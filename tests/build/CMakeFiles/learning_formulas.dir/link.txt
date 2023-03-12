@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++11 -rdynamic CMakeFiles/learning_formulas.dir/formulas.cpp.o -o learning_formulas 
