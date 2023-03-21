@@ -11,7 +11,7 @@ include_directories(include)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # Wskazanie źródeł
-set(SOURCES "src/types.cpp" "src/main.cpp" "src/formulas/formulas.cpp" "src/formulas/generator.cpp" "src/classifier/classifier.cpp")
+set(SOURCES "types.cpp" "utils.cpp" "main.cpp")
 
 # Ustawienie pliku wykonywalnego
 add_executable(learning_formulas ${SOURCES})

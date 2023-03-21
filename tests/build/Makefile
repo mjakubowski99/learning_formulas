@@ -117,41 +117,113 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named learning_formulas
+# Target rules for targets named learning_formulas_tests
 
 # Build rule for target.
-learning_formulas: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 learning_formulas
-.PHONY : learning_formulas
+learning_formulas_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 learning_formulas_tests
+.PHONY : learning_formulas_tests
 
 # fast build rule for target.
-learning_formulas/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas.dir/build.make CMakeFiles/learning_formulas.dir/build
-.PHONY : learning_formulas/fast
+learning_formulas_tests/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/build
+.PHONY : learning_formulas_tests/fast
 
-formulas.o: formulas.cpp.o
-.PHONY : formulas.o
+FormulaGeneratorTest.o: FormulaGeneratorTest.cpp.o
+.PHONY : FormulaGeneratorTest.o
 
 # target to build an object file
-formulas.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas.dir/build.make CMakeFiles/learning_formulas.dir/formulas.cpp.o
-.PHONY : formulas.cpp.o
+FormulaGeneratorTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.o
+.PHONY : FormulaGeneratorTest.cpp.o
 
-formulas.i: formulas.cpp.i
-.PHONY : formulas.i
+FormulaGeneratorTest.i: FormulaGeneratorTest.cpp.i
+.PHONY : FormulaGeneratorTest.i
 
 # target to preprocess a source file
-formulas.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas.dir/build.make CMakeFiles/learning_formulas.dir/formulas.cpp.i
-.PHONY : formulas.cpp.i
+FormulaGeneratorTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.i
+.PHONY : FormulaGeneratorTest.cpp.i
 
-formulas.s: formulas.cpp.s
-.PHONY : formulas.s
+FormulaGeneratorTest.s: FormulaGeneratorTest.cpp.s
+.PHONY : FormulaGeneratorTest.s
 
 # target to generate assembly for a file
-formulas.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas.dir/build.make CMakeFiles/learning_formulas.dir/formulas.cpp.s
-.PHONY : formulas.cpp.s
+FormulaGeneratorTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.s
+.PHONY : FormulaGeneratorTest.cpp.s
+
+home/michal99/Projects/learning-formulas/FormulaGenerator.o: home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.o
+.PHONY : home/michal99/Projects/learning-formulas/FormulaGenerator.o
+
+# target to build an object file
+home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.o
+.PHONY : home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.o
+
+home/michal99/Projects/learning-formulas/FormulaGenerator.i: home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.i
+.PHONY : home/michal99/Projects/learning-formulas/FormulaGenerator.i
+
+# target to preprocess a source file
+home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.i
+.PHONY : home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.i
+
+home/michal99/Projects/learning-formulas/FormulaGenerator.s: home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.s
+.PHONY : home/michal99/Projects/learning-formulas/FormulaGenerator.s
+
+# target to generate assembly for a file
+home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.s
+.PHONY : home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.s
+
+home/michal99/Projects/learning-formulas/types.o: home/michal99/Projects/learning-formulas/types.cpp.o
+.PHONY : home/michal99/Projects/learning-formulas/types.o
+
+# target to build an object file
+home/michal99/Projects/learning-formulas/types.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/types.cpp.o
+.PHONY : home/michal99/Projects/learning-formulas/types.cpp.o
+
+home/michal99/Projects/learning-formulas/types.i: home/michal99/Projects/learning-formulas/types.cpp.i
+.PHONY : home/michal99/Projects/learning-formulas/types.i
+
+# target to preprocess a source file
+home/michal99/Projects/learning-formulas/types.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/types.cpp.i
+.PHONY : home/michal99/Projects/learning-formulas/types.cpp.i
+
+home/michal99/Projects/learning-formulas/types.s: home/michal99/Projects/learning-formulas/types.cpp.s
+.PHONY : home/michal99/Projects/learning-formulas/types.s
+
+# target to generate assembly for a file
+home/michal99/Projects/learning-formulas/types.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/types.cpp.s
+.PHONY : home/michal99/Projects/learning-formulas/types.cpp.s
+
+home/michal99/Projects/learning-formulas/utils.o: home/michal99/Projects/learning-formulas/utils.cpp.o
+.PHONY : home/michal99/Projects/learning-formulas/utils.o
+
+# target to build an object file
+home/michal99/Projects/learning-formulas/utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/utils.cpp.o
+.PHONY : home/michal99/Projects/learning-formulas/utils.cpp.o
+
+home/michal99/Projects/learning-formulas/utils.i: home/michal99/Projects/learning-formulas/utils.cpp.i
+.PHONY : home/michal99/Projects/learning-formulas/utils.i
+
+# target to preprocess a source file
+home/michal99/Projects/learning-formulas/utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/utils.cpp.i
+.PHONY : home/michal99/Projects/learning-formulas/utils.cpp.i
+
+home/michal99/Projects/learning-formulas/utils.s: home/michal99/Projects/learning-formulas/utils.cpp.s
+.PHONY : home/michal99/Projects/learning-formulas/utils.s
+
+# target to generate assembly for a file
+home/michal99/Projects/learning-formulas/utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/utils.cpp.s
+.PHONY : home/michal99/Projects/learning-formulas/utils.cpp.s
 
 # Help Target
 help:
@@ -161,10 +233,19 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... learning_formulas"
-	@echo "... formulas.o"
-	@echo "... formulas.i"
-	@echo "... formulas.s"
+	@echo "... learning_formulas_tests"
+	@echo "... FormulaGeneratorTest.o"
+	@echo "... FormulaGeneratorTest.i"
+	@echo "... FormulaGeneratorTest.s"
+	@echo "... home/michal99/Projects/learning-formulas/FormulaGenerator.o"
+	@echo "... home/michal99/Projects/learning-formulas/FormulaGenerator.i"
+	@echo "... home/michal99/Projects/learning-formulas/FormulaGenerator.s"
+	@echo "... home/michal99/Projects/learning-formulas/types.o"
+	@echo "... home/michal99/Projects/learning-formulas/types.i"
+	@echo "... home/michal99/Projects/learning-formulas/types.s"
+	@echo "... home/michal99/Projects/learning-formulas/utils.o"
+	@echo "... home/michal99/Projects/learning-formulas/utils.i"
+	@echo "... home/michal99/Projects/learning-formulas/utils.s"
 .PHONY : help
 
 
