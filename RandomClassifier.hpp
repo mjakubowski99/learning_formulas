@@ -1,16 +1,19 @@
+#pragma once
+
 #include "types.hpp"
-#include "FormulaClassifier.hpp"
 #include "FormulaGenerator.hpp"
 #include "FormulaEvaluator.hpp"
 #include <vector>
+#include <list>
+#include <string>
 
-class RandomClassifier : public FormulaClassifier 
+class RandomClassifier
 {
-    FormulaGenerator generator;
+    FormulaGenerator * generator;
 
-    FormulaEvaluator evaluator;
+    FormulaEvaluator * evaluator;
 
-    DecisionClass * decision_classes;
+    std::list<Formula> * decision_class_formulas;
 
     int decision_classes_count;
 
@@ -23,13 +26,15 @@ class RandomClassifier : public FormulaClassifier
     int literals_count;
 
     public:
-        RandomClassifier(int cycles_count, int formulas_count, int clauses_count, int literals_count);
+        RandomClassifier(int decision_classes_count, int cycles_count, int formulas_count, int clauses_count, int literals_count);
 
-        void fit(Data * data, int classes_count);
+        void fit(Data * data);
 
-        void score(Data * data, int classes_count);
+        float score(Data * data);
+
+        void saveFormulasToFile(std::string file_name);
     private:
-        bool satisfiableFormulasCountGenerated(Data * data, int classes_count)
+        bool satisfiableFormulasCountGenerated();
 
-        void clearWeakestFormualas(Data * data, int classes_count);
-}
+        void clearWeakestFormulas(std::list<Formula> & formulas, Data * data, int class_index);
+};

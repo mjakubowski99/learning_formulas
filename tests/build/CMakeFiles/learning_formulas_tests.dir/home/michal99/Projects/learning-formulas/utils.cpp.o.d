@@ -50,6 +50,7 @@ CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/
  /usr/include/c++/11/ext/aligned_buffer.h \
  /usr/include/c++/11/bits/list.tcc /usr/include/c++/11/array \
  /usr/include/c++/11/utility /usr/include/c++/11/bits/stl_relops.h \
+ /home/michal99/Projects/learning-formulas/utils.hpp \
  /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
  /usr/include/c++/11/ios /usr/include/c++/11/iosfwd \
  /usr/include/c++/11/bits/stringfwd.h /usr/include/c++/11/bits/postypes.h \
@@ -156,4 +157,5 @@ CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
  /usr/include/c++/11/bits/istream.tcc /usr/include/c++/11/sstream \
- /usr/include/c++/11/bits/sstream.tcc
+ /usr/include/c++/11/bits/sstream.tcc /usr/include/c++/11/cstring \
+ /usr/include/string.h /usr/include/strings.h

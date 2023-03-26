@@ -1,10 +1,12 @@
+#pragma once
+
 #include "types.hpp"
 #include <set>
+#include <list>
 
 class FormulaGenerator {
     public:
-        void makeFormulas(
-            DecisionClass & decision_class, 
+        std::list<Formula> makeFormulas(
             Data * data, 
             int classes_count, 
             int formulas_count, 
@@ -14,7 +16,7 @@ class FormulaGenerator {
         );
 
         void makePositiveFormulas(
-            DecisionClass & decision_class, 
+            std::list<Formula> & positive_formulas,
             Data data,
             int formulas_count, 
             int clauses_count, 
@@ -22,7 +24,7 @@ class FormulaGenerator {
         );
 
         void makeNegativeFormulas(
-            DecisionClass & decision_class, 
+            std::list<Formula> & negative_formulas,
             Data data,
             int formulas_count, 
             int clauses_count, 

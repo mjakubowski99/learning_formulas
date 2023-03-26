@@ -15,8 +15,10 @@ set(
     SOURCES 
     "../types.cpp"
     "../utils.cpp"
-    "../FormulaGenerator.cpp" 
-    "FormulaGeneratorTest.cpp"
+    "../FormulaGenerator.cpp"
+    "../FormulaEvaluator.cpp"
+    "../RandomClassifier.cpp"  
+    "tests.cpp"
 )
 
 # Ustawienie pliku wykonywalnego

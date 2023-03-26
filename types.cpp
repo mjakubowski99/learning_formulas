@@ -41,10 +41,11 @@ FormulaScore::FormulaScore()
     this->false_negatives = 0;
 }
 
-FormulaScore FormulaScore::operator+(const FormulaScore & score)
+FormulaScore & FormulaScore::operator+(const FormulaScore & score)
 {
-    this->true_positives = score.true_positives;
-    this->true_negatives = score.true_negatives;
-    this->false_positives = score.false_negatives;
-    this->false_negatives = score.false_negatives;
+    this->true_positives += score.true_positives;
+    this->true_negatives += score.true_negatives;
+    this->false_positives += score.false_positives;
+    this->false_negatives += score.false_negatives;
+    return *this;
 }

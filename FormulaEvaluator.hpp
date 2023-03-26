@@ -1,12 +1,12 @@
+#pragma once
+
 #include "types.hpp"
 
 class FormulaEvaluator {
     public:
-        bool positiveFormulaEfficient(Data * data, int classes_count, Formula & formula, int class_index);
+        bool formulaIsEfficient(Data * data, int classes_count, Formula & formula, int class_index);
 
-        bool negativeFormulaEfficient(Data * data, int classes_count, Formula & formula, int class_index);
-
-        int voteForRow(DecisionClass * decision_classes, int classes_count, bool * row, int attributes_count);
+        int voteForRow(std::list<Formula> * decision_class_formulas, int classes_count, bool * row, int attributes_count);
 
         FormulaScore score(Formula formula, Data * data, int classes_count, int class_index, bool expected);
 

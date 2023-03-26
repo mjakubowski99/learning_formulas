@@ -1,23 +1,17 @@
 #include "types.hpp"
 #include "FormulaEvaluator.hpp"
+#include <iostream>
 
-bool FormulaEvaluator::positiveFormulaEfficient(Data * data, int classes_count, Formula & formula, int class_index)
+bool FormulaEvaluator::formulaIsEfficient(Data * data, int classes_count, Formula & formula, int class_index)
 {
     FormulaScore score;
 
     for(int i=0; i<classes_count; i++) {
         //Formula should be positive only for cases when belongs to class
         bool formula_positive = (i == class_index);
-
-        score = score+this->score(formula, data, classes_count, i, true);
+        score = score+this->score(formula, data, classes_count, i, formula_positive);
     }
 
-    return this->formulaEfficient(score);
-}
-
-bool FormulaEvaluator::negativeFormulaEfficient(Data * data, int classes_count, Formula & formula, int class_index)
-{
-    FormulaScore score = this->score(formula, data, classes_count, class_index, false);
     return this->formulaEfficient(score);
 }
 
@@ -26,26 +20,19 @@ bool FormulaEvaluator::formulaEfficient(FormulaScore score)
     if (score.false_negatives+score.false_positives == 0 ) {
         return score.true_positives + score.true_negatives > 0;
     }
-    return (score.true_positives+score.true_negatives) / (float) (score.false_negatives+score.false_negatives) > 2.0;
+    return (score.true_positives+score.true_negatives) / (float) (score.false_negatives+score.false_positives) > 2.0;
 }
 
-int FormulaEvaluator::voteForRow(DecisionClass * decision_classes, int classes_count, bool * row, int attributes_count)
+int FormulaEvaluator::voteForRow(std::list<Formula> * decision_class_formulas, int classes_count, bool * row, int attributes_count)
 {
     int max_score = 0;
     int max_index = 0;
 
     for (int i=0; i<classes_count; i++) {
         int score = 0;
-        DecisionClass decision_class = decision_classes[i];
-
-        for(Formula formula : decision_class.positive_formulas) {
+        
+        for(Formula formula : decision_class_formulas[i]) {
             if (this->formulaSatisfied(formula, row, attributes_count)) {
-                score++;
-            }
-        }
-
-        for(Formula formula : decision_class.negative_formulas) {
-            if (!this->formulaSatisfied(formula, row, attributes_count)) {
                 score++;
             }
         }

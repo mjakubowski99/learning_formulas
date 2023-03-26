@@ -8,10 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/michal99/Projects/learning-formulas/tests/FormulaGeneratorTest.cpp" "CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.o" "gcc" "CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.o.d"
+  "/home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp" "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.o" "gcc" "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.o.d"
   "/home/michal99/Projects/learning-formulas/FormulaGenerator.cpp" "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.o" "gcc" "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.o.d"
   "/home/michal99/Projects/learning-formulas/types.cpp" "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/types.cpp.o" "gcc" "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/types.cpp.o.d"
   "/home/michal99/Projects/learning-formulas/utils.cpp" "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/utils.cpp.o" "gcc" "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/utils.cpp.o.d"
+  "/home/michal99/Projects/learning-formulas/tests/tests.cpp" "CMakeFiles/learning_formulas_tests.dir/tests.cpp.o" "gcc" "CMakeFiles/learning_formulas_tests.dir/tests.cpp.o.d"
   )
 
 # Targets to which this target links.

@@ -30,7 +30,7 @@ struct FormulaScore {
     int false_negatives;
 
     FormulaScore();
-    FormulaScore operator+(const FormulaScore & score);
+    FormulaScore & operator+(const FormulaScore & score);
 };
 
 #endif

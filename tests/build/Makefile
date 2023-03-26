@@ -129,29 +129,29 @@ learning_formulas_tests/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/build
 .PHONY : learning_formulas_tests/fast
 
-FormulaGeneratorTest.o: FormulaGeneratorTest.cpp.o
-.PHONY : FormulaGeneratorTest.o
+home/michal99/Projects/learning-formulas/FormulaEvaluator.o: home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.o
+.PHONY : home/michal99/Projects/learning-formulas/FormulaEvaluator.o
 
 # target to build an object file
-FormulaGeneratorTest.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.o
-.PHONY : FormulaGeneratorTest.cpp.o
+home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.o
+.PHONY : home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.o
 
-FormulaGeneratorTest.i: FormulaGeneratorTest.cpp.i
-.PHONY : FormulaGeneratorTest.i
+home/michal99/Projects/learning-formulas/FormulaEvaluator.i: home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.i
+.PHONY : home/michal99/Projects/learning-formulas/FormulaEvaluator.i
 
 # target to preprocess a source file
-FormulaGeneratorTest.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.i
-.PHONY : FormulaGeneratorTest.cpp.i
+home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.i
+.PHONY : home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.i
 
-FormulaGeneratorTest.s: FormulaGeneratorTest.cpp.s
-.PHONY : FormulaGeneratorTest.s
+home/michal99/Projects/learning-formulas/FormulaEvaluator.s: home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.s
+.PHONY : home/michal99/Projects/learning-formulas/FormulaEvaluator.s
 
 # target to generate assembly for a file
-FormulaGeneratorTest.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.s
-.PHONY : FormulaGeneratorTest.cpp.s
+home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.s
+.PHONY : home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.s
 
 home/michal99/Projects/learning-formulas/FormulaGenerator.o: home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.o
 .PHONY : home/michal99/Projects/learning-formulas/FormulaGenerator.o
@@ -225,6 +225,30 @@ home/michal99/Projects/learning-formulas/utils.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/utils.cpp.s
 .PHONY : home/michal99/Projects/learning-formulas/utils.cpp.s
 
+tests.o: tests.cpp.o
+.PHONY : tests.o
+
+# target to build an object file
+tests.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/tests.cpp.o
+.PHONY : tests.cpp.o
+
+tests.i: tests.cpp.i
+.PHONY : tests.i
+
+# target to preprocess a source file
+tests.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/tests.cpp.i
+.PHONY : tests.cpp.i
+
+tests.s: tests.cpp.s
+.PHONY : tests.s
+
+# target to generate assembly for a file
+tests.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/learning_formulas_tests.dir/build.make CMakeFiles/learning_formulas_tests.dir/tests.cpp.s
+.PHONY : tests.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -234,9 +258,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... learning_formulas_tests"
-	@echo "... FormulaGeneratorTest.o"
-	@echo "... FormulaGeneratorTest.i"
-	@echo "... FormulaGeneratorTest.s"
+	@echo "... home/michal99/Projects/learning-formulas/FormulaEvaluator.o"
+	@echo "... home/michal99/Projects/learning-formulas/FormulaEvaluator.i"
+	@echo "... home/michal99/Projects/learning-formulas/FormulaEvaluator.s"
 	@echo "... home/michal99/Projects/learning-formulas/FormulaGenerator.o"
 	@echo "... home/michal99/Projects/learning-formulas/FormulaGenerator.i"
 	@echo "... home/michal99/Projects/learning-formulas/FormulaGenerator.s"
@@ -246,6 +270,9 @@ help:
 	@echo "... home/michal99/Projects/learning-formulas/utils.o"
 	@echo "... home/michal99/Projects/learning-formulas/utils.i"
 	@echo "... home/michal99/Projects/learning-formulas/utils.s"
+	@echo "... tests.o"
+	@echo "... tests.i"
+	@echo "... tests.s"
 .PHONY : help
 
 

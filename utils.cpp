@@ -68,14 +68,17 @@ Formula fromString(std::string pattern)
 
         for(string literal : literals) {
             Literal result_literal;
+            string bitPosition;
             if (literal.substr(0,2) == "~X") {
                 result_literal.positive = false;
+                bitPosition = literal.substr(2, literal.length());
             } else if (literal.substr(0,1) == "X"){
                 result_literal.positive = true;
+                bitPosition = literal.substr(1, literal.length());
             } else {
                 throw "Failed to parse formula from string";
             }
-            result_literal.bitPosition = atoi("");
+            result_literal.bitPosition = atoi(bitPosition.c_str());
 
             result_clause.push_back(result_literal);
         }

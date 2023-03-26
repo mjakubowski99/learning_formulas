@@ -2,9 +2,11 @@
 #include <ctime>
 #include "FormulaGenerator.hpp"
 #include "types.hpp"
+#include <iostream>
+#include <list> 
+#include "utils.hpp"
 
-void FormulaGenerator::makeFormulas(
-    DecisionClass & decision_class, 
+std::list<Formula> FormulaGenerator::makeFormulas(
     Data * data, 
     int classes_count, 
     int formulas_count, 
@@ -13,40 +15,47 @@ void FormulaGenerator::makeFormulas(
     int goal
 )
 {
-    int positive_count = formulas_count / 2;
-    this->makePositiveFormulas(decision_class, data[goal], positive_count, clauses_count, literals_count);
-    int negative_count = (formulas_count/2) / (classes_count);
+    std::list<Formula> positive_formulas;
+    std::list<Formula> negative_formulas;
+
+    int positive_count = (formulas_count / 2);
+    this->makePositiveFormulas(positive_formulas, data[goal], positive_count, clauses_count, literals_count);
+    int negative_count = (formulas_count/2) / (classes_count-1);
 
     for(int i=0; i<classes_count; i++) {
         if (i != goal) {
-            this->makeNegativeFormulas(decision_class, data[i], negative_count, clauses_count, literals_count);
+            this->makeNegativeFormulas(negative_formulas, data[i], negative_count, clauses_count, literals_count);
         }
     }
 
-    if (decision_class.negative_formulas.size() < positive_count) {
-        int expected_negative_count = positive_count - decision_class.negative_formulas.size();
-
+    if (negative_formulas.size() < positive_count) {
+        int expected_negative_count = positive_count - negative_formulas.size();
         for(int i=0; i<classes_count; i++) {
             if (i != goal) {
-                this->makeNegativeFormulas(decision_class, data[i], negative_count, clauses_count, literals_count);
+                this->makeNegativeFormulas(negative_formulas, data[i], negative_count, clauses_count, literals_count);
                 break;
             }
         }
     }
+
+    for(Formula formula : negative_formulas) {
+        positive_formulas.push_back(formula);
+    }
+    
+    return positive_formulas;
 }
 
 void FormulaGenerator::makePositiveFormulas(
-    DecisionClass & decision_class, 
+    std::list<Formula> & positive_formulas, 
     Data data,
     int formulas_count, 
     int clauses_count, 
     int literals_count
 )
 {
+    srand((unsigned) time(NULL));
     int rows = data.rows_count;
     int cols = data.attributes_count;
-
-    srand((unsigned) time(NULL));
     
     for(int i=0; i<formulas_count; i++) {
         Formula formula;
@@ -65,21 +74,21 @@ void FormulaGenerator::makePositiveFormulas(
             }
             formula.push_back(clause);
         }
-        decision_class.positive_formulas.push_back(formula);
+        positive_formulas.push_back(formula);
     }
 }
 
 void FormulaGenerator::makeNegativeFormulas(
-    DecisionClass & decision_class, 
+    std::list<Formula> & negative_formulas, 
     Data data,
     int formulas_count, 
     int clauses_count, 
     int literals_count
 )
 {
+    srand((unsigned) time(NULL));
     int rows = data.rows_count;
     int cols = data.attributes_count;
-    srand((unsigned) time(NULL));
     
     for(int i=0; i<formulas_count; i++) {
         Formula formula;
@@ -97,7 +106,7 @@ void FormulaGenerator::makeNegativeFormulas(
             }
             formula.push_back(clause);
         }
-        decision_class.negative_formulas.push_back(formula);
+        negative_formulas.push_back(formula);
     }
 }
 

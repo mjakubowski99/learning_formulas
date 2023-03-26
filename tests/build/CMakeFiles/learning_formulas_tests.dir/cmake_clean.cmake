@@ -1,12 +1,14 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.o"
-  "CMakeFiles/learning_formulas_tests.dir/FormulaGeneratorTest.cpp.o.d"
+  "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.o"
+  "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaEvaluator.cpp.o.d"
   "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.o"
   "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/FormulaGenerator.cpp.o.d"
   "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/types.cpp.o"
   "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/types.cpp.o.d"
   "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/utils.cpp.o"
   "CMakeFiles/learning_formulas_tests.dir/home/michal99/Projects/learning-formulas/utils.cpp.o.d"
+  "CMakeFiles/learning_formulas_tests.dir/tests.cpp.o"
+  "CMakeFiles/learning_formulas_tests.dir/tests.cpp.o.d"
   "learning_formulas_tests"
   "learning_formulas_tests.pdb"
 )
