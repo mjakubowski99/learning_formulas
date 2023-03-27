@@ -1,0 +1,6 @@
+version: '3'
+services:
+  learning_formulas:
+    build: ./core
+    volumes:
+      - ./core/result:/src/result

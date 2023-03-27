@@ -3,6 +3,8 @@
 #include "RandomClassifier.hpp"
 #include <iostream>
 #include <fstream>
+#include <ctime>
+#include <sstream>
 
 int decision_classes_count = 0;
 
@@ -84,7 +86,12 @@ int main(int argc, char * argv[]) {
 
     std::cout << clf.score(test_data) << std::endl;
 
-    clf.saveFormulasToFile("../output.txt");
+    std::time_t ms = std::time(nullptr);
+
+    std::stringstream stream;
+    stream << "../result/" << ms << ".txt";
+
+    clf.saveFormulasToFile(stream.str());
 
     return 0;
 }
