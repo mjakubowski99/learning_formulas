@@ -1,1 +1,0 @@
-/usr/bin/c++  -std=c++11 -rdynamic CMakeFiles/learning_formulas.dir/types.cpp.o CMakeFiles/learning_formulas.dir/utils.cpp.o CMakeFiles/learning_formulas.dir/FormulaGenerator.cpp.o CMakeFiles/learning_formulas.dir/FormulaEvaluator.cpp.o CMakeFiles/learning_formulas.dir/RandomClassifier.cpp.o CMakeFiles/learning_formulas.dir/main.cpp.o -o learning_formulas 
