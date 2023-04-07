@@ -60,6 +60,7 @@ class MainWindow(QMainWindow):
         self.selected_file = self.file_dialog.selectedFiles()[0]
         self.reader = DataframeReader(self.selected_file)
         self.layout.addWidget(self.reader.make_table())
+        self.reader.add_pagination_to_layout(self.layout)
     
     def stop_formula_learning(self):
         self._process_reader.kill()
