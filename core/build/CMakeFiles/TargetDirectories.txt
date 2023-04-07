@@ -1,0 +1,3 @@
+/home/michal99/Projects/learning-formulas/core/build/CMakeFiles/learning_formulas.dir
+/home/michal99/Projects/learning-formulas/core/build/CMakeFiles/edit_cache.dir
+/home/michal99/Projects/learning-formulas/core/build/CMakeFiles/rebuild_cache.dir

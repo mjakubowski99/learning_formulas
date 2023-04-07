@@ -1,10 +1,10 @@
 FROM ubuntu:latest
 
-ENV FILE_NAME="../train.txt"
-ENV CYCLES_COUNT=10
-ENV FORMULAS_COUNT=100
-ENV CLAUSES_COUNT=6
-ENV LITERALS_COUNT=3
+ARG FILE_NAME
+ARG CYCLES_COUNT
+ARG FORMULAS_COUNT
+ARG CLAUSES_COUNT
+ARG LITERALS_COUNT
 
 WORKDIR /src
 
@@ -17,8 +17,8 @@ COPY . /src
 
 WORKDIR /src/build 
 
-RUN cmake .. && make 
+RUN cmake .. && make
 
-CMD ["./learning_formulas"]
+CMD ["./learning_formulas", "${FILE_NAME} ${CYCLES_COUNT} ${FORMULAS_COUNT} ${CLAUSES_COUNT} ${LITERALS_COUNT}"]
 
 

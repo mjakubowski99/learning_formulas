@@ -8,11 +8,13 @@
 
 int decision_classes_count = 0;
 
-std::string file_name = "../train.txt";
+std::string train_file_name = "../train.txt";
+std::string test_file_name = "../test.txt";
 int max_cycles_count_param = 20;
 int formulas_count_param = 100;
 int clauses_count_param = 5;
 int literals_count_param = 3;
+std::string result_dir = "../result/";
 
 Data * parseData(std::string file_name)
 {
@@ -44,20 +46,28 @@ Data * parseData(std::string file_name)
 void parse_args(int argc, char * argv[]) 
 {
     if (argc>=2) {
-        std::string pom(argv[1]);
-        file_name = pom;
+        std::string train_pom(argv[1]);
+        train_file_name = train_pom;
     }
     if (argc>=3) {
-        max_cycles_count_param = std::stoi(argv[2]);
+        std::string test_pom(argv[2]);
+        test_file_name = test_pom;
     }
     if (argc>=4) {
-        formulas_count_param = std::stoi(argv[3]);
+        max_cycles_count_param = std::stoi(argv[3]);
     }
     if (argc>=5) {
-        clauses_count_param = std::stoi(argv[4]);
+        formulas_count_param = std::stoi(argv[4]);
     }
     if (argc>=6) {
-        literals_count_param = std::stoi(argv[5]);
+        clauses_count_param = std::stoi(argv[5]);
+    }
+    if (argc>=7) {
+        literals_count_param = std::stoi(argv[6]);
+    }
+    if (argc>=8) {
+        std::string pom(argv[7]);
+        result_dir = pom;
     }
 }
 
@@ -65,14 +75,15 @@ int main(int argc, char * argv[]) {
     parse_args(argc, argv);
     
     std::cout << "Algorithm started with: " << std::endl;
-    std::cout << "Runned for file: " << file_name << std::endl;
+    std::cout << "Runned for file: " << train_file_name << std::endl;
+    std::cout << "Test file: " << test_file_name << std::endl;
     std::cout << "Cycles count: " << max_cycles_count_param << std::endl;
     std::cout << "Formulas count for class: " << formulas_count_param << std::endl;
     std::cout << "Clauses count in formula: " << clauses_count_param << std::endl;
     std::cout << "Literals count in formula: " << literals_count_param << std::endl;
 
-    Data * train_data = parseData(file_name);
-    Data * test_data = parseData("../test.txt");
+    Data * train_data = parseData(train_file_name);
+    Data * test_data = parseData(test_file_name);
 
     RandomClassifier clf(
         decision_classes_count, 
@@ -89,7 +100,7 @@ int main(int argc, char * argv[]) {
     std::time_t ms = std::time(nullptr);
 
     std::stringstream stream;
-    stream << "../result/" << ms << ".txt";
+    stream << result_dir << ms << ".txt";
 
     clf.saveFormulasToFile(stream.str());
 

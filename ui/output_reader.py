@@ -36,6 +36,9 @@ class MyConsole(QPlainTextEdit):
 
         self._cursor_output = self.textCursor()
 
+    def clear_output(self):
+        self.clear()
+
     @pyqtSlot(str)
     def append_output(self, text):
         self._cursor_output.insertText(text)
