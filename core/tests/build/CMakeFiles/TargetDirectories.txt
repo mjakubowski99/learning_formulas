@@ -1,3 +1,0 @@
-/home/michal99/Projects/learning-formulas/tests/build/CMakeFiles/learning_formulas_tests.dir
-/home/michal99/Projects/learning-formulas/tests/build/CMakeFiles/edit_cache.dir
-/home/michal99/Projects/learning-formulas/tests/build/CMakeFiles/rebuild_cache.dir

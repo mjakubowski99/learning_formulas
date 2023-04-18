@@ -72,5 +72,6 @@
         "*.ipp": "cpp",
         "codecvt": "cpp"
     },
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "enabled",
+    "git.ignoreLimitWarning": true
 }
