@@ -1,6 +1,9 @@
 version: '3'
 services:
   learning_formulas:
-    build: ./core
+    build: ./random_algorithm
     volumes:
-      - ./core/result:/src/result
+      - ./random_algorithm/result:/src/result
+      - ./random_algorithm/data:/src/data
+    env_file:
+      - .env

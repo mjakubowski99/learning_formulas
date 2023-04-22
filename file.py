@@ -1,15 +1,15 @@
 import numpy as np
 import pandas as pd
 
-def make_train_test_data_files(df, target):
+def make_train_test_data_files(df, target, train_file="train.txt", test_file="test.txt"):
     classes = df[target].unique()
 
     msk = np.random.rand(len(df)) < 0.7
     train = df[msk].groupby(target)
     test = df[~msk].groupby(target)
 
-    train_file = open("train.txt", "w")
-    test_file = open("test.txt", "w")
+    train_file = open(train_file, "w")
+    test_file = open(test_file, "w")
 
     train_classes = len(classes)
 

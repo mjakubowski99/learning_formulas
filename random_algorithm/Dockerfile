@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     gcc \
     cmake 
 
-COPY . /src 
+COPY . /src
 
 WORKDIR /src/build 
 
