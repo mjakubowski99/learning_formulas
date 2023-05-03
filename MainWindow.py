@@ -11,7 +11,7 @@ from file import make_train_test_data_files
 
 class FormulaLearner(QMainWindow):
 
-    def __init__(self, reader, run_with_docker, parent=None):
+    def __init__(self, reader=None, run_with_docker=True, parent=None):
         super(FormulaLearner, self).__init__(parent)
         self.reader = reader
         self.run_with_docker = run_with_docker
@@ -48,12 +48,13 @@ class FormulaLearner(QMainWindow):
         self.train_file = "random_algorithm/data/train.txt"
         self.test_file = "random_algorithm/data/test.txt"
         
-        make_train_test_data_files(
-            self.reader.df, 
-            self.reader.target_column, 
-            self.train_file,
-            self.test_file
-        )
+        if reader is not None:
+            make_train_test_data_files(
+                self.reader.df, 
+                self.reader.target_column, 
+                self.train_file,
+                self.test_file
+            )
 
                 
     def stop_formula_learning(self):
@@ -123,16 +124,21 @@ class MainWindow(QMainWindow):
         self.file_dialog.setFileMode(QFileDialog.AnyFile)
 
         self.load_file = QPushButton("Załaduj plik z danymi csv")
+        self.learn_formula = QPushButton("Przejdz do uczenia formuł...")
         self.load_file.setFixedWidth(200)
+        self.learn_formula.setFixedWidth(200)
         self.load_file.clicked.connect(self.open_file_dialog)
+        self.learn_formula.clicked.connect(self.reload)
 
         self.button_layout.addWidget(self.load_file)
+        self.button_layout.addWidget(self.learn_formula)
 
         self.layout.addLayout(self.button_layout)
         self.layout.addLayout(self.data_layout)
         
         # set the central widget of the main window to the new widget
         self.setCentralWidget(self.widget)
+        self.reader = None 
 
     def reload(self):
         self.dialog = FormulaLearner(self.reader, self.run_with_docker)

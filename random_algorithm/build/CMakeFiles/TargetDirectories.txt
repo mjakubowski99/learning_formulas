@@ -1,3 +1,0 @@
-/home/michal99/Projects/learning-formulas/random_algorithm/build/CMakeFiles/learning_formulas.dir
-/home/michal99/Projects/learning-formulas/random_algorithm/build/CMakeFiles/edit_cache.dir
-/home/michal99/Projects/learning-formulas/random_algorithm/build/CMakeFiles/rebuild_cache.dir

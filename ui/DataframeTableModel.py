@@ -7,10 +7,12 @@ import pandas as pd
 class TableModel(QAbstractTableModel):
     def __init__(self, data):
         super().__init__()
-        self._data = data
+        self._data = data.head(100)
+        self._data = data.iloc[:, :20]
 
     def update_data(self, data):
-        self._data = data
+        self._data = data.head(100)
+        self._data = data.iloc[:, :20]
         self.layoutChanged.emit()
 
     def data(self, index, role=Qt.DisplayRole):

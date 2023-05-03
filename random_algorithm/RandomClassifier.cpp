@@ -96,13 +96,16 @@ bool RandomClassifier::satisfiableFormulasCountGenerated()
 void RandomClassifier::clearWeakestFormulas(std::list<Formula> & formulas, Data * data, int class_index)
 {
     auto formula = formulas.begin();
+    int erased_count = 0;
     while (formula != formulas.end()) {
         if (!this->evaluator->formulaIsEfficient(data, this->decision_classes_count, *formula, class_index)) {
             formulas.erase(formula++);
+            erased_count++;
         } else {
             ++formula;
         }
     }
+    std::cout << "Liczba usuniętych formuł: " << erased_count << std::endl;
 }
 
 void RandomClassifier::saveFormulasToFile(std::string file_name)
