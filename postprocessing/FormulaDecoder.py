@@ -9,6 +9,8 @@ class FormulaDecoder:
         for clause in line.split('^'):
             literals = []
             for literal in clause[1:-1].split('v'):
+                if literal[-1] == ')':
+                    literal = literal[:-1]
                 literals.append(self.literal_from_string(literal))
             clauses.append(Clause(literals))
 
@@ -16,7 +18,7 @@ class FormulaDecoder:
 
     def literal_from_string(self, literal: str):
         if literal[0:2] == '~X':
-            positive = False 
+            positive = False
         elif literal[0:1] == "X":
             positive = True 
         else:

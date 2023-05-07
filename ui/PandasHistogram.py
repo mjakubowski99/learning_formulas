@@ -10,15 +10,17 @@ class PandasHistogram:
     def hist(self, df, column):
         fig, ax = plt.subplots()
 
-        canvas = FigureCanvasQTAgg(Figure(figsize=(5, 3)))
+        canvas = FigureCanvasQTAgg(Figure(figsize=(15, 10)))
         ax = canvas.figure.subplots()
 
         widget = QWidget()
         layout = QVBoxLayout(widget)
 
-        if df[column].dtype.kind in 'biufc':
-            ax.hist(df[column], 50, facecolor="green", alpha=0.75)
-            layout.addWidget(canvas)
+        categories = df[column].value_counts().index
+        counts = df[column].value_counts().values
+
+        ax.bar(categories, counts)
+        layout.addWidget(canvas)
 
         return widget
 

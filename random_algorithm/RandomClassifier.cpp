@@ -7,6 +7,8 @@
 #include <iostream>
 #include "utils.hpp"
 #include <fstream>
+#include <string>
+#include <set>
 
 RandomClassifier::RandomClassifier(int decision_classes_count, int cycles_count, int formulas_count, int clauses_count, int literals_count)
 {
@@ -111,11 +113,17 @@ void RandomClassifier::clearWeakestFormulas(std::list<Formula> & formulas, Data 
 void RandomClassifier::saveFormulasToFile(std::string file_name)
 {
     std::ofstream formulas_file(file_name);
+    std::set<std::string> formula_strings;
     
     for(int i=0; i<this->decision_classes_count; i++) {
         formulas_file << i << '\n';
         for(Formula formula : this->decision_class_formulas[i]) {
-            formulas_file << stringifyFormula(formula) << '\n';
+            std::string f = stringifyFormula(formula);
+        
+            if (formula_strings.find(f) == formula_strings.end()) {
+                formulas_file << f << '\n';
+                formula_strings.insert(f);
+            }
         }
     }
 

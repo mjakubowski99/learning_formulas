@@ -115,7 +115,7 @@ int FormulaGenerator::randomIndex(int min, int max, std::set<int> & drawn)
     int random = (rand() % max) + min;
 
     int i = 0;
-    int tries = 10000;
+    int tries = 100000;
 
     while(drawn.find(random) != drawn.end() && i<tries) {
         random = (rand() % max) + min;
