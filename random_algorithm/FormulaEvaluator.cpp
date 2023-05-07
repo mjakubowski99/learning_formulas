@@ -11,8 +11,9 @@ bool FormulaEvaluator::formulaIsEfficient(Data * data, int classes_count, Formul
         bool formula_positive = (i == class_index);
         score = score+this->score(formula, data, classes_count, i, formula_positive);
     }
+    float positive_responses = score.true_positives/(float) data[class_index].rows_count;
 
-    return this->formulaEfficient(score);
+    return this->formulaEfficient(score) && positive_responses>0.7;
 }
 
 bool FormulaEvaluator::formulaEfficient(FormulaScore score)
