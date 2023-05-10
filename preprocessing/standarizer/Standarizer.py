@@ -19,6 +19,8 @@ class Standarizer:
         for column in df.columns:
             if column == target:
                 continue
+            if df[column].min() == 0 or df[column].max() in [0,1]:
+                continue
             df[column] = df[column].apply(encode_column, intervals=self.intervals[column])
         return df 
 
