@@ -4,6 +4,7 @@
 #include <vector>
 #include <list>
 #include <array>
+#include <set>
 using namespace std;
 
 
@@ -69,7 +70,7 @@ struct DecisionClass
 struct Data {
     int rows_count;
     int attributes_count;
-    bool ** data;
+    std::map<int, bool> data;
     Data();
     Data(int rows_count, int attributes_count);
     void fromVector(std::vector<std::vector<bool>> vec);

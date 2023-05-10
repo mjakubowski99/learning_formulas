@@ -4,9 +4,50 @@ from sklearn.preprocessing import LabelBinarizer
 import os
 
 def make_train_test_data_files(df, target, train_file="train.txt", test_file="test.txt"):
+    os.remove(train_file)
+    os.remove(test_file)
+
+    train_file = open(train_file, "a")
+    test_file = open(test_file, "a")
+
+    msk = np.random.rand(len(df)) < 0.7
+    
+    train_len = len(df[msk])
+    test_len = len(df[~msk])
+
+    train = df[msk].groupby(target)
+    test = df[~msk].groupby(target)
+
+    all_bin = True
+    for column in df.columns:
+        if column == target:
+            continue
+        if df[column].min() != 0 or df[column].max() not in [0,1]:
+            all_bin = False
+            break 
+
     classes = df[target].unique()
     classes.sort()
 
+    if all_bin:
+
+        train_file.write(str(train_len)+'\n')
+        test_file.write(str(test_len)+'\n')
+
+        for c in classes:
+            train_group = get_group(train, c)
+            test_group = get_group(test,c)
+
+            line = str(len(train_group))+" "+str(len(train_group.iloc[0])-1)+'\n'
+            train_file.write(line)
+            np.savetxt(train_file, train_group.loc[:, train_group.columns != target].values, fmt='%d')
+
+            line = str(len(test_group))+" "+str(len(test_group.iloc[0])-1)+'\n'
+            test_file.write(line)
+            np.savetxt(test_file, test_group.loc[:, test_group.columns != target].values, fmt='%d')
+
+        return
+    
     binarizers = {}
 
     for column in df.columns:
@@ -14,13 +55,6 @@ def make_train_test_data_files(df, target, train_file="train.txt", test_file="te
             continue
         binarizers[column] = LabelBinarizer()
         binarizers[column].fit(df[column])
-
-    msk = np.random.rand(len(df)) < 0.7
-    train = df[msk].groupby(target)
-    test = df[~msk].groupby(target)
-
-    os.remove(train_file)
-    os.remove(test_file)
 
     train_file = open(train_file, "a")
     test_file = open(test_file, "a")
@@ -57,15 +91,28 @@ def write_description_lines(file, df, binarizers, target):
     file.write(str(rows_count)+' '+str(cols_count)+'\n')
 
 def write_lines(file, binarizers, df, target):
+    all_bin = True
+    for column in df.columns:
+        if column == target:
+            continue
+        if df[column].min() != 0 or df[column].max() != 1:
+            all_bin = False
+
+    if all_bin:
+        np.savetxt(file, df.values, fmt='%d')
+        return
+            
     result = None 
     for column in df.columns:
         if column == target:
-            continue 
-        
+            continue
+
         if result is None:
             result = binarizers[column].transform(df[column])
-        else:
-            result = np.concatenate((result, binarizers[column].transform(df[column])), axis=1)
+            continue
+
+        result = np.concatenate((result, binarizers[column].transform(df[column])), axis=1)
+
     np.savetxt(file, result, fmt='%d')
         
 def binarize(binarizers, row, columns, target):
