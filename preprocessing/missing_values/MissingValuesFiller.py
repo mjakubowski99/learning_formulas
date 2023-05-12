@@ -1,11 +1,12 @@
 from preprocessing.missing_values.Treshold import Treshold
+from preprocessing.DataTransformer import DataTransformer
 import pandas as pd 
 import typing as t 
 
 fill_na_default_treshold = 0.1
 drop_na_default_treshold = 0.4
 
-class MissingValuesFiller:
+class MissingValuesFiller(DataTransformer):
 
     def __init__(self, columns, tresholds: dict[t.Any, Treshold]=None):
         if tresholds is None:
@@ -13,7 +14,7 @@ class MissingValuesFiller:
         else:
             self.__tresholds = tresholds
     
-    def fill_missing(self, df: pd.DataFrame, target):
+    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:
         rows_count = len(df)
 
         for column in df.columns:

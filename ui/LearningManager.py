@@ -12,6 +12,7 @@ class LearningManager:
         self.formulas_count = 100
         self.clauses_count = 5
         self.literals_count = 3
+        self.positive_responses_percentage = 0.4
 
     def set_params(self, cycles_count, formulas_count, clauses_count, literals_count):
         self.cycles_count = cycles_count

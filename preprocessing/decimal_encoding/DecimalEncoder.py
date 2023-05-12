@@ -1,18 +1,18 @@
 import typing as t
 import numpy as np
 import pandas as pd 
+from preprocessing.DataTransformer import DataTransformer
 
 default_multiplier = 100
 
-class DecimalEncoder:
-
+class DecimalEncoder(DataTransformer):
     def __init__(self, columns, multipliers: dict[t.Any, float]=None):
         if multipliers is None:
             self.multipliers = self.make_default_multipliers(columns)
         else:
             self.multipliers = multipliers
     
-    def encode(self, df: pd.DataFrame, target=None):
+    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:
         float_columns = df.select_dtypes(include=[np.float64])
 
         for column in float_columns:

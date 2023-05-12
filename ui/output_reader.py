@@ -30,10 +30,8 @@ class MyConsole(QPlainTextEdit):
 
     def __init__(self, parent=None):
         super().__init__(parent=parent)
-
         self.setReadOnly(True)
         self.setMaximumBlockCount(10000)  # limit console to 10000 lines
-
         self._cursor_output = self.textCursor()
 
     def clear_output(self):

@@ -1,4 +1,6 @@
 from models.Interval import Interval
+from preprocessing.DataTransformer import DataTransformer
+import pandas as pd 
 
 def encode_column(x, intervals: dict[int, Interval]):
     for label, interval in intervals.items():
@@ -6,7 +8,7 @@ def encode_column(x, intervals: dict[int, Interval]):
             return label
     raise Exception("Failed to encode value")
 
-class Standarizer:
+class Standarizer(DataTransformer):
 
     def __init__(self, df, target):
         self.default_boundary = 5
@@ -14,8 +16,7 @@ class Standarizer:
 
         self.intervals = self.init_intervals(df, target)
 
-
-    def encode(self, df, target):
+    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:
         for column in df.columns:
             if column == target:
                 continue
