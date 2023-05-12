@@ -4,8 +4,10 @@ from sklearn.preprocessing import LabelBinarizer
 import os
 
 def make_train_test_data_files(df, target, train_file="train.txt", test_file="test.txt"):
-    os.remove(train_file)
-    os.remove(test_file)
+    if os.path.isfile(train_file):
+        os.remove(train_file)
+    if os.path.isfile(test_file):
+        os.remove(test_file)
 
     train_file = open(train_file, "a")
     test_file = open(test_file, "a")
@@ -31,8 +33,8 @@ def make_train_test_data_files(df, target, train_file="train.txt", test_file="te
 
     if all_bin:
 
-        train_file.write(str(train_len)+'\n')
-        test_file.write(str(test_len)+'\n')
+        train_file.write(str(len(classes))+'\n')
+        test_file.write(str(len(classes))+'\n')
 
         for c in classes:
             train_group = get_group(train, c)
@@ -55,9 +57,6 @@ def make_train_test_data_files(df, target, train_file="train.txt", test_file="te
             continue
         binarizers[column] = LabelBinarizer()
         binarizers[column].fit(df[column])
-
-    train_file = open(train_file, "a")
-    test_file = open(test_file, "a")
 
     train_classes = len(classes)
 

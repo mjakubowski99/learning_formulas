@@ -1,9 +1,10 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QDialog, QVBoxLayout, QHBoxLayout, QPushButton, QSlider, QLineEdit, QLabel
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton
 from PyQt5.QtWidgets import QFileDialog
 from ui.output_reader import ProcessOutputReader, MyConsole
-from PyQt5.QtCore import pyqtSignal, pyqtSlot
+from PyQt5.QtCore import pyqtSlot
 from ui.LabeledInput import LabeledInput
+from ui.LabeledComboBox import LabeledComboBox
 from ui.DataframeReader import DataframeReader
 from ui.layout_cleaner import clean_layout
 import numpy as np 
@@ -22,10 +23,11 @@ class FormulaLearner(QMainWindow):
         self._process_reader = ProcessOutputReader()
         self.console = MyConsole()
         self.input_layout = QHBoxLayout()
-        self.cycles_input = LabeledInput("Ilość cykli:", "20").add_to_layout(self.input_layout)
-        self.formulas_input = LabeledInput("Ilość formuł: ", "100").add_to_layout(self.input_layout)
-        self.clauses_input = LabeledInput("Ilość klauzul: ", "5").add_to_layout(self.input_layout)
-        self.literals_input = LabeledInput("Ilość literałów: ", "3").add_to_layout(self.input_layout)
+        self.cycles_input = LabeledComboBox("Ilość cykli:", 20).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.formulas_input = LabeledComboBox("Ilość formuł: ", 100).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.clauses_input = LabeledComboBox("Ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.literals_input = LabeledComboBox("Ilość literałów: ", 3).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.positive_responses_percentage_input = LabeledComboBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout).setValueRange(0,100)
 
         self.start_button = QPushButton("Rozpocznij uczenie")
         self.start_button.resize(50,50)
@@ -45,8 +47,8 @@ class FormulaLearner(QMainWindow):
 
         self.setCentralWidget(self.widget)
 
-        self.train_file = "random_algorithm/data/train.txt"
-        self.test_file = "random_algorithm/data/test.txt"
+        self.train_file = "core/data/train.txt"
+        self.test_file = "core/data/test.txt"
         
         if reader is not None:
             make_train_test_data_files(
@@ -55,8 +57,7 @@ class FormulaLearner(QMainWindow):
                 self.train_file,
                 self.test_file
             )
-
-                
+        
     def stop_formula_learning(self):
         self._process_reader.kill()
         self.console.append_output("Process stopped...")
@@ -68,11 +69,12 @@ class FormulaLearner(QMainWindow):
             "FORMULAS_COUNT": self.formulas_input.get_value(),
             "CYCLES_COUNT": self.cycles_input.get_value(),
             "CLAUSES_COUNT": self.clauses_input.get_value(),
-            "LITERALS_COUNT": self.literals_input.get_value()
+            "LITERALS_COUNT": self.literals_input.get_value(),
+            "POSITIVE_RESPONSES_PERCENTAGE": self.positive_responses_percentage_input.get_value()
         }
         with open(".env", "w") as f:
             for variable in variables:
-                f.write(variable+"="+variables[variable]+'\n')
+                f.write(variable+"="+str(variables[variable])+'\n')
         f.close()
 
     def start_with_docker(self):
@@ -80,7 +82,7 @@ class FormulaLearner(QMainWindow):
         self._process_reader.start("docker-compose", ["up", "--build"])
 
     def start_with_system(self):
-        self._process_reader.start('./random_algorithm/build/learning_formulas', [
+        self._process_reader.start('./core/build/learning_formulas', [
             self.train_file,
             self.test_file,
             self.cycles_input.get_value(),

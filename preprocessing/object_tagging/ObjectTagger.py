@@ -1,9 +1,11 @@
 import typing as t
+import pandas as pd
 from sklearn.preprocessing import LabelEncoder
+from preprocessing.DataTransformer import DataTransformer
 
 default_max_unique = 5
 
-class ObjectTagger:
+class ObjectTagger(DataTransformer):
 
     def __init__(self, columns, max_unique_counts: dict[t.Any, int]=None):
         if max_unique_counts is None:
@@ -12,7 +14,7 @@ class ObjectTagger:
             self.max_unique_counts = max_unique_counts
         self.taggers = {}
 
-    def tag_objects(self, df, target):
+    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:
         self.taggers = {}
 
         for column in df.columns:
