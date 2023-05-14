@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QFileDialog
 from ui.output_reader import ProcessOutputReader, MyConsole
 from PyQt5.QtCore import pyqtSlot
 from ui.LabeledInput import LabeledInput
-from ui.LabeledComboBox import LabeledComboBox
+from ui.LabeledSpinBox import LabeledSpinBox
 from ui.DataframeReader import DataframeReader
 from ui.layout_cleaner import clean_layout
 import numpy as np 
@@ -23,11 +23,11 @@ class FormulaLearner(QMainWindow):
         self._process_reader = ProcessOutputReader()
         self.console = MyConsole()
         self.input_layout = QHBoxLayout()
-        self.cycles_input = LabeledComboBox("Ilość cykli:", 20).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.formulas_input = LabeledComboBox("Ilość formuł: ", 100).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.clauses_input = LabeledComboBox("Ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.literals_input = LabeledComboBox("Ilość literałów: ", 3).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.positive_responses_percentage_input = LabeledComboBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout).setValueRange(0,100)
+        self.cycles_input = LabeledSpinBox("Ilość cykli:", 20).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 100).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.clauses_input = LabeledSpinBox("Ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.literals_input = LabeledSpinBox("Ilość literałów: ", 3).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.positive_responses_percentage_input = LabeledSpinBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout).setValueRange(0,100)
 
         self.start_button = QPushButton("Rozpocznij uczenie")
         self.start_button.resize(50,50)
@@ -156,5 +156,5 @@ class MainWindow(QMainWindow):
         try:
             self.reader = DataframeReader(self.selected_file, self.data_layout, self)
         except Exception as ex:
-            print(ex)
             print("Failed to load file")
+            raise ex
