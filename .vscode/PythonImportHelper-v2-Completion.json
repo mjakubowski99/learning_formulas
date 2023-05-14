@@ -1,0 +1,1537 @@
+[
+    {
+        "label": "Preprocessor",
+        "importPath": "preprocessing.Preprocessor",
+        "description": "preprocessing.Preprocessor",
+        "isExtraImport": true,
+        "detail": "preprocessing.Preprocessor",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaCollection",
+        "importPath": "models.FormulaCollection",
+        "description": "models.FormulaCollection",
+        "isExtraImport": true,
+        "detail": "models.FormulaCollection",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaCollection",
+        "importPath": "models.FormulaCollection",
+        "description": "models.FormulaCollection",
+        "isExtraImport": true,
+        "detail": "models.FormulaCollection",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "Enum",
+        "importPath": "enum",
+        "description": "enum",
+        "isExtraImport": true,
+        "detail": "enum",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "dataclass",
+        "importPath": "dataclasses",
+        "description": "dataclasses",
+        "isExtraImport": true,
+        "detail": "dataclasses",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
+        "importPath": "models.Literal",
+        "description": "models.Literal",
+        "isExtraImport": true,
+        "detail": "models.Literal",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
+        "importPath": "models.Literal",
+        "description": "models.Literal",
+        "isExtraImport": true,
+        "detail": "models.Literal",
+        "documentation": {}
+    },
+    {
+        "label": "Clause",
+        "importPath": "models.Clause",
+        "description": "models.Clause",
+        "isExtraImport": true,
+        "detail": "models.Clause",
+        "documentation": {}
+    },
+    {
+        "label": "Clause",
+        "importPath": "models.Clause",
+        "description": "models.Clause",
+        "isExtraImport": true,
+        "detail": "models.Clause",
+        "documentation": {}
+    },
+    {
+        "label": "Formula",
+        "importPath": "models.Formula",
+        "description": "models.Formula",
+        "isExtraImport": true,
+        "detail": "models.Formula",
+        "documentation": {}
+    },
+    {
+        "label": "Formula",
+        "importPath": "models.Formula",
+        "description": "models.Formula",
+        "isExtraImport": true,
+        "detail": "models.Formula",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaDecoder",
+        "importPath": "postprocessing.FormulaDecoder",
+        "description": "postprocessing.FormulaDecoder",
+        "isExtraImport": true,
+        "detail": "postprocessing.FormulaDecoder",
+        "documentation": {}
+    },
+    {
+        "label": "typing",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "typing",
+        "description": "typing",
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "DataTransformer",
+        "importPath": "preprocessing.DataTransformer",
+        "description": "preprocessing.DataTransformer",
+        "isExtraImport": true,
+        "detail": "preprocessing.DataTransformer",
+        "documentation": {}
+    },
+    {
+        "label": "DataTransformer",
+        "importPath": "preprocessing.DataTransformer",
+        "description": "preprocessing.DataTransformer",
+        "isExtraImport": true,
+        "detail": "preprocessing.DataTransformer",
+        "documentation": {}
+    },
+    {
+        "label": "DataTransformer",
+        "importPath": "preprocessing.DataTransformer",
+        "description": "preprocessing.DataTransformer",
+        "isExtraImport": true,
+        "detail": "preprocessing.DataTransformer",
+        "documentation": {}
+    },
+    {
+        "label": "DataTransformer",
+        "importPath": "preprocessing.DataTransformer",
+        "description": "preprocessing.DataTransformer",
+        "isExtraImport": true,
+        "detail": "preprocessing.DataTransformer",
+        "documentation": {}
+    },
+    {
+        "label": "DataTransformer",
+        "importPath": "preprocessing.DataTransformer",
+        "description": "preprocessing.DataTransformer",
+        "isExtraImport": true,
+        "detail": "preprocessing.DataTransformer",
+        "documentation": {}
+    },
+    {
+        "label": "Treshold",
+        "importPath": "preprocessing.missing_values.Treshold",
+        "description": "preprocessing.missing_values.Treshold",
+        "isExtraImport": true,
+        "detail": "preprocessing.missing_values.Treshold",
+        "documentation": {}
+    },
+    {
+        "label": "LabelEncoder",
+        "importPath": "sklearn.preprocessing",
+        "description": "sklearn.preprocessing",
+        "isExtraImport": true,
+        "detail": "sklearn.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "LabelBinarizer",
+        "importPath": "sklearn.preprocessing",
+        "description": "sklearn.preprocessing",
+        "isExtraImport": true,
+        "detail": "sklearn.preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "Interval",
+        "importPath": "models.Interval",
+        "description": "models.Interval",
+        "isExtraImport": true,
+        "detail": "models.Interval",
+        "documentation": {}
+    },
+    {
+        "label": "Interval",
+        "importPath": "models.Interval",
+        "description": "models.Interval",
+        "isExtraImport": true,
+        "detail": "models.Interval",
+        "documentation": {}
+    },
+    {
+        "label": "MissingValuesFiller",
+        "importPath": "preprocessing.missing_values.MissingValuesFiller",
+        "description": "preprocessing.missing_values.MissingValuesFiller",
+        "isExtraImport": true,
+        "detail": "preprocessing.missing_values.MissingValuesFiller",
+        "documentation": {}
+    },
+    {
+        "label": "MissingValuesFiller",
+        "importPath": "preprocessing.missing_values.MissingValuesFiller",
+        "description": "preprocessing.missing_values.MissingValuesFiller",
+        "isExtraImport": true,
+        "detail": "preprocessing.missing_values.MissingValuesFiller",
+        "documentation": {}
+    },
+    {
+        "label": "MissingValuesFiller",
+        "importPath": "preprocessing.missing_values.MissingValuesFiller",
+        "description": "preprocessing.missing_values.MissingValuesFiller",
+        "isExtraImport": true,
+        "detail": "preprocessing.missing_values.MissingValuesFiller",
+        "documentation": {}
+    },
+    {
+        "label": "LabeledSpinBox",
+        "importPath": "ui.LabeledSpinBox",
+        "description": "ui.LabeledSpinBox",
+        "isExtraImport": true,
+        "detail": "ui.LabeledSpinBox",
+        "documentation": {}
+    },
+    {
+        "label": "LabeledSpinBox",
+        "importPath": "ui.LabeledSpinBox",
+        "description": "ui.LabeledSpinBox",
+        "isExtraImport": true,
+        "detail": "ui.LabeledSpinBox",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QMainWindow",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QVBoxLayout",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QWidget",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QTableView",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QSizePolicy",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QVBoxLayout",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QHBoxLayout",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLabel",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QScrollArea",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QWidget",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QComboBox",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QMainWindow",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QSpinBox",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLabel",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QTableView",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QHBoxLayout",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QWidget",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QSpinBox",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLabel",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QScrollArea",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QMainWindow",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QVBoxLayout",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QVBoxLayout",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QListWidget",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QListWidgetItem",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QAbstractItemView",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLineEdit",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLabel",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QSpinBox",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QLabel",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QWidget",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QVBoxLayout",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QApplication",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPlainTextEdit",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QMainWindow",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QWidget",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QVBoxLayout",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QHBoxLayout",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QPushButton",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QFileDialog",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "QApplication",
+        "importPath": "PyQt5.QtWidgets",
+        "description": "PyQt5.QtWidgets",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtWidgets",
+        "documentation": {}
+    },
+    {
+        "label": "DataEncodingState",
+        "importPath": "enums.DataEncodingState",
+        "description": "enums.DataEncodingState",
+        "isExtraImport": true,
+        "detail": "enums.DataEncodingState",
+        "documentation": {}
+    },
+    {
+        "label": "DataEncodingState",
+        "importPath": "enums.DataEncodingState",
+        "description": "enums.DataEncodingState",
+        "isExtraImport": true,
+        "detail": "enums.DataEncodingState",
+        "documentation": {}
+    },
+    {
+        "label": "PandasHistogram",
+        "importPath": "ui.PandasHistogram",
+        "description": "ui.PandasHistogram",
+        "isExtraImport": true,
+        "detail": "ui.PandasHistogram",
+        "documentation": {}
+    },
+    {
+        "label": "PandasHistogram",
+        "importPath": "ui.PandasHistogram",
+        "description": "ui.PandasHistogram",
+        "isExtraImport": true,
+        "detail": "ui.PandasHistogram",
+        "documentation": {}
+    },
+    {
+        "label": "EncodingState",
+        "importPath": "ui.state.EncodingState",
+        "description": "ui.state.EncodingState",
+        "isExtraImport": true,
+        "detail": "ui.state.EncodingState",
+        "documentation": {}
+    },
+    {
+        "label": "EncodingState",
+        "importPath": "ui.state.EncodingState",
+        "description": "ui.state.EncodingState",
+        "isExtraImport": true,
+        "detail": "ui.state.EncodingState",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnButton",
+        "importPath": "ui.ColumnButton",
+        "description": "ui.ColumnButton",
+        "isExtraImport": true,
+        "detail": "ui.ColumnButton",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnButton",
+        "importPath": "ui.ColumnButton",
+        "description": "ui.ColumnButton",
+        "isExtraImport": true,
+        "detail": "ui.ColumnButton",
+        "documentation": {}
+    },
+    {
+        "label": "MissingValuesFillingManager",
+        "importPath": "ui.preprocessing.MissingValuesFillingManager",
+        "description": "ui.preprocessing.MissingValuesFillingManager",
+        "isExtraImport": true,
+        "detail": "ui.preprocessing.MissingValuesFillingManager",
+        "documentation": {}
+    },
+    {
+        "label": "DataframeReader",
+        "importPath": "ui.DataframeReader",
+        "description": "ui.DataframeReader",
+        "isExtraImport": true,
+        "detail": "ui.DataframeReader",
+        "documentation": {}
+    },
+    {
+        "label": "DataframeReader",
+        "importPath": "ui.DataframeReader",
+        "description": "ui.DataframeReader",
+        "isExtraImport": true,
+        "detail": "ui.DataframeReader",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnActionButton",
+        "importPath": "ui.ColumnActionButton",
+        "description": "ui.ColumnActionButton",
+        "isExtraImport": true,
+        "detail": "ui.ColumnActionButton",
+        "documentation": {}
+    },
+    {
+        "label": "TableModel",
+        "importPath": "ui.DataframeTableModel",
+        "description": "ui.DataframeTableModel",
+        "isExtraImport": true,
+        "detail": "ui.DataframeTableModel",
+        "documentation": {}
+    },
+    {
+        "label": "Qt",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "QAbstractTableModel",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "QVariant",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "Qt",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "Qt",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "pyqtSignal",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "pyqtSlot",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "QProcess",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "QTextCodec",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "pyqtSlot",
+        "importPath": "PyQt5.QtCore",
+        "description": "PyQt5.QtCore",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtCore",
+        "documentation": {}
+    },
+    {
+        "label": "DecimalEncoder",
+        "importPath": "preprocessing.decimal_encoding.DecimalEncoder",
+        "description": "preprocessing.decimal_encoding.DecimalEncoder",
+        "isExtraImport": true,
+        "detail": "preprocessing.decimal_encoding.DecimalEncoder",
+        "documentation": {}
+    },
+    {
+        "label": "ObjectTagger",
+        "importPath": "preprocessing.object_tagging.ObjectTagger",
+        "description": "preprocessing.object_tagging.ObjectTagger",
+        "isExtraImport": true,
+        "detail": "preprocessing.object_tagging.ObjectTagger",
+        "documentation": {}
+    },
+    {
+        "label": "Standarizer",
+        "importPath": "preprocessing.standarizer.Standarizer",
+        "description": "preprocessing.standarizer.Standarizer",
+        "isExtraImport": true,
+        "detail": "preprocessing.standarizer.Standarizer",
+        "documentation": {}
+    },
+    {
+        "label": "Standarizer",
+        "importPath": "preprocessing.standarizer.Standarizer",
+        "description": "preprocessing.standarizer.Standarizer",
+        "isExtraImport": true,
+        "detail": "preprocessing.standarizer.Standarizer",
+        "documentation": {}
+    },
+    {
+        "label": "clean_layout",
+        "importPath": "ui.layout_cleaner",
+        "description": "ui.layout_cleaner",
+        "isExtraImport": true,
+        "detail": "ui.layout_cleaner",
+        "documentation": {}
+    },
+    {
+        "label": "clean_layout",
+        "importPath": "ui.layout_cleaner",
+        "description": "ui.layout_cleaner",
+        "isExtraImport": true,
+        "detail": "ui.layout_cleaner",
+        "documentation": {}
+    },
+    {
+        "label": "clean_layout",
+        "importPath": "ui.layout_cleaner",
+        "description": "ui.layout_cleaner",
+        "isExtraImport": true,
+        "detail": "ui.layout_cleaner",
+        "documentation": {}
+    },
+    {
+        "label": "IntervalPicker",
+        "importPath": "ui.IntervalPicker",
+        "description": "ui.IntervalPicker",
+        "isExtraImport": true,
+        "detail": "ui.IntervalPicker",
+        "documentation": {}
+    },
+    {
+        "label": "IntervalPicker",
+        "importPath": "ui.IntervalPicker",
+        "description": "ui.IntervalPicker",
+        "isExtraImport": true,
+        "detail": "ui.IntervalPicker",
+        "documentation": {}
+    },
+    {
+        "label": "IntervalPickerButton",
+        "importPath": "ui.IntervalPickerButton",
+        "description": "ui.IntervalPickerButton",
+        "isExtraImport": true,
+        "detail": "ui.IntervalPickerButton",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnWidgetsManager",
+        "importPath": "ui.ColumnWidgetsManager",
+        "description": "ui.ColumnWidgetsManager",
+        "isExtraImport": true,
+        "detail": "ui.ColumnWidgetsManager",
+        "documentation": {}
+    },
+    {
+        "label": "QColor",
+        "importPath": "PyQt5.QtGui",
+        "description": "PyQt5.QtGui",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtGui",
+        "documentation": {}
+    },
+    {
+        "label": "QTextCursor",
+        "importPath": "PyQt5.QtGui",
+        "description": "PyQt5.QtGui",
+        "isExtraImport": true,
+        "detail": "PyQt5.QtGui",
+        "documentation": {}
+    },
+    {
+        "label": "QtCore",
+        "importPath": "PyQt5",
+        "description": "PyQt5",
+        "isExtraImport": true,
+        "detail": "PyQt5",
+        "documentation": {}
+    },
+    {
+        "label": "ProcessOutputReader",
+        "importPath": "ui.output_reader",
+        "description": "ui.output_reader",
+        "isExtraImport": true,
+        "detail": "ui.output_reader",
+        "documentation": {}
+    },
+    {
+        "label": "MyConsole",
+        "importPath": "ui.output_reader",
+        "description": "ui.output_reader",
+        "isExtraImport": true,
+        "detail": "ui.output_reader",
+        "documentation": {}
+    },
+    {
+        "label": "ProcessOutputReader",
+        "importPath": "ui.output_reader",
+        "description": "ui.output_reader",
+        "isExtraImport": true,
+        "detail": "ui.output_reader",
+        "documentation": {}
+    },
+    {
+        "label": "MyConsole",
+        "importPath": "ui.output_reader",
+        "description": "ui.output_reader",
+        "isExtraImport": true,
+        "detail": "ui.output_reader",
+        "documentation": {}
+    },
+    {
+        "label": "matplotlib.pyplot",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "matplotlib.pyplot",
+        "description": "matplotlib.pyplot",
+        "detail": "matplotlib.pyplot",
+        "documentation": {}
+    },
+    {
+        "label": "FigureCanvasQTAgg",
+        "importPath": "matplotlib.backends.backend_qt5agg",
+        "description": "matplotlib.backends.backend_qt5agg",
+        "isExtraImport": true,
+        "detail": "matplotlib.backends.backend_qt5agg",
+        "documentation": {}
+    },
+    {
+        "label": "Figure",
+        "importPath": "matplotlib.figure",
+        "description": "matplotlib.figure",
+        "isExtraImport": true,
+        "detail": "matplotlib.figure",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "LabeledInput",
+        "importPath": "ui.LabeledInput",
+        "description": "ui.LabeledInput",
+        "isExtraImport": true,
+        "detail": "ui.LabeledInput",
+        "documentation": {}
+    },
+    {
+        "label": "make_train_test_data_files",
+        "importPath": "file",
+        "description": "file",
+        "isExtraImport": true,
+        "detail": "file",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "MainWindow",
+        "importPath": "MainWindow",
+        "description": "MainWindow",
+        "isExtraImport": true,
+        "detail": "MainWindow",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaProcessor",
+        "importPath": "postprocessing.FormulaProcessor",
+        "description": "postprocessing.FormulaProcessor",
+        "isExtraImport": true,
+        "detail": "postprocessing.FormulaProcessor",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaClassifier",
+        "importPath": "classifier.FormulaClassifier",
+        "description": "classifier.FormulaClassifier",
+        "isExtraImport": true,
+        "detail": "classifier.FormulaClassifier",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaClassifier",
+        "kind": 6,
+        "importPath": "classifier.FormulaClassifier",
+        "description": "classifier.FormulaClassifier",
+        "peekOfCode": "class FormulaClassifier:\n    def __init__(self, formula_collection: FormulaCollection):\n        self.formula_collection = formula_collection\n    def predict(self, row: list[bool]):\n        return self.__vote_for_class(row)\n    def __vote_for_class(self, row: list[bool]):\n        votes = {}\n        for decision_class in self.formula_collection.formulas:\n            votes[decision_class] = 0\n            for formula in self.formula_collection.formulas[decision_class]:",
+        "detail": "classifier.FormulaClassifier",
+        "documentation": {}
+    },
+    {
+        "label": "DataEncodingState",
+        "kind": 6,
+        "importPath": "enums.DataEncodingState",
+        "description": "enums.DataEncodingState",
+        "peekOfCode": "class DataEncodingState(Enum):\n    FILL_MISSING = 'FILLING_MISSING'\n    FLOAT_ENCODING = 'FLOAT_ENCODING'\n    OBJECT_TAGGING = 'OBJECT_TAGGING'\n    VALUE_STANDARIZATION = 'VALUE_STANDARIZATION'\n    BINARY_ENCODING = 'BINARY_ENCODING'",
+        "detail": "enums.DataEncodingState",
+        "documentation": {}
+    },
+    {
+        "label": "Clause",
+        "kind": 6,
+        "importPath": "models.Clause",
+        "description": "models.Clause",
+        "peekOfCode": "class Clause:\n    literals: list[Literal]",
+        "detail": "models.Clause",
+        "documentation": {}
+    },
+    {
+        "label": "Formula",
+        "kind": 6,
+        "importPath": "models.Formula",
+        "description": "models.Formula",
+        "peekOfCode": "class Formula:\n    clauses: list[Clause]\n    def literals_count(self):\n        length = 0\n        for clause in self.clauses:\n            length += len(clause.literals)\n        return length\n    def satisfied_by(self, row: list[bool]):\n        for clause in self.clauses:\n            positive = False ",
+        "detail": "models.Formula",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaCollection",
+        "kind": 6,
+        "importPath": "models.FormulaCollection",
+        "description": "models.FormulaCollection",
+        "peekOfCode": "class FormulaCollection:\n    formulas: dict[int, list[Formula]]\n    def item_size(self):\n        for decision_class in self.formulas:\n            return self.formulas[decision_class][0].literals_count()\n        return 0",
+        "detail": "models.FormulaCollection",
+        "documentation": {}
+    },
+    {
+        "label": "Interval",
+        "kind": 6,
+        "importPath": "models.Interval",
+        "description": "models.Interval",
+        "peekOfCode": "class Interval:\n    begin: int\n    end: int",
+        "detail": "models.Interval",
+        "documentation": {}
+    },
+    {
+        "label": "Literal",
+        "kind": 6,
+        "importPath": "models.Literal",
+        "description": "models.Literal",
+        "peekOfCode": "class Literal:\n    index: int\n    positive: bool",
+        "detail": "models.Literal",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaDecoder",
+        "kind": 6,
+        "importPath": "postprocessing.FormulaDecoder",
+        "description": "postprocessing.FormulaDecoder",
+        "peekOfCode": "class FormulaDecoder:\n    def cnf_from_string(self, line: str):\n        clauses = []\n        for clause in line.split('^'):\n            literals = []\n            for literal in clause[1:-1].split('v'):\n                if literal[-1] == ')':\n                    literal = literal[:-1]\n                literals.append(self.literal_from_string(literal))\n            clauses.append(Clause(literals))",
+        "detail": "postprocessing.FormulaDecoder",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaProcessor",
+        "kind": 6,
+        "importPath": "postprocessing.FormulaProcessor",
+        "description": "postprocessing.FormulaProcessor",
+        "peekOfCode": "class FormulaProcessor:\n    def __init__(self, file):\n        self.decoder = FormulaDecoder()\n        self.file = open(file)\n    def process(self):\n        formulas = {}\n        current_class = 0\n        for line in self.file.readlines():\n            if formulas.get(current_class) is None:\n                formulas[current_class] = []",
+        "detail": "postprocessing.FormulaProcessor",
+        "documentation": {}
+    },
+    {
+        "label": "DecimalEncoder",
+        "kind": 6,
+        "importPath": "preprocessing.decimal_encoding.DecimalEncoder",
+        "description": "preprocessing.decimal_encoding.DecimalEncoder",
+        "peekOfCode": "class DecimalEncoder(DataTransformer):\n    def __init__(self, columns, multipliers: dict[t.Any, float]=None):\n        if multipliers is None:\n            self.multipliers = self.make_default_multipliers(columns)\n        else:\n            self.multipliers = multipliers\n    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:\n        float_columns = df.select_dtypes(include=[np.float64])\n        for column in float_columns:\n            if target is not None and column == target:",
+        "detail": "preprocessing.decimal_encoding.DecimalEncoder",
+        "documentation": {}
+    },
+    {
+        "label": "default_multiplier",
+        "kind": 5,
+        "importPath": "preprocessing.decimal_encoding.DecimalEncoder",
+        "description": "preprocessing.decimal_encoding.DecimalEncoder",
+        "peekOfCode": "default_multiplier = 100\nclass DecimalEncoder(DataTransformer):\n    def __init__(self, columns, multipliers: dict[t.Any, float]=None):\n        if multipliers is None:\n            self.multipliers = self.make_default_multipliers(columns)\n        else:\n            self.multipliers = multipliers\n    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:\n        float_columns = df.select_dtypes(include=[np.float64])\n        for column in float_columns:",
+        "detail": "preprocessing.decimal_encoding.DecimalEncoder",
+        "documentation": {}
+    },
+    {
+        "label": "MissingValuesFiller",
+        "kind": 6,
+        "importPath": "preprocessing.missing_values.MissingValuesFiller",
+        "description": "preprocessing.missing_values.MissingValuesFiller",
+        "peekOfCode": "class MissingValuesFiller(DataTransformer):\n    def __init__(self, columns, tresholds: dict[t.Any, Treshold]=None):\n        if tresholds is None:\n            self.__tresholds = self.make_default_tresholds(columns)\n        else:\n            self.__tresholds = tresholds\n    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:\n        rows_count = len(df)\n        for column in df.columns:\n            print(\"Filling missing for column: \"+column)",
+        "detail": "preprocessing.missing_values.MissingValuesFiller",
+        "documentation": {}
+    },
+    {
+        "label": "fill_na_default_treshold",
+        "kind": 5,
+        "importPath": "preprocessing.missing_values.MissingValuesFiller",
+        "description": "preprocessing.missing_values.MissingValuesFiller",
+        "peekOfCode": "fill_na_default_treshold = 0.1\ndrop_na_default_treshold = 0.4\nclass MissingValuesFiller(DataTransformer):\n    def __init__(self, columns, tresholds: dict[t.Any, Treshold]=None):\n        if tresholds is None:\n            self.__tresholds = self.make_default_tresholds(columns)\n        else:\n            self.__tresholds = tresholds\n    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:\n        rows_count = len(df)",
+        "detail": "preprocessing.missing_values.MissingValuesFiller",
+        "documentation": {}
+    },
+    {
+        "label": "drop_na_default_treshold",
+        "kind": 5,
+        "importPath": "preprocessing.missing_values.MissingValuesFiller",
+        "description": "preprocessing.missing_values.MissingValuesFiller",
+        "peekOfCode": "drop_na_default_treshold = 0.4\nclass MissingValuesFiller(DataTransformer):\n    def __init__(self, columns, tresholds: dict[t.Any, Treshold]=None):\n        if tresholds is None:\n            self.__tresholds = self.make_default_tresholds(columns)\n        else:\n            self.__tresholds = tresholds\n    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:\n        rows_count = len(df)\n        for column in df.columns:",
+        "detail": "preprocessing.missing_values.MissingValuesFiller",
+        "documentation": {}
+    },
+    {
+        "label": "Treshold",
+        "kind": 6,
+        "importPath": "preprocessing.missing_values.Treshold",
+        "description": "preprocessing.missing_values.Treshold",
+        "peekOfCode": "class Treshold:\n    fill_na_treshold: float\n    drop_na_treshold: float\n    def __post_init__(self):\n        if self.drop_na_treshold < self.fill_na_treshold:\n            raise Exception(\"Fill treshold must be greater than drop_na treshold\")",
+        "detail": "preprocessing.missing_values.Treshold",
+        "documentation": {}
+    },
+    {
+        "label": "ObjectTagger",
+        "kind": 6,
+        "importPath": "preprocessing.object_tagging.ObjectTagger",
+        "description": "preprocessing.object_tagging.ObjectTagger",
+        "peekOfCode": "class ObjectTagger(DataTransformer):\n    def __init__(self, columns, max_unique_counts: dict[t.Any, int]=None):\n        if max_unique_counts is None:\n            self.max_unique_counts = self.make_default_max_unique(columns)\n        else:\n            self.max_unique_counts = max_unique_counts\n        self.taggers = {}\n    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:\n        self.taggers = {}\n        for column in df.columns:",
+        "detail": "preprocessing.object_tagging.ObjectTagger",
+        "documentation": {}
+    },
+    {
+        "label": "default_max_unique",
+        "kind": 5,
+        "importPath": "preprocessing.object_tagging.ObjectTagger",
+        "description": "preprocessing.object_tagging.ObjectTagger",
+        "peekOfCode": "default_max_unique = 5\nclass ObjectTagger(DataTransformer):\n    def __init__(self, columns, max_unique_counts: dict[t.Any, int]=None):\n        if max_unique_counts is None:\n            self.max_unique_counts = self.make_default_max_unique(columns)\n        else:\n            self.max_unique_counts = max_unique_counts\n        self.taggers = {}\n    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:\n        self.taggers = {}",
+        "detail": "preprocessing.object_tagging.ObjectTagger",
+        "documentation": {}
+    },
+    {
+        "label": "Standarizer",
+        "kind": 6,
+        "importPath": "preprocessing.standarizer.Standarizer",
+        "description": "preprocessing.standarizer.Standarizer",
+        "peekOfCode": "class Standarizer(DataTransformer):\n    def __init__(self, df, target):\n        self.default_boundary = 5\n        self.boundaries = {}\n        self.intervals = self.init_intervals(df, target)\n    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:\n        for column in df.columns:\n            if column == target:\n                continue\n            if df[column].min() == 0 or df[column].max() in [0,1]:",
+        "detail": "preprocessing.standarizer.Standarizer",
+        "documentation": {}
+    },
+    {
+        "label": "encode_column",
+        "kind": 2,
+        "importPath": "preprocessing.standarizer.Standarizer",
+        "description": "preprocessing.standarizer.Standarizer",
+        "peekOfCode": "def encode_column(x, intervals: dict[int, Interval]):\n    for label, interval in intervals.items():\n        if x >= interval.begin and x<=interval.end:\n            return label\n    raise Exception(\"Failed to encode value\")\nclass Standarizer(DataTransformer):\n    def __init__(self, df, target):\n        self.default_boundary = 5\n        self.boundaries = {}\n        self.intervals = self.init_intervals(df, target)",
+        "detail": "preprocessing.standarizer.Standarizer",
+        "documentation": {}
+    },
+    {
+        "label": "DataTransformer",
+        "kind": 6,
+        "importPath": "preprocessing.DataTransformer",
+        "description": "preprocessing.DataTransformer",
+        "peekOfCode": "class DataTransformer:\n    def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:\n        raise Exception(\"process method must be implemented\")",
+        "detail": "preprocessing.DataTransformer",
+        "documentation": {}
+    },
+    {
+        "label": "Pipeline",
+        "kind": 6,
+        "importPath": "preprocessing.Pipeline",
+        "description": "preprocessing.Pipeline",
+        "peekOfCode": "class Pipeline:\n    def __init__(self, steps: list[DataTransformer] = []):\n        self.steps = steps\n    def add(self, step: DataTransformer):\n        self.steps.append(step)\n    def process(self, df: pd.DataFrame, target=None):\n        for step in self.steps:\n            df = step.procees(df, target)\n        return df",
+        "detail": "preprocessing.Pipeline",
+        "documentation": {}
+    },
+    {
+        "label": "MissingValuesFillingManager",
+        "kind": 6,
+        "importPath": "ui.preprocessing.MissingValuesFillingManager",
+        "description": "ui.preprocessing.MissingValuesFillingManager",
+        "peekOfCode": "class MissingValuesFillingManager:\n    def __init__(self, filler: MissingValuesFiller = None):\n        self.filler = filler \n    def make_widgets(self, df: pd.DataFrame, column, layout: QBoxLayout) -> None:\n        self.filler = MissingValuesFiller(df.columns)\n        missing_values_count = df[column].isnull().sum()\n        if missing_values_count == 0:\n            return \n        missing_values = QLabel(\"Ilość brakujących wartości: \"+str(missing_values_count))\n        fill_na_treshold = LabeledSpinBox(\"Próg do uzupełnienia wartości: \", 10)",
+        "detail": "ui.preprocessing.MissingValuesFillingManager",
+        "documentation": {}
+    },
+    {
+        "label": "EncodingState",
+        "kind": 6,
+        "importPath": "ui.state.EncodingState",
+        "description": "ui.state.EncodingState",
+        "peekOfCode": "class EncodingState:\n    def __init__(self, state: DataEncodingState):\n        self.state = state \n    def setState(self, state: DataEncodingState):\n        self.state = state\n    def isFillMissing(self):\n        return self.state.value == DataEncodingState.FILL_MISSING.value\n    def isFloatEncoding(self):\n        return self.state.value == DataEncodingState.FLOAT_ENCODING.value\n    def isObjectTagging(self):",
+        "detail": "ui.state.EncodingState",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnActionButton",
+        "kind": 6,
+        "importPath": "ui.ColumnActionButton",
+        "description": "ui.ColumnActionButton",
+        "peekOfCode": "class ColumnActionButton(QPushButton):\n    def __init__(self, column, parent=None):\n        super().__init__(parent)\n        self.column = column",
+        "detail": "ui.ColumnActionButton",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnButton",
+        "kind": 6,
+        "importPath": "ui.ColumnButton",
+        "description": "ui.ColumnButton",
+        "peekOfCode": "class ColumnButton(QPushButton):\n    def __init__(self, df, column, text, parent=None):\n        super().__init__(parent)\n        self.df = df \n        self.column = column\n        self.setText(text)\n        self.window = QMainWindow()\n        self.window.setWindowTitle(self.column)\n        self.clicked.connect(self.make_hist)\n    def make_hist(self):",
+        "detail": "ui.ColumnButton",
+        "documentation": {}
+    },
+    {
+        "label": "ColumnWidgetsManager",
+        "kind": 6,
+        "importPath": "ui.ColumnWidgetsManager",
+        "description": "ui.ColumnWidgetsManager",
+        "peekOfCode": "class ColumnWidgetsManager:\n    def __init__(self, state: EncodingState):\n        self.state = state\n        self.dataframe_reader = None\n        self.layout = QHBoxLayout()\n        self.missing_values_filling_manager = MissingValuesFillingManager()\n    def make(self, dataframe_reader: DataframeReader) -> QBoxLayout:\n        self.dataframe_reader = dataframe_reader\n        df = self.dataframe_reader.df\n        for column in df:",
+        "detail": "ui.ColumnWidgetsManager",
+        "documentation": {}
+    },
+    {
+        "label": "DataframeReader",
+        "kind": 6,
+        "importPath": "ui.DataframeReader",
+        "description": "ui.DataframeReader",
+        "peekOfCode": "class DataframeReader:\n    def __init__(self, file_name, layout, parent):\n        self.state = EncodingState(DataEncodingState)\n        self.missing_values_filler = None\n        self.standarizer = None \n        self.encoded_to_binary = False \n        self.file_name = file_name\n        self.model = None\n        self.layout = layout\n        self.main_layout = QVBoxLayout()",
+        "detail": "ui.DataframeReader",
+        "documentation": {}
+    },
+    {
+        "label": "TableModel",
+        "kind": 6,
+        "importPath": "ui.DataframeTableModel",
+        "description": "ui.DataframeTableModel",
+        "peekOfCode": "class TableModel(QAbstractTableModel):\n    def __init__(self, data):\n        super().__init__()\n        self._data = data.head(100)\n        self._data = data.iloc[:, :20]\n    def update_data(self, data):\n        self._data = data.head(100)\n        self._data = data.iloc[:, :20]\n        self.layoutChanged.emit()\n    def data(self, index, role=Qt.DisplayRole):",
+        "detail": "ui.DataframeTableModel",
+        "documentation": {}
+    },
+    {
+        "label": "IntervalPicker",
+        "kind": 6,
+        "importPath": "ui.IntervalPicker",
+        "description": "ui.IntervalPicker",
+        "peekOfCode": "class IntervalPicker:\n    def __init__(self, intervals: dict[int, Interval]):\n        self.intervals = intervals\n        self.pickers = {}\n        self.max = 0\n        self.min = 0\n        for id, interval in self.intervals.items():\n            if interval.end > self.max:\n                self.max = interval.end\n            if interval.begin < self.min:",
+        "detail": "ui.IntervalPicker",
+        "documentation": {}
+    },
+    {
+        "label": "IntervalPickerButton",
+        "kind": 6,
+        "importPath": "ui.IntervalPickerButton",
+        "description": "ui.IntervalPickerButton",
+        "peekOfCode": "class IntervalPickerButton(QPushButton):\n    def __init__(self, standarizer: Standarizer, column, columns, parent=None):\n        super().__init__(parent)\n        self.setText(\"Dostosuj przedziały\")\n        self.window = QMainWindow()\n        self.window.setFixedWidth(500)\n        self.window.setFixedHeight(500)\n        self.clicked.connect(self.make_intervals)\n        self.standarizer = standarizer\n        self.column = column",
+        "detail": "ui.IntervalPickerButton",
+        "documentation": {}
+    },
+    {
+        "label": "LabeledInput",
+        "kind": 6,
+        "importPath": "ui.LabeledInput",
+        "description": "ui.LabeledInput",
+        "peekOfCode": "class LabeledInput:\n    def __init__(self, label, init_value=\"\"):\n        self.label = QLabel(label)\n        self.input = QLineEdit(init_value)\n    def add_to_layout(self, layout):\n        layout.addWidget(self.label)\n        layout.addWidget(self.input)\n        return self\n    def get_value(self):\n        return str(int(self.input.text()))",
+        "detail": "ui.LabeledInput",
+        "documentation": {}
+    },
+    {
+        "label": "LabeledSpinBox",
+        "kind": 6,
+        "importPath": "ui.LabeledSpinBox",
+        "description": "ui.LabeledSpinBox",
+        "peekOfCode": "class LabeledSpinBox:\n    def __init__(self, label, init_value: int):\n        self.__label = QLabel(label)\n        self.__spin_box = QSpinBox()\n        self.__spin_box.setValue(init_value)\n    def add_to_layout(self, layout):\n        layout.addWidget(self.__label)\n        layout.addWidget(self.__spin_box)\n        return self\n    def setValueRange(self, min:int, max: int):",
+        "detail": "ui.LabeledSpinBox",
+        "documentation": {}
+    },
+    {
+        "label": "LearningManager",
+        "kind": 6,
+        "importPath": "ui.LearningManager",
+        "description": "ui.LearningManager",
+        "peekOfCode": "class LearningManager:\n    def __init__(self):\n        self._process_reader = ProcessOutputReader()\n        self.console = MyConsole()\n        self.start_button = QPushButton(\"Rozpocznij uczenie\")\n        self.stop_button = QPushButton(\"Zakończ proces uczenia\")\n        self.cycles_count = 20\n        self.formulas_count = 100\n        self.clauses_count = 5\n        self.literals_count = 3",
+        "detail": "ui.LearningManager",
+        "documentation": {}
+    },
+    {
+        "label": "PandasHistogram",
+        "kind": 6,
+        "importPath": "ui.PandasHistogram",
+        "description": "ui.PandasHistogram",
+        "peekOfCode": "class PandasHistogram:\n    def hist(self, df, column):\n        fig, ax = plt.subplots()\n        canvas = FigureCanvasQTAgg(Figure(figsize=(15, 10)))\n        ax = canvas.figure.subplots()\n        widget = QWidget()\n        layout = QVBoxLayout(widget)\n        categories = df[column].value_counts().index\n        counts = df[column].value_counts().values\n        ax.bar(categories, counts)",
+        "detail": "ui.PandasHistogram",
+        "documentation": {}
+    },
+    {
+        "label": "clean_layout",
+        "kind": 2,
+        "importPath": "ui.layout_cleaner",
+        "description": "ui.layout_cleaner",
+        "peekOfCode": "def clean_layout(layout, delete=False):\n     if layout is not None:\n         while layout.count():\n             item = layout.takeAt(0)\n             widget = item.widget()\n             if widget is not None:\n                 widget.setParent(None)\n                 if delete:\n                     widget.hide()\n             else:",
+        "detail": "ui.layout_cleaner",
+        "documentation": {}
+    },
+    {
+        "label": "ProcessOutputReader",
+        "kind": 6,
+        "importPath": "ui.output_reader",
+        "description": "ui.output_reader",
+        "peekOfCode": "class ProcessOutputReader(QProcess):\n    produce_output = pyqtSignal(str)\n    process_finished = pyqtSignal()\n    def __init__(self, parent=None):\n        super().__init__(parent=parent)\n        self.setProcessChannelMode(QProcess.MergedChannels)\n        codec = QTextCodec.codecForLocale()\n        self._decoder_stdout = codec.makeDecoder()\n        self.readyReadStandardOutput.connect(self._ready_read_standard_output)\n        self.finished.connect(self._process_finished)",
+        "detail": "ui.output_reader",
+        "documentation": {}
+    },
+    {
+        "label": "MyConsole",
+        "kind": 6,
+        "importPath": "ui.output_reader",
+        "description": "ui.output_reader",
+        "peekOfCode": "class MyConsole(QPlainTextEdit):\n    def __init__(self, parent=None):\n        super().__init__(parent=parent)\n        self.setReadOnly(True)\n        self.setMaximumBlockCount(10000)  # limit console to 10000 lines\n        self._cursor_output = self.textCursor()\n    def clear_output(self):\n        self.clear()\n    @pyqtSlot(str)\n    def append_output(self, text):",
+        "detail": "ui.output_reader",
+        "documentation": {}
+    },
+    {
+        "label": "FormulaLearner",
+        "kind": 6,
+        "importPath": "MainWindow",
+        "description": "MainWindow",
+        "peekOfCode": "class FormulaLearner(QMainWindow):\n    def __init__(self, reader=None, run_with_docker=True, parent=None):\n        super(FormulaLearner, self).__init__(parent)\n        self.reader = reader\n        self.run_with_docker = run_with_docker\n        self.widget = QWidget()\n        self.layout = QVBoxLayout(self.widget)\n        self._process_reader = ProcessOutputReader()\n        self.console = MyConsole()\n        self.input_layout = QHBoxLayout()",
+        "detail": "MainWindow",
+        "documentation": {}
+    },
+    {
+        "label": "MainWindow",
+        "kind": 6,
+        "importPath": "MainWindow",
+        "description": "MainWindow",
+        "peekOfCode": "class MainWindow(QMainWindow):\n    def __init__(self, run_with_docker=True):\n        super().__init__()\n        self.setWindowTitle(\"Manager uczenia formuł logicznych\")\n        self.setGeometry(100, 100, 1270, 720)\n        self.run_with_docker = run_with_docker\n        self.widget = QWidget()\n        self.layout = QVBoxLayout(self.widget)\n        self.data_layout = QVBoxLayout()\n        self.layout.setContentsMargins(5,5,5,5)",
+        "detail": "MainWindow",
+        "documentation": {}
+    },
+    {
+        "label": "make_train_test_data_files",
+        "kind": 2,
+        "importPath": "file",
+        "description": "file",
+        "peekOfCode": "def make_train_test_data_files(df, target, train_file=\"train.txt\", test_file=\"test.txt\"):\n    if os.path.isfile(train_file):\n        os.remove(train_file)\n    if os.path.isfile(test_file):\n        os.remove(test_file)\n    train_file = open(train_file, \"a\")\n    test_file = open(test_file, \"a\")\n    msk = np.random.rand(len(df)) < 0.7\n    train_len = len(df[msk])\n    test_len = len(df[~msk])",
+        "detail": "file",
+        "documentation": {}
+    },
+    {
+        "label": "get_group",
+        "kind": 2,
+        "importPath": "file",
+        "description": "file",
+        "peekOfCode": "def get_group(df, decision_class):\n    if decision_class in df.groups:\n        return df.get_group(decision_class)\n    else:\n        return pd.DataFrame({})\ndef write_description_lines(file, df, binarizers, target):\n    rows_count = len(df)\n    if rows_count == 0:\n        cols_count = 0\n    else:",
+        "detail": "file",
+        "documentation": {}
+    },
+    {
+        "label": "write_description_lines",
+        "kind": 2,
+        "importPath": "file",
+        "description": "file",
+        "peekOfCode": "def write_description_lines(file, df, binarizers, target):\n    rows_count = len(df)\n    if rows_count == 0:\n        cols_count = 0\n    else:\n        cols_count = len(binarize(binarizers, df.iloc[0], df.columns, target).split(' '))\n    file.write(str(rows_count)+' '+str(cols_count)+'\\n')\ndef write_lines(file, binarizers, df, target):\n    all_bin = True\n    for column in df.columns:",
+        "detail": "file",
+        "documentation": {}
+    },
+    {
+        "label": "write_lines",
+        "kind": 2,
+        "importPath": "file",
+        "description": "file",
+        "peekOfCode": "def write_lines(file, binarizers, df, target):\n    all_bin = True\n    for column in df.columns:\n        if column == target:\n            continue\n        if df[column].min() != 0 or df[column].max() != 1:\n            all_bin = False\n    if all_bin:\n        np.savetxt(file, df.values, fmt='%d')\n        return",
+        "detail": "file",
+        "documentation": {}
+    },
+    {
+        "label": "binarize",
+        "kind": 2,
+        "importPath": "file",
+        "description": "file",
+        "peekOfCode": "def binarize(binarizers, row, columns, target):\n    line = ''\n    for column in columns:\n        if column == target:\n            continue\n        result = binarizers[column].transform([row[column]])[0]\n        line += ' '.join(str(x) for x in result)\n        line += ' '\n    return line[:-1]",
+        "detail": "file",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "app = QApplication(sys.argv)\nmain_window = MainWindow(True)\n#main_window.start_formula_learning()\nmain_window.show()\nsys.exit(app.exec_())",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "main_window",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "main_window = MainWindow(True)\n#main_window.start_formula_learning()\nmain_window.show()\nsys.exit(app.exec_())",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "processor",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "processor = FormulaProcessor(\"core/result/1682165454.txt\")\nformulas = FormulaCollection(processor.process())\nclf = FormulaClassifier(formulas)\nprint(clf.predict([x%2==0 for x in range(0,300)]))",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "formulas",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "formulas = FormulaCollection(processor.process())\nclf = FormulaClassifier(formulas)\nprint(clf.predict([x%2==0 for x in range(0,300)]))",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "clf",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "clf = FormulaClassifier(formulas)\nprint(clf.predict([x%2==0 for x in range(0,300)]))",
+        "detail": "test",
+        "documentation": {}
+    }
+]
