@@ -1,42 +1,40 @@
 import pandas as pd
-from PyQt5.QtWidgets import QWidget, QTableView, QSizePolicy, QVBoxLayout, QHBoxLayout, QLabel, QScrollArea, QWidget, QPushButton, QComboBox, QMainWindow
+from PyQt5.QtWidgets import *
 from ui.DataframeTableModel import TableModel
 from PyQt5.QtCore import Qt
-from preprocessing.missing_values.MissingValuesFiller import MissingValuesFiller
 from preprocessing.decimal_encoding.DecimalEncoder import DecimalEncoder
 from preprocessing.object_tagging.ObjectTagger import ObjectTagger
 from preprocessing.standarizer.Standarizer import Standarizer
-from ui.ColumnButton import ColumnButton
 from ui.layout_cleaner import clean_layout
-from ui.IntervalPicker import IntervalPicker
-from ui.IntervalPickerButton import IntervalPickerButton
-from ui.ColumnWidgetsManager import ColumnWidgetsManager
 from enums.DataEncodingState import DataEncodingState
 from ui.state.EncodingState import EncodingState
+from preprocessing.DataManager import DataManager
+from ui.ColumnEncodingManager import ColumnEncodingManager
+from preprocessing.missing_values.Treshold import Treshold
 
 class DataframeReader:
 
-    def __init__(self, file_name, layout, parent):
-        self.state = EncodingState(DataEncodingState)
-        self.missing_values_filler = None
-        self.standarizer = None 
+    def __init__(self, file_name, config_file, layout, parent):
+        self.state = EncodingState(DataEncodingState.FILL_MISSING)
         self.encoded_to_binary = False 
         self.file_name = file_name
+        self.config_file = config_file
         self.model = None
         self.layout = layout
         self.main_layout = QVBoxLayout()
         df = pd.read_csv(self.file_name)
         self.parent = parent 
-
-        self.target_column = df.columns[0]
-        self.target_index = 0
-
+    
         self.target_select_label = QLabel("Wybierz docelową kolumnę: ")
         self.target_select = QComboBox()
         self.target_select.addItems(df.columns)
         self.target_select.currentIndexChanged.connect(self.targetchange)
-    
+
         self.setDataframe(df)
+
+        self.target_column = self.data_manager.getTarget()
+        self.target_index = self.data_manager.getData().columns.get_loc(self.target_column)
+
         self.original_df = df.copy()
 
     def init_layout(self):
@@ -81,10 +79,6 @@ class DataframeReader:
         self.main_layout.addLayout(self.buttons_layout)
         self.main_layout.addWidget(self.scroll)
 
-    def targetchange(self,i):
-        self.target_column = self.target_select.currentText()
-        self.target_index = self.target_select.currentIndex()
-
     def encode_objects(self):
         self.state.setState(DataEncodingState.VALUE_STANDARIZATION)
 
@@ -99,17 +93,32 @@ class DataframeReader:
         decimal_encoder = DecimalEncoder(self.df.columns)
         self.setDataframe(decimal_encoder.process(self.df, self.target_column))
 
-    def fix_missing(self):
-        self.target_select.setDisabled(True)
-
-        self.state.setState(DataEncodingState.FLOAT_ENCODING)
-
-        self.filler = MissingValuesFiller(self.df.columns)
-        self.setDataframe(self.missing_values_filler.process(self.df, self.target_column))
-
     def standarize_value(self):
         self.setDataframe(self.standarizer.process(self.df, self.target_column))
         self.parent.reload()
+
+    def targetchange(self,i):
+        self.target_column = self.target_select.currentText()
+        self.target_index = self.target_select.currentIndex()
+        self.data_manager.setTarget(self.target_column)
+        self.setDataframe(self.data_manager.getData())
+
+    def fix_missing(self):
+        self.target_select.setDisabled(True)
+        self.state.setState(DataEncodingState.FLOAT_ENCODING)
+
+        df = self.data_manager.getData()
+        for column in df.columns:
+            self.data_manager.setFillMissing(
+                column,
+                Treshold(
+                    self.column_managers[column].fill_na_treshold.get_value()/100.0,
+                    self.column_managers[column].drop_na_treshold.get_value()/100.0
+                )
+            )
+        self.data_manager.fill_missing()
+
+        self.setDataframe(self.data_manager.getData())
 
     def reset_dataframe(self):
         self.init_state()
@@ -122,14 +131,13 @@ class DataframeReader:
         self.layout.addLayout(self.main_layout)
 
     def show_stats(self):
-        if self.encoded_to_binary:
-            return
-        
-        builder = ColumnWidgetsManager(self.state)
-        self.column_layout = builder.make(self)
+        df = self.data_manager.getData()
+        self.column_managers = {}
 
-        self.stats_layout.addLayout(self.column_layout)
-        self.main_layout.addLayout(self.column_layout)
+        for column in df.columns:
+            self.column_managers[column] = ColumnEncodingManager(column)
+            self.stats_layout.addLayout(self.column_managers[column].init_ui(self.data_manager, self.state))
+            self.column_managers[column].drop_column.clicked.connect(self.drop_column)
 
         """
         for column in self.df.columns:
@@ -168,12 +176,12 @@ class DataframeReader:
         """
         
     def make_table(self):
-        self.model = TableModel(self.df)
+        self.model = TableModel(self.data_manager.getData())
         self.table.setModel(self.model)
         self.table.setMaximumHeight(300)
     
     def setDataframe(self, df):
-        self.df = df
+        self.data_manager = DataManager(df, self.config_file)
         clean_layout(self.main_layout)
         self.init_layout()
         self.table = self.make_table()

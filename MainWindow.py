@@ -153,8 +153,12 @@ class MainWindow(QMainWindow):
         self.selected_file = self.file_dialog.selectedFiles()[0]
         clean_layout(self.data_layout)
 
+        config_path = self.selected_file.split('/')[:-1]
+
+        self.config_file = "/".join(config_path) + "/" + "config.json"
+
         try:
-            self.reader = DataframeReader(self.selected_file, self.data_layout, self)
+            self.reader = DataframeReader(self.selected_file, self.config_file, self.data_layout, self)
         except Exception as ex:
             print("Failed to load file")
             raise ex
