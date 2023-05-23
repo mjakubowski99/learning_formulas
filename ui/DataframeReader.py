@@ -79,24 +79,6 @@ class DataframeReader:
         self.main_layout.addLayout(self.buttons_layout)
         self.main_layout.addWidget(self.scroll)
 
-    def encode_objects(self):
-        self.state.setState(DataEncodingState.VALUE_STANDARIZATION)
-
-        tagger = ObjectTagger(self.df.columns)
-        df = tagger.process(self.df, self.target_column)
-        self.standarizer = Standarizer(df, self.target_column)
-        self.setDataframe(tagger.process(self.df, self.target_column))
-
-    def to_integers(self):
-        self.state.setState(DataEncodingState.OBJECT_TAGGING)
-
-        decimal_encoder = DecimalEncoder(self.df.columns)
-        self.setDataframe(decimal_encoder.process(self.df, self.target_column))
-
-    def standarize_value(self):
-        self.setDataframe(self.standarizer.process(self.df, self.target_column))
-        self.parent.reload()
-
     def targetchange(self,i):
         self.target_column = self.target_select.currentText()
         self.target_index = self.target_select.currentIndex()
@@ -120,6 +102,35 @@ class DataframeReader:
 
         self.setDataframe(self.data_manager.getData())
 
+    def to_integers(self):
+        self.state.setState(DataEncodingState.OBJECT_TAGGING)
+
+        df = self.data_manager.getData()
+        for column in df.columns:
+            self.data_manager.setMultipier(column, self.column_managers[column].float_encoding.get_value())
+
+        self.data_manager.encode_floats()
+        self.setDataframe(self.data_manager.getData())
+
+    def encode_objects(self):
+        self.state.setState(DataEncodingState.VALUE_STANDARIZATION)
+
+        df = self.data_manager.getData()
+        for column in df.columns:
+            self.data_manager.setMaxUniqueObjects(column, self.column_managers[column].max_unique_objects.get_value())
+
+        self.data_manager.encode_objects()
+        self.setDataframe(self.data_manager.getData())
+
+    def standarize_value(self):
+        df = self.data_manager.getData()
+        for column in df.columns:
+            self.data_manager.setValueRanges(column, self.column_managers[column].interval_picker.getIntervals())
+
+        self.data_manager.standarize()
+        self.setDataframe(self.data_manager.getData())
+        self.parent.reload()
+
     def reset_dataframe(self):
         self.init_state()
         self.setDataframe(self.original_df)
@@ -137,43 +148,6 @@ class DataframeReader:
         for column in df.columns:
             self.column_managers[column] = ColumnEncodingManager(column)
             self.stats_layout.addLayout(self.column_managers[column].init_ui(self.data_manager, self.state))
-            self.column_managers[column].drop_column.clicked.connect(self.drop_column)
-
-        """
-        for column in self.df.columns:
-            column_layout = QVBoxLayout()
-            missing_values_count = self.df[column].isnull().sum()
-
-            label = QLabel("Kolumna: "+column)
-            missing_values = QLabel("Ilość brakujących wartości: "+str(missing_values_count))
-            data_type = QLabel("Typ danych: "+str(self.df[column].dtype))
-
-            button = ColumnButton(self.df, column, "Pokaż histogram")
-            column_layout.addWidget(label)
-            
-            if self.standarizer is not None:
-                button = IntervalPickerButton(self.standarizer, column, self.df.columns)
-                button.setContentsMargins(0,0,0,0)
-                column_layout.addWidget(button)
-
-            if self.missing_values_state:
-                column_layout.addWidget(missing_values)
-
-            if self.df[column].dtype.kind in 'biufc':
-                min_value = QLabel("Minimalna wartość: {}".format(self.df[column].min()))
-                max_value = QLabel("Maksymalna wartość: {}".format(self.df[column].max()))
-                mean_value = QLabel("Srednia wartości: {}".format(self.df[column].mean()))
-
-                column_layout.addWidget(min_value)
-                column_layout.addWidget(max_value)
-                column_layout.addWidget(mean_value)
-
-                
-            column_layout.addWidget(data_type)
-            column_layout.addWidget(button)
-
-            self.stats_layout.addLayout(column_layout)
-        """
         
     def make_table(self):
         self.model = TableModel(self.data_manager.getData())

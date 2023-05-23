@@ -1,4 +1,5 @@
 from ui.state.EncodingState import EncodingState
+from ui.IntervalPickerButton import IntervalPickerButton
 from ui.LabeledSpinBox import LabeledSpinBox
 from ui.ColumnButton import ColumnButton
 from ui.ColumnActionButton import ColumnActionButton
@@ -26,6 +27,19 @@ class ColumnEncodingManager:
             self.drop_na_treshold.add_to_layout(column_layout)
             column_layout.addWidget(self.drop_column)
 
+        elif state.isFloatEncoding():
+            self.__init_float_multipliers(data_manager, state)
+            self.float_encoding.add_to_layout(column_layout)
+
+        elif state.isObjectTagging():
+            self.__init_max_unique_objects(data_manager, state)
+            self.max_unique_objects.add_to_layout(column_layout)
+
+        elif state.isValueStandarization():
+            data_manager.init_standarizer()
+            self.__init_interval_picker(data_manager, state)
+            column_layout.addWidget(self.interval_picker)
+
         column_layout.addWidget(self.hist_button)
 
         return column_layout
@@ -51,6 +65,25 @@ class ColumnEncodingManager:
             "Próg do usunięcia wartości:", 
             round(data_manager.getFillMissing(self.column)['drop_na_treshold']*100)
         )
+
+    def __init_float_multipliers(self, data_manager: DataManager, state: EncodingState):
+        df = data_manager.getData()
+
+        self.float_encoding = LabeledSpinBox(
+            "Mnożnik wartości float:",
+            data_manager.getMultipier(self.column)
+        )
+        self.float_encoding.setValueRange(0,100000000)
+
+    def __init_max_unique_objects(self, data_manager: DataManager, state: EncodingState):
+        self.max_unique_objects = LabeledSpinBox(
+            "Maksymalna ilość unikalnych wartości:",
+            data_manager.getMaxUniqueObjects(self.column)
+        )
+        self.max_unique_objects.setValueRange(0,100000000)
+
+    def __init_interval_picker(self, data_manager: DataManager, state: EncodingState):
+        self.interval_picker = IntervalPickerButton(data_manager.value_standarizer, self.column, data_manager.getData().columns)
 
 
 

@@ -17,7 +17,7 @@ class DecimalEncoder(DataTransformer):
             if target is not None and column == target:
                 continue
             
-            df[column] = df[column] * self.multipliers[column] 
+            df[column] = df[column] * multipliers[column] 
             df[column] = df[column].round(0).astype(np.int64)
 
         return df

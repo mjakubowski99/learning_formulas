@@ -10,11 +10,14 @@ def encode_column(x, intervals: dict[int, Interval]):
 
 class Standarizer(DataTransformer):
 
-    def __init__(self, df, target):
+    def __init__(self, df, target, intervals=None):
         self.default_boundary = 5
         self.boundaries = {}
 
-        self.intervals = self.init_intervals(df, target)
+        if intervals is None:
+            self.intervals = self.init_intervals(df, target)
+        else:
+            self.intervals = intervals
 
     def process(self, df: pd.DataFrame, target=None) -> pd.DataFrame:
         for column in df.columns:
@@ -49,6 +52,9 @@ class Standarizer(DataTransformer):
 
     def setIntervals(self, column, intervals):
         self.intervals[column] = intervals
+
+    def getColumnIntervals(self, column):
+        return self.intervals[column]
 
     def getIntervals(self):
         return self.intervals

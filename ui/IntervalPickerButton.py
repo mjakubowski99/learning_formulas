@@ -26,6 +26,9 @@ class IntervalPickerButton(QPushButton):
         self.values.valueChanged.connect(self.setBoundary)
         self.main_layout = QVBoxLayout()
 
+    def getIntervals(self):
+        return self.standarizer.getColumnIntervals(self.column)
+
     def setBoundary(self):
         self.standarizer.setBoundary(self.column, self.values.value())
         clean_layout(self.main_layout)
@@ -38,7 +41,6 @@ class IntervalPickerButton(QPushButton):
         for column in columns:
             self.standarizer.setIntervals(column, intervals)
         self.standarizer.setIntervals(self.column, intervals)
-
 
     def make_intervals(self):
         self.picker = IntervalPicker(self.standarizer.getIntervals()[self.column])

@@ -2,6 +2,8 @@ from preprocessing.missing_values.MissingValuesFiller import MissingValuesFiller
 from preprocessing.missing_values.Treshold import Treshold
 from preprocessing.decimal_encoding.DecimalEncoder import DecimalEncoder
 from preprocessing.object_tagging.ObjectTagger import ObjectTagger
+from models.Interval import Interval
+from preprocessing.standarizer.Standarizer import Standarizer
 import os.path
 import pandas as pd
 import json 
@@ -13,11 +15,26 @@ class DataManager:
         self.config_file = config_file
 
         self.missing_filler = MissingValuesFiller()
-        #self.decimal_encoder = DecimalEncoder()
-        #self.object_tagger = ObjectTagger()
+        self.decimal_encoder = DecimalEncoder()
+        self.object_tagger = ObjectTagger()
+        self.value_standarizer = None
 
         self.make()
         self.df = self.df.drop(columns=self.config['dropped_columns'])
+
+    def init_standarizer(self):
+        intervals = {}
+        for column in self.df.columns:
+            if self.config[column].get('value_ranges') is None:
+                self.value_standarizer = Standarizer(self.df, self.target)
+                return
+            
+            data = {}
+            for key, value_range in self.config[column]['value_ranges'].items():
+                data[int(key)] = Interval(value_range['begin'], value_range['end'])
+            intervals[column] = data
+
+        self.value_standarizer = Standarizer(self.df, self.target, data)
 
     def dropColumn(self, column):
         self.df = self.df.drop(columns=[column])
@@ -39,6 +56,37 @@ class DataManager:
             'drop_na_treshold': treshold.drop_na_treshold
         }
         self.save_config()
+    
+    def getMultipier(self, column):
+        return self.config[column]['float_multiplier']
+    
+    def setMultipier(self, column, float_multiplier):
+        self.config[column]['float_multiplier'] = float_multiplier
+        self.save_config()
+
+    def getMaxUniqueObjects(self, column):
+        return self.config[column]['max_unique_objects']
+    
+    def setMaxUniqueObjects(self, column, max_unique_count):
+        self.config[column]['max_unique_objects'] = max_unique_count
+        self.save_config()
+
+    def getValueRanges(self, column):
+        if self.config[column].get('value_ranges') is None:
+            self.setValueRanges(self.value_standarizer.intervals)
+
+        data = {}
+        for key, value_range in self.config[column]['value_ranges'].items():
+            data[int(key)] = Interval(value_range['begin'], value_range['end'])
+        return data
+
+    def setValueRanges(self, column, value_ranges: dict[Interval]):
+        data = {}
+        for key, value_range in value_ranges.items():
+            data[int(key)] = {'begin': int(value_range.begin), 'end': int(value_range.end)}
+
+        self.config[column]['value_ranges'] = data
+        self.save_config()
 
     def fill_missing(self):
         tresholds = {}
@@ -47,6 +95,27 @@ class DataManager:
             tresholds[column] = Treshold(treshold['fill_na_treshold'], treshold['drop_na_treshold'])
 
         self.df = self.missing_filler.process(self.df, self.target, tresholds)
+
+    def encode_floats(self):
+        data = {}
+        for column in self.df.columns:
+            data[column] = self.config[column]['float_multiplier']
+        
+        self.df = self.decimal_encoder.process(self.df, self.target, data)
+
+    def encode_objects(self):
+        data = {}
+        for column in self.df.columns:
+            data[column] = self.config[column]['max_unique_objects']
+
+        self.df = self.object_tagger.process(self.df, self.target, data)
+
+    def standarize(self):
+        data = {}
+        for column in self.df.columns:
+            data[column] = self.config[column]['value_ranges']
+
+        self.df = self.value_standarizer.process(self.df, self.target)
 
     def getData(self):
         return self.df 
@@ -69,8 +138,8 @@ class DataManager:
         config['dropped_columns'] = []
 
         missing_filler_settings = self.missing_filler.default(self.df)
-        #decimal_encoder_settings = self.decimal_encoder.default(df)
-        #object_tagger_settings = self.object_tagger.default(df)
+        decimal_encoder_settings = self.decimal_encoder.default(self.df)
+        object_tagger_settings = self.object_tagger.default(self.df)
 
         for column in self.df.columns:
             config[column] = {}
@@ -81,14 +150,11 @@ class DataManager:
                     'drop_na_treshold': missing_filler_settings[column].drop_na_treshold
                 }
 
-            """
             if decimal_encoder_settings.get(column) is not None:
-                config[column]['multiplier'] = decimal_encoder_settings[column]
+                config[column]['float_multiplier'] = decimal_encoder_settings[column]
 
-            if object_tagger_settings.get(column) is not None:
+            if decimal_encoder_settings.get(column) is not None:
                 config[column]['max_unique_objects'] = object_tagger_settings[column]
-
-            """
 
         return config
     

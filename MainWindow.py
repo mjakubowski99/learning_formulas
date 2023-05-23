@@ -52,7 +52,7 @@ class FormulaLearner(QMainWindow):
         
         if reader is not None:
             make_train_test_data_files(
-                self.reader.df, 
+                self.reader.data_manager.getData(), 
                 self.reader.target_column, 
                 self.train_file,
                 self.test_file
