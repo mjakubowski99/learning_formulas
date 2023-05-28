@@ -11,7 +11,8 @@ class MissingValuesFiller(DataTransformer):
     def default(self, df):
         return self.make_default_tresholds(df.columns) 
     
-    def process(self, df: pd.DataFrame, target, tresholds: dict[t.Any, Treshold]) -> pd.DataFrame:
+    def process(self, df: pd.DataFrame, target, tresholds: dict[t.Any, Treshold], dropped_columns: list) -> pd.DataFrame:
+        df = df.drop(columns=dropped_columns)
         rows_count = len(df)
 
         for column in df.columns:

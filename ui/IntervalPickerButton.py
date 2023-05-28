@@ -28,6 +28,9 @@ class IntervalPickerButton(QPushButton):
 
     def getIntervals(self):
         return self.standarizer.getColumnIntervals(self.column)
+    
+    def getBoundaries(self):
+        return self.standarizer.getFullBoundary(self.column)
 
     def setBoundary(self):
         self.standarizer.setBoundary(self.column, self.values.value())

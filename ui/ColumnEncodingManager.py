@@ -2,6 +2,7 @@ from ui.state.EncodingState import EncodingState
 from ui.IntervalPickerButton import IntervalPickerButton
 from ui.LabeledSpinBox import LabeledSpinBox
 from ui.ColumnButton import ColumnButton
+from ui.ColumnCheckbox import ColumnCheckbox
 from ui.ColumnActionButton import ColumnActionButton
 from preprocessing.DataManager import DataManager
 from PyQt5.QtWidgets import *
@@ -25,7 +26,7 @@ class ColumnEncodingManager:
             column_layout.addWidget(self.missing_values_count)
             self.fill_na_treshold.add_to_layout(column_layout)
             self.drop_na_treshold.add_to_layout(column_layout)
-            column_layout.addWidget(self.drop_column)
+            column_layout.addWidget(self.drop_checkbox)
 
         elif state.isFloatEncoding():
             self.__init_float_multipliers(data_manager, state)
@@ -48,8 +49,6 @@ class ColumnEncodingManager:
         self.label = QLabel("Kolumna: "+self.column)
         self.data_type = QLabel("Typ danych: "+str(df[self.column].dtype))
         self.hist_button = ColumnButton(df, self.column, "Pokaż histogram")
-        self.drop_column = ColumnActionButton(self.column)
-        self.drop_column.setText("Usuń kolumnę")
 
     def __init_missing_values_count(self, data_manager: DataManager, state: EncodingState):
         df = data_manager.getData()
@@ -57,6 +56,9 @@ class ColumnEncodingManager:
         missing_values_percentage = df[self.column].isnull().sum() / len(df[self.column])
         self.missing_values_count = QLabel("Ilość brakujących wartości: {}".format(round(missing_values_percentage,2)))
 
+        self.drop_checkbox = ColumnCheckbox(self.column)
+        self.drop_checkbox.setText("Kolumna do usunięcia")
+        self.drop_checkbox.setChecked(data_manager.columnDropped(self.column))
         self.fill_na_treshold = LabeledSpinBox(
             "Próg do uzupełnienia wartości:", 
             round(data_manager.getFillMissing(self.column)['fill_na_treshold']*100)

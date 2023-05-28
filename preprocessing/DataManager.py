@@ -20,25 +20,29 @@ class DataManager:
         self.value_standarizer = None
 
         self.make()
-        self.df = self.df.drop(columns=self.config['dropped_columns'])
 
     def init_standarizer(self):
         intervals = {}
+        boundaries = {}
         for column in self.df.columns:
-            if self.config[column].get('value_ranges') is None:
+            if self.config['columns'][column].get('value_ranges') is None:
                 self.value_standarizer = Standarizer(self.df, self.target)
                 return
             
             data = {}
-            for key, value_range in self.config[column]['value_ranges'].items():
+            for key, value_range in self.config['columns'][column]['value_ranges'].items():
                 data[int(key)] = Interval(value_range['begin'], value_range['end'])
             intervals[column] = data
+            boundaries[column] = self.config['columns'][column]['boundaries']
 
-        self.value_standarizer = Standarizer(self.df, self.target, data)
+        self.value_standarizer = Standarizer(self.df, self.target, intervals, boundaries)
+
+    def columnDropped(self, column):
+        return column in self.config['dropped_columns']
 
     def dropColumn(self, column):
-        self.df = self.df.drop(columns=[column])
         self.config['dropped_columns'].append(column)
+        self.save_config()
 
     def getTarget(self):
         return self.config["target"]
@@ -48,72 +52,83 @@ class DataManager:
         self.save_config()
 
     def getFillMissing(self, column):
-        return self.config[column]['missing_values']
+        return self.config['columns'][column]['missing_values']
 
     def setFillMissing(self, column, treshold: Treshold):
-        self.config[column]['missing_values'] = {
+        self.config['columns'][column]['missing_values'] = {
             'fill_na_treshold': treshold.fill_na_treshold,
             'drop_na_treshold': treshold.drop_na_treshold
         }
         self.save_config()
     
     def getMultipier(self, column):
-        return self.config[column]['float_multiplier']
+        return self.config['columns'][column]['float_multiplier']
     
     def setMultipier(self, column, float_multiplier):
-        self.config[column]['float_multiplier'] = float_multiplier
+        self.config['columns'][column]['float_multiplier'] = float_multiplier
         self.save_config()
 
     def getMaxUniqueObjects(self, column):
-        return self.config[column]['max_unique_objects']
+        return self.config['columns'][column]['max_unique_objects']
     
     def setMaxUniqueObjects(self, column, max_unique_count):
-        self.config[column]['max_unique_objects'] = max_unique_count
+        self.config['columns'][column]['max_unique_objects'] = max_unique_count
         self.save_config()
 
     def getValueRanges(self, column):
-        if self.config[column].get('value_ranges') is None:
+        if self.config['columns'][column].get('value_ranges') is None:
             self.setValueRanges(self.value_standarizer.intervals)
 
         data = {}
-        for key, value_range in self.config[column]['value_ranges'].items():
+        for key, value_range in self.config['columns'][column]['value_ranges'].items():
             data[int(key)] = Interval(value_range['begin'], value_range['end'])
         return data
+    
+    def getBoundaries(self, column):
+        return self.config['columns'][column]['boundaries']
+    
+    def setBoundaries(self, column, boundaries: dict):
+        self.config['columns'][column]['boundaries'] = {
+            'min': int(boundaries['min']),
+            'max': int(boundaries['max']),
+            'boundary': int(boundaries['boundary']),
+        }
+        self.save_config()
 
     def setValueRanges(self, column, value_ranges: dict[Interval]):
         data = {}
         for key, value_range in value_ranges.items():
             data[int(key)] = {'begin': int(value_range.begin), 'end': int(value_range.end)}
 
-        self.config[column]['value_ranges'] = data
+        self.config['columns'][column]['value_ranges'] = data
         self.save_config()
 
     def fill_missing(self):
         tresholds = {}
         for column in self.df.columns:
-            treshold = self.config[column]['missing_values']
+            treshold = self.config['columns'][column]['missing_values']
             tresholds[column] = Treshold(treshold['fill_na_treshold'], treshold['drop_na_treshold'])
 
-        self.df = self.missing_filler.process(self.df, self.target, tresholds)
+        self.df = self.missing_filler.process(self.df, self.target, tresholds, self.config['dropped_columns'])
 
     def encode_floats(self):
         data = {}
         for column in self.df.columns:
-            data[column] = self.config[column]['float_multiplier']
+            data[column] = self.config['columns'][column]['float_multiplier']
         
         self.df = self.decimal_encoder.process(self.df, self.target, data)
 
     def encode_objects(self):
         data = {}
         for column in self.df.columns:
-            data[column] = self.config[column]['max_unique_objects']
+            data[column] = self.config['columns'][column]['max_unique_objects']
 
         self.df = self.object_tagger.process(self.df, self.target, data)
 
     def standarize(self):
         data = {}
         for column in self.df.columns:
-            data[column] = self.config[column]['value_ranges']
+            data[column] = self.config['columns'][column]['value_ranges']
 
         self.df = self.value_standarizer.process(self.df, self.target)
 
@@ -134,27 +149,29 @@ class DataManager:
         config = {}
 
         self.target = self.df.columns[0]
+
         config["target"] = self.target
         config['dropped_columns'] = []
+        config['columns'] = {}
 
         missing_filler_settings = self.missing_filler.default(self.df)
         decimal_encoder_settings = self.decimal_encoder.default(self.df)
         object_tagger_settings = self.object_tagger.default(self.df)
 
         for column in self.df.columns:
-            config[column] = {}
+            config['columns'][column] = {}
             
             if missing_filler_settings.get(column) is not None:
-                config[column]['missing_values'] = {
+                config['columns'][column]['missing_values'] = {
                     'fill_na_treshold': missing_filler_settings[column].fill_na_treshold,
                     'drop_na_treshold': missing_filler_settings[column].drop_na_treshold
                 }
 
             if decimal_encoder_settings.get(column) is not None:
-                config[column]['float_multiplier'] = decimal_encoder_settings[column]
+                config['columns'][column]['float_multiplier'] = decimal_encoder_settings[column]
 
             if decimal_encoder_settings.get(column) is not None:
-                config[column]['max_unique_objects'] = object_tagger_settings[column]
+                config['columns'][column]['max_unique_objects'] = object_tagger_settings[column]
 
         return config
     

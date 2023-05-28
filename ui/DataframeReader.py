@@ -98,6 +98,9 @@ class DataframeReader:
                     self.column_managers[column].drop_na_treshold.get_value()/100.0
                 )
             )
+            if self.column_managers[column].drop_checkbox.isChecked():
+                self.data_manager.dropColumn(column)
+
         self.data_manager.fill_missing()
 
         self.setDataframe(self.data_manager.getData())
@@ -126,6 +129,7 @@ class DataframeReader:
         df = self.data_manager.getData()
         for column in df.columns:
             self.data_manager.setValueRanges(column, self.column_managers[column].interval_picker.getIntervals())
+            self.data_manager.setBoundaries(column, self.column_managers[column].interval_picker.getBoundaries())
 
         self.data_manager.standarize()
         self.setDataframe(self.data_manager.getData())

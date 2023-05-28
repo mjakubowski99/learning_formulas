@@ -120,11 +120,7 @@ void RandomClassifier::saveFormulasToFile(std::string file_name)
         formulas_file << i << '\n';
         for(Formula formula : this->decision_class_formulas[i]) {
             std::string f = stringifyFormula(formula);
-        
-            if (formula_strings.find(f) == formula_strings.end()) {
-                formulas_file << f << '\n';
-                formula_strings.insert(f);
-            }
+            formulas_file << f << '\n';
         }
     }
 
