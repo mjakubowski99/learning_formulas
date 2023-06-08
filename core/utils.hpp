@@ -4,6 +4,10 @@
 #include <string>
 #include <sstream>
 
+void setSrandTime();
+
+int randomInt(int min, int max);
+
 void displayLiteral(Literal literal);
 
 void displayFormula(Formula formula);

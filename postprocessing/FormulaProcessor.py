@@ -1,4 +1,5 @@
 from postprocessing.FormulaDecoder import FormulaDecoder
+from models.Formula import Formula
 
 class FormulaProcessor:
     
@@ -6,7 +7,7 @@ class FormulaProcessor:
         self.decoder = FormulaDecoder()
         self.file = open(file)
 
-    def process(self):
+    def process(self) -> dict[list[Formula]]:
         formulas = {}
         current_class = 0
         for line in self.file.readlines():

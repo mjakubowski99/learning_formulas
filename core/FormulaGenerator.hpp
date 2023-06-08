@@ -12,7 +12,8 @@ class FormulaGenerator {
             int formulas_count, 
             int clauses_count, 
             int literals_count, 
-            int goal
+            int goal,
+            bool constant_size=true
         );
 
         void makePositiveFormulas(
@@ -20,15 +21,19 @@ class FormulaGenerator {
             Data data,
             int formulas_count, 
             int clauses_count, 
-            int literals_count
+            int literals_count,
+            bool constant_size
         );
 
         void makeNegativeFormulas(
             std::list<Formula> & negative_formulas,
-            Data data,
+            Data * data,
+            int goal,
+            int classes_count,
             int formulas_count, 
             int clauses_count, 
-            int literals_count
+            int literals_count,
+            bool constant_size
         );
 
         int randomIndex(int min, int max, std::set<int> & drawn);

@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPus
 from PyQt5.QtWidgets import QFileDialog
 from ui.output_reader import ProcessOutputReader, MyConsole
 from PyQt5.QtCore import pyqtSlot
-from ui.LabeledInput import LabeledInput
 from ui.LabeledSpinBox import LabeledSpinBox
 from ui.DataframeReader import DataframeReader
 from ui.layout_cleaner import clean_layout

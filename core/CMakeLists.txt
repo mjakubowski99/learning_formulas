@@ -11,7 +11,17 @@ include_directories(include)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 # Wskazanie źródeł
-set(SOURCES "types.cpp" "utils.cpp" "FormulaGenerator.cpp" "FormulaEvaluator.cpp" "RandomClassifier.cpp" "main.cpp")
+set(SOURCES 
+    "types.cpp" 
+    "utils.cpp" 
+    "FormulaGenerator.cpp" 
+    "FormulaEvaluator.cpp" 
+    "RandomClassifier.cpp" 
+    "genetic/crosser/OnePointCrosser.cpp"
+    "genetic/selector/RankingSelector.cpp"
+    "genetic/algorithm/Algorithm.cpp"
+    "main.cpp"
+)
 
 # Ustawienie pliku wykonywalnego
 add_executable(learning_formulas ${SOURCES})

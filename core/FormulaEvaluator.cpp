@@ -52,6 +52,34 @@ int FormulaEvaluator::voteForRow(std::list<Formula> * decision_class_formulas, i
     return max_index;
 }
 
+float FormulaEvaluator::numericScore(Formula formula, Data * data, int classes_count, int goal)
+{
+    int total_rows_count = 0;
+    int valid_responses_count = 0;
+    float result;
+
+    for(int i=0; i<classes_count; i++) {
+        total_rows_count += data[i].rows_count;
+
+        for(int j=0; j<data[i].rows_count; j++) {
+            bool formula_satisfied = this->formulaSatisfied(
+                formula, 
+                data[i],
+                j,
+                data[i].attributes_count
+            );
+
+            bool expected = i==goal;
+
+            if (expected==formula_satisfied) {
+                valid_responses_count++;
+            }
+        }
+    }
+
+    return valid_responses_count/(float)total_rows_count;
+}
+
 FormulaScore FormulaEvaluator::score(Formula formula, Data * data, int classes_count, int class_index, bool expected)
 {
     FormulaScore score;

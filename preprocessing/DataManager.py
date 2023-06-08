@@ -4,6 +4,7 @@ from preprocessing.decimal_encoding.DecimalEncoder import DecimalEncoder
 from preprocessing.object_tagging.ObjectTagger import ObjectTagger
 from models.Interval import Interval
 from preprocessing.standarizer.Standarizer import Standarizer
+from sklearn.preprocessing import LabelBinarizer
 import os.path
 import pandas as pd
 import json 
@@ -131,6 +132,39 @@ class DataManager:
             data[column] = self.config['columns'][column]['value_ranges']
 
         self.df = self.value_standarizer.process(self.df, self.target)
+
+    def process_all_at_once(self):
+        self.fill_missing()
+        self.encode_floats()
+        self.encode_objects()
+        self.standarize()
+
+        result = []
+        for x in range(0, len(self.df)+1):
+            result.append([])
+
+        target = self.config['target']
+        
+        for column in self.df.columns:
+            if column == target:
+                continue
+
+            binarizer = LabelBinarizer() 
+            max = self.config['columns'][column]['boundaries']['boundary']
+
+            self.df[column].where(self.df[column] > max, max)
+
+            values = self.df[column].values.tolist()
+            values.append(max)
+
+            values = binarizer.fit_transform(values)
+            i=0
+            for row in values:
+                result[i].extend(row)
+                i+=1
+
+        return result
+
 
     def getData(self):
         return self.df 

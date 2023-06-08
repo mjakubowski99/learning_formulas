@@ -1,13 +1,16 @@
 from postprocessing.FormulaProcessor import FormulaProcessor
 from models.FormulaCollection import FormulaCollection
-from classifier.FormulaClassifier import FormulaClassifier
+from postprocessing.FormulaPredictor import FormulaPredictor
+import pandas as pd 
 
-processor = FormulaProcessor("core/result/1682165454.txt")
-formulas = FormulaCollection(processor.process())
+processor = FormulaProcessor("core/result/1685481741.txt")
+formulas = processor.process()
 
-clf = FormulaClassifier(formulas)
+predictor = FormulaPredictor(formulas)
+df = pd.read_csv('datasets/wine.csv')
 
-print(clf.predict([x%2==0 for x in range(0,300)]))
+print( predictor.predict(df, 'datasets/config.json'))
+
 
 
 

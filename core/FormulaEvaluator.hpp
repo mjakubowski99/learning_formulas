@@ -13,6 +13,8 @@ class FormulaEvaluator {
 
         FormulaScore score(Formula formula, Data * data, int classes_count, int class_index, bool expected);
 
+        float numericScore(Formula formula, Data * data, int classes_count, int goal);
+
         bool formulaEfficient(FormulaScore score);
 
         bool formulaSatisfied(Formula formula, Data data, int row, int attributes_count);

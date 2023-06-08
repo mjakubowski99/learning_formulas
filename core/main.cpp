@@ -5,17 +5,20 @@
 #include <fstream>
 #include <ctime>
 #include <sstream>
+#include "genetic/algorithm/Algorithm.hpp"
+#include "genetic/crosser/OnePointCrosser.hpp"
+#include "genetic/selector/RankingSelector.hpp"
 
 int decision_classes_count = 0;
 
-std::string train_file_name = "../train.txt";
-std::string test_file_name = "../test.txt";
+std::string train_file_name = "../data/train.txt";
+std::string test_file_name = "../data/test.txt";
 int max_cycles_count_param = 20;
 int formulas_count_param = 100;
 int clauses_count_param = 5;
 int literals_count_param = 3;
 float positive_responses_percentage = 0.4;
-std::string result_dir = "../result/";
+std::string result_dir = "/src/result/";
 
 Data * parseData(std::string file_name)
 {
@@ -75,6 +78,24 @@ void parse_args(int argc, char * argv[])
     }
 }
 
+void saveFormulasToFile(FormulaWithScoreArray * formulas, int classes_count, std::string file_name)
+{
+    std::cout << file_name << std::endl;
+    std::ofstream formulas_file(file_name);
+    std::set<std::string> formula_strings;
+    
+    for(int i=0; i<classes_count; i++) {
+        formulas_file << i << '\n';
+
+        for(int j=0; j<formulas[i].size; j++) {
+            std::string f = stringifyFormula(formulas[i].formulas[j].formula);
+            formulas_file << f << '\n';
+        }
+    }
+
+    formulas_file.close();
+}
+
 int main(int argc, char * argv[]) {
     parse_args(argc, argv);
     
@@ -90,6 +111,53 @@ int main(int argc, char * argv[]) {
     Data * train_data = parseData(train_file_name);
 
     std::cout << "Running algorithm..." << std::endl;
+
+    FormulaGenerator * generator = new FormulaGenerator;
+    FormulaEvaluator * evaluator = new FormulaEvaluator(positive_responses_percentage);
+
+    Algorithm algorithm(generator, evaluator);
+    FormulaCrosser * crosser = new OnePointCrosser;
+    FormulaSelector * selector = new RankingSelector(20);
+
+    algorithm.setData(train_data, decision_classes_count);
+    algorithm.setCrossingStrategy(crosser);
+    algorithm.setSelectionStrategy(selector);
+    algorithm.setFormulaParams(formulas_count_param, clauses_count_param, literals_count_param);
+    algorithm.setPopulationsCount(200);
+    algorithm.setPopulationSize(100);
+    algorithm.setMutationsPercent(0.05);
+
+    FormulaWithScoreArray * formula_with_score_array = algorithm.run();
+
+    Data * test_data = parseData(test_file_name);
+    saveFormulasToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
+
+    std::cout << algorithm.score(test_data) << std::endl;
+    /**
+    std::cout << "Running algorithm..." << std::endl;
+
+    FormulaGenerator * generator = new FormulaGenerator;
+    FormulaEvaluator * evaluator = new FormulaEvaluator(positive_responses_percentage);
+
+    Algorithm algorithm(generator, evaluator);
+    FormulaCrosser * crosser = new OnePointCrosser;
+    FormulaSelector * selector = new RankingSelector(20);
+
+    algorithm.setData(train_data, decision_classes_count);
+    algorithm.setCrossingStrategy(crosser);
+    algorithm.setSelectionStrategy(selector);
+    algorithm.setFormulaParams(formulas_count_param, clauses_count_param, literals_count_param);
+    algorithm.setPopulationsCount(1000);
+    algorithm.setPopulationSize(30);
+
+    FormulaWithScoreArray * formula_with_score_array = algorithm.run();
+
+    Data * test_data = parseData(test_file_name);
+    saveFormulasToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
+
+    std::cout << algorithm.score(test_data) << std::endl;
+
+    /**
     RandomClassifier clf(
         decision_classes_count, 
         max_cycles_count_param, 
@@ -108,9 +176,9 @@ int main(int argc, char * argv[]) {
     std::time_t ms = std::time(nullptr);
 
     std::stringstream stream;
-    stream << result_dir << ms << ".txt";
+    stream << result_dir << ms;
 
-    clf.saveFormulasToFile(stream.str());
-
+    clf.saveFormulasToFile(result_dir+"result.txt");
+    **/
     return 0;
 }

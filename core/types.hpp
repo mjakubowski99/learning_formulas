@@ -47,7 +47,7 @@ typedef vector<Literal> Clause;
 #ifndef FORMULA_H
 #define FORMULA_H
 
-typedef deque<Clause> Formula;
+typedef vector<Clause> Formula;
 
 #endif
 
@@ -81,3 +81,32 @@ struct Data {
 
 #endif
 
+#ifndef FORMULA_WITH_SCORE
+#define FORMULA_WITH_SCORE
+
+struct FormulaWithScore
+{
+    float score;
+    Formula formula;
+};
+
+#endif
+
+#ifndef FORMULA_WITH_SCORE_ARRAY
+#define FORMULA_WITH_SCORE_ARRAY
+
+struct FormulaWithScoreArray
+{
+    FormulaWithScore * formulas;
+    int size=0;
+
+    FormulaWithScoreArray(){};
+
+    FormulaWithScoreArray(int size)
+    {
+        this->formulas = new FormulaWithScore[size];
+        this->size = size;
+    }
+};
+
+#endif 

@@ -4,6 +4,22 @@
 #include <string>
 #include <sstream>
 #include <cstring>
+#include <cstdlib>
+#include <random>
+
+void setSrandTime()
+{
+
+}
+
+int randomInt(int min, int max)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd()); // seed the generator
+    std::uniform_int_distribution<> distr(min, max-1); // define the range
+
+    return distr(gen);
+}
 
 void displayLiteral(Literal literal) {
     if (!literal.positive) {
