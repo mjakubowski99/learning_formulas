@@ -21,12 +21,25 @@ class RandomClassifier
     
     int formulas_count;
 
-    int clauses_count;
+    int min_clauses_count;
 
-    int literals_count;
+    int max_clauses_count;
+
+    int min_literals_count;
+
+    int max_literals_count;
 
     public:
-        RandomClassifier(int decision_classes_count, int cycles_count, int formulas_count, int clauses_count, int literals_count, float positive_responses_treshold);
+        RandomClassifier(
+            int decision_classes_count, 
+            int cycles_count, 
+            int formulas_count, 
+            int min_clauses_count,
+            int max_clauses_count, 
+            int min_literals_count,
+            int max_literals_count,
+            float positive_responses_treshold
+        );
 
         void fit(Data * data);
 

@@ -22,12 +22,11 @@ class FormulaLearner(QMainWindow):
 
         self._process_reader = ProcessOutputReader()
         self.console = MyConsole()
+        self.select_layout = QHBoxLayout()
+        self.make_select()
+
         self.input_layout = QHBoxLayout()
-        self.cycles_input = LabeledSpinBox("Ilość cykli:", 20).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 100).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.clauses_input = LabeledSpinBox("Ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.literals_input = LabeledSpinBox("Ilość literałów: ", 3).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.positive_responses_percentage_input = LabeledSpinBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout).setValueRange(0,100)
+        self.make_for_random_algorithm()
 
         self.start_button = QPushButton("Rozpocznij uczenie")
         self.start_button.resize(50,50)
@@ -41,6 +40,7 @@ class FormulaLearner(QMainWindow):
         self.button_layout.addWidget(self.start_button)
         self.button_layout.addWidget(self.stop_button)
 
+        self.layout.addLayout(self.select_layout)
         self.layout.addLayout(self.button_layout)
         self.layout.addLayout(self.input_layout)
         self.layout.addWidget(self.console)
@@ -61,8 +61,13 @@ class FormulaLearner(QMainWindow):
     def make_select(self):
         self.algorithm_selector = QComboBox()
         self.algorithm_selector.addItems(['Randomowy', 'Ewolucyjny'])
-        self.input_layout.addItem(self.algorithm_selector)
         self.algorithm_selector.currentIndexChanged.connect(self.on_selected_algorithm)
+        self.select_layout.addWidget(self.algorithm_selector)
+
+    def get_current_algorithm(self):
+        if self.algorithm_selector.currentIndex == 0:
+            return "RANDOM"
+        return "EVOLUTION"
 
     def on_selected_algorithm(self):
         clean_layout(self.input_layout)
@@ -75,16 +80,20 @@ class FormulaLearner(QMainWindow):
     def make_for_random_algorithm(self):
         self.cycles_input = LabeledSpinBox("Ilość cykli:", 20).add_to_layout(self.input_layout).setValueRange(0,1000000)
         self.formulas_input = LabeledSpinBox("Ilość formuł: ", 100).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.clauses_input = LabeledSpinBox("Ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.literals_input = LabeledSpinBox("Ilość literałów: ", 3).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
         self.positive_responses_percentage_input = LabeledSpinBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout).setValueRange(0,100)
 
     def make_for_evolution_algorithm(self):
         self.populations_count_input = LabeledSpinBox("Ilość populacji:", 20)
         self.final_formulas_size_input = LabeledSpinBox("Finalna ilośc formuł:", 100)
         self.formulas_input = LabeledSpinBox("Ilość formuł: ", 300).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.clauses_input = LabeledSpinBox("Ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.literals_input = LabeledSpinBox("Ilość literałów: ", 3).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
         self.mutations_percentage_input = LabeledSpinBox("Procent mutacji: ", 5).add_to_layout(self.input_layout).setValueRange(0,100)
         self.percentage_to_reproduce_input = LabeledSpinBox("Procent populacji do reporodukcji: ", 5).add_to_layout(self.input_layout).setValueRange(0,100)
 
@@ -94,13 +103,21 @@ class FormulaLearner(QMainWindow):
 
     def set_up_env(self):
         variables = {
+            "ALGORITHM": self.get_current_algorithm(),
             "TRAIN_FILE_NAME": "/src/data/train.txt",
             "TEST_FILE_NAME": "/src/data/test.txt",
             "FORMULAS_COUNT": self.formulas_input.get_value(),
             "CYCLES_COUNT": self.cycles_input.get_value(),
-            "CLAUSES_COUNT": self.clauses_input.get_value(),
-            "LITERALS_COUNT": self.literals_input.get_value(),
-            "POSITIVE_RESPONSES_PERCENTAGE": self.positive_responses_percentage_input.get_value()
+            "MIN_CLAUSES_COUNT": self.min_clauses_input.get_value(),
+            "MAX_CLAUSES_COUNT": self.max_clauses_input.get_value(),
+            "MIN_LITERALS_COUNT": self.min_literals_input.get_value(),
+            "MAX_LITERALS_COUNT": self.max_literals_input.get_value(),
+            "POSITIVE_RESPONSES_PERCENTAGE": self.positive_responses_percentage_input.get_value(),
+            "POPULATIONS_COUNT": self.populations_count_input.get_value(),
+            "POPULATIONS_SIZE": self.formulas_input.get_value(),
+            "FINAL_POPULATION_SIZE": self.final_formulas_size_input.get_value(),
+            "MUTATION_PERCENTAGE": self.mutations_percentage_input.get_value()/100.0,
+            "REPRODUCTION_PERCENTAGE": self.percentage_to_reproduce_input.get_value()/100.0
         }
         with open(".env", "w") as f:
             for variable in variables:

@@ -9,11 +9,14 @@
 class Algorithm {
     Data * data;
     int populations_count;
+    int final_population_size;
     int poulation_size;
     float mutations_percent;
     int formulas_count;
-    int clauses_count;
-    int literals_count;
+    int min_clauses_count;
+    int max_clauses_count;
+    int min_literals_count;
+    int max_literals_count;
     int classes_count;
     FormulaGenerator * generator;
     FormulaEvaluator * evaluator;
@@ -27,9 +30,13 @@ class Algorithm {
 
         void setData(Data * data, int classes_count);
 
-        void setFormulasSizeConstant(bool formulas_size_constant);
-
-        void setFormulaParams(int formulas_count, int clauses_count, int literals_count);
+        void setFormulaParams(
+            int formulas_count, 
+            int min_clauses_count, 
+            int max_clauses_count, 
+            int min_literals_count, 
+            int max_literals_count
+        );
 
         void setSelectionStrategy(FormulaSelector * selector);
 
@@ -40,6 +47,8 @@ class Algorithm {
         void setPopulationsCount(int populations_count);
 
         void setMutationsPercent(float mutations_percent);
+
+        void setFinalPopulationSize(int final_population_size);
 
         FormulaWithScoreArray * run();
 

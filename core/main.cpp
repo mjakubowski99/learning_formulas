@@ -22,7 +22,13 @@ int max_clauses_count = 5;
 int min_literals_count = 5;
 int max_literals_count = 5;
 float positive_responses_percentage = 0.4;
-std::string result_dir = "/src/result/";
+std::string result_dir = "../result/";
+
+int populations_count = 100;
+int population_size = 300;
+int final_population_size = 100;
+float mutation_percentage = 0.1;
+float reproduction_percentage = 0.5;
 
 Data * parseData(std::string file_name)
 {
@@ -70,19 +76,44 @@ void parse_args(int argc, char * argv[])
         std::string test_pom(argv[4]);
         algorithm = test_pom;
     }
+    if (argc>=6) {
+        min_clauses_count = std::stoi(argv[5]);
+    }
+    if (argc>=7) {
+        max_clauses_count = std::stoi(argv[6]);
+    }
+    if (argc>=8) {
+        min_literals_count = std::stoi(argv[7]);
+    }
+    if (argc>=9) {
+        max_literals_count = std::stoi(argv[8]);
+    }   
 
     if (algorithm == "RANDOM") {
-        if (argc>=6) {
-            formulas_count_param = std::stoi(argv[5]);
+        if (argc>=10) {
+            max_cycles_count_param = std::stoi(argv[9]);
         }
-        if (argc>=7) {
-            min_clauses_count = std::stoi(argv[6]);
+        if (argc>=11) {
+            formulas_count_param = std::stoi(argv[10]);
         }
-        if (argc>=8) {
-            max_clauses_count = std::stoi(argv[7]);
+        if (argc>=12) {
+            positive_responses_percentage = std::stof(argv[11]);
         }
-        if (argc>=9) {
-            max_clauses_count = std::stoi(argv[7]);
+    } else if (algorithm == "EVOLUTION") {
+        if (argc>=10) {
+            populations_count = std::stoi(argv[9]);
+        }
+        if (argc>=11) {
+            population_size = std::stoi(argv[10]);
+        }
+        if (argc>=12) {
+            final_population_size = std::stoi(argv[11]);
+        }
+        if (argc>=13) {
+            mutation_percentage = std::stof(argv[12]);
+        }
+        if (argc>=14) {
+            reproduction_percentage = std::stof(argv[13]);
         }
     }
 }
@@ -125,66 +156,88 @@ void saveFormulasWithScoreToFile(FormulaWithScoreArray * formulas, int classes_c
 
 int main(int argc, char * argv[]) {
     parse_args(argc, argv);
+
+    Data * train_data = parseData(train_file_name);
     
-    std::cout << "Algorithm started with: " << std::endl;
-    std::cout << "Runned for file: " << train_file_name << std::endl;
-    std::cout << "Test file: " << test_file_name << std::endl;
-    std::cout << "Cycles count: " << max_cycles_count_param << std::endl;
-    std::cout << "Formulas count for class: " << formulas_count_param << std::endl;
-    std::cout << "Clauses count in formula: " << clauses_count_param << std::endl;
-    std::cout << "Literals count in formula: " << literals_count_param << std::endl;
-    std::cout << "Positive responses percentage for decision class: " << positive_responses_percentage << std::endl;
+    if (algorithm == "RANDOM") {
+        std::cout << "Started random algorithm" << std::endl;
+        std::cout << "Algorithm started with: " << std::endl;
+        std::cout << "Runned for file: " << train_file_name << std::endl;
+        std::cout << "Test file: " << test_file_name << std::endl;
+        std::cout << "Cycles count: " << max_cycles_count_param << std::endl;
+        std::cout << "Formulas count for class: " << formulas_count_param << std::endl;
+        std::cout << "Min clauses count in formula: " << min_clauses_count << std::endl;
+        std::cout << "Max clauses count in formula: " << max_clauses_count << std::endl;
+        std::cout << "Min literals count in formula: " << min_literals_count << std::endl;
+        std::cout << "Max literals count in formula: " << max_literals_count << std::endl;
+        std::cout << "Positive responses percentage for decision class: " << positive_responses_percentage << std::endl;
 
-    Data * train_data = parseData(train_file_name);
+        RandomClassifier clf(
+            decision_classes_count, 
+            max_cycles_count_param, 
+            formulas_count_param, 
+            min_clauses_count,
+            max_clauses_count,
+            min_literals_count,
+            max_literals_count,
+            positive_responses_percentage
+        );
+        clf.fit(train_data);
 
-    std::cout << "Running algorithm..." << std::endl;
+        delete train_data;
 
-    FormulaGenerator * generator = new FormulaGenerator;
-    FormulaEvaluator * evaluator = new FormulaEvaluator(positive_responses_percentage);
+        Data * test_data = parseData(test_file_name);
+        std::cout << clf.score(test_data) << std::endl;
 
-    Algorithm algorithm(generator, evaluator);
-    FormulaCrosser * crosser = new OnePointCrosser;
-    FormulaSelector * selector = new RankingSelector(150);
+        std::time_t ms = std::time(nullptr);
 
-    algorithm.setData(train_data, decision_classes_count);
-    algorithm.setCrossingStrategy(crosser);
-    algorithm.setSelectionStrategy(selector);
-    algorithm.setFormulaParams(formulas_count_param, clauses_count_param, literals_count_param);
-    algorithm.setPopulationsCount(20);
-    algorithm.setPopulationSize(300);
-    algorithm.setMutationsPercent(0.05);
+        std::stringstream stream;
+        stream << result_dir << ms;
 
-    FormulaWithScoreArray * formula_with_score_array = algorithm.run();
+        clf.saveFormulasToFile(result_dir+"result.txt");
+    } else {
+        int to_reproduction_size = (int) (population_size*reproduction_percentage);
 
-    Data * test_data = parseData(test_file_name);
-    saveFormulasWithScoreToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
+        std::cout << "Started evolation" << std::endl;
+        std::cout << "Algorithm started with: " << std::endl;
+        std::cout << "Runned for file: " << train_file_name << std::endl;
+        std::cout << "Test file: " << test_file_name << std::endl;
+        std::cout << "Populations count: " << populations_count << std::endl;
+        std::cout << "Population size: " << formulas_count_param << std::endl;
+        std::cout << "Min clauses count in formula: " << min_clauses_count << std::endl;
+        std::cout << "Max clauses count in formula: " << max_clauses_count << std::endl;
+        std::cout << "Min literals count in formula: " << min_literals_count << std::endl;
+        std::cout << "Max literals count in formula: " << max_literals_count << std::endl;
+        std::cout << "Size to reproduction: " << to_reproduction_size << std::endl;
+        std::cout << "Final population size: " << final_population_size << std::endl;
 
-    std::cout << algorithm.score(test_data) << std::endl;
+        FormulaGenerator * generator = new FormulaGenerator;
+        FormulaEvaluator * evaluator = new FormulaEvaluator(positive_responses_percentage);
 
-    /**
-    Data * train_data = parseData(train_file_name);
-    RandomClassifier clf(
-        decision_classes_count, 
-        max_cycles_count_param, 
-        formulas_count_param, 
-        clauses_count_param, 
-        literals_count_param,
-        positive_responses_percentage
-    );
-    clf.fit(train_data);
+        Algorithm algorithm(generator, evaluator);
+        FormulaCrosser * crosser = new OnePointCrosser;
+        FormulaSelector * selector = new RankingSelector( (int) (population_size*reproduction_percentage) );
 
-    delete train_data;
+        algorithm.setData(train_data, decision_classes_count);
+        algorithm.setCrossingStrategy(crosser);
+        algorithm.setSelectionStrategy(selector);
+        algorithm.setFormulaParams(
+            formulas_count_param, 
+            min_clauses_count, 
+            max_clauses_count, 
+            min_literals_count, 
+            max_literals_count
+        );
+        algorithm.setPopulationsCount(populations_count);
+        algorithm.setPopulationSize(population_size);
+        algorithm.setMutationsPercent(mutation_percentage);
 
-    Data * test_data = parseData(test_file_name);
-    std::cout << clf.score(test_data) << std::endl;
+        FormulaWithScoreArray * formula_with_score_array = algorithm.run();
 
-    std::time_t ms = std::time(nullptr);
+        Data * test_data = parseData(test_file_name);
+        saveFormulasWithScoreToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
+        std::cout << algorithm.score(test_data) << std::endl;
+    }
 
-    std::stringstream stream;
-    stream << result_dir << ms;
-
-    clf.saveFormulasToFile(result_dir+"result.txt");
     return 0;
-         * 
-    */
 }

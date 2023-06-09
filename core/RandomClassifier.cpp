@@ -10,7 +10,16 @@
 #include <string>
 #include <set>
 
-RandomClassifier::RandomClassifier(int decision_classes_count, int cycles_count, int formulas_count, int clauses_count, int literals_count, float positive_responses_treshold)
+RandomClassifier::RandomClassifier(
+    int decision_classes_count, 
+    int cycles_count, 
+    int formulas_count, 
+    int min_clauses_count,
+    int max_clauses_count,
+    int min_literals_count, 
+    int max_literals_count,
+    float positive_responses_treshold
+)
 {
     this->generator = new FormulaGenerator();
     this->evaluator = new FormulaEvaluator(positive_responses_treshold);
@@ -18,8 +27,10 @@ RandomClassifier::RandomClassifier(int decision_classes_count, int cycles_count,
     this->decision_class_formulas = new std::list<Formula>[decision_classes_count];
     this->cycles_count = cycles_count;
     this->formulas_count = formulas_count;
-    this->clauses_count = clauses_count;
-    this->literals_count = literals_count;
+    this->min_clauses_count = min_clauses_count;
+    this->max_clauses_count = max_clauses_count;
+    this->min_literals_count = min_literals_count;
+    this->max_literals_count = max_literals_count;
 }
 
 void RandomClassifier::fit(Data * data)
@@ -34,8 +45,10 @@ void RandomClassifier::fit(Data * data)
                 data,
                 this->decision_classes_count,
                 formulas_number, 
-                this->clauses_count, 
-                this->literals_count, 
+                this->min_clauses_count,
+                this->max_clauses_count,
+                this->min_literals_count,
+                this->max_literals_count,
                 k
             );
 

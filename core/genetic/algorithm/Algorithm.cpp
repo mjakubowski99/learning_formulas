@@ -14,16 +14,19 @@ void Algorithm::setData(Data * data, int classes_count)
     this->formulas = new FormulaWithScoreArray[this->classes_count];
 }
 
-void Algorithm::setFormulasSizeConstant(bool formulas_size_constant)
-{
-    
-}
-
-void Algorithm::setFormulaParams(int formulas_count, int clauses_count, int literals_count)
+void Algorithm::setFormulaParams(
+    int formulas_count, 
+    int min_clauses_count, 
+    int max_clauses_count, 
+    int min_literals_count, 
+    int max_literals_count
+)
 {
     this->formulas_count = formulas_count;
-    this->clauses_count = clauses_count;
-    this->literals_count = literals_count;
+    this->min_clauses_count = min_clauses_count;
+    this->max_clauses_count = max_clauses_count;
+    this->min_literals_count = min_literals_count;
+    this->max_literals_count = max_literals_count;
 }
 
 void Algorithm::setSelectionStrategy(FormulaSelector * selector)
@@ -34,6 +37,11 @@ void Algorithm::setSelectionStrategy(FormulaSelector * selector)
 void Algorithm::setCrossingStrategy(FormulaCrosser * crosser)
 {
     this->crosser = crosser;
+}
+
+void Algorithm::setFinalPopulationSize(int final_population_size)
+{
+    this->final_population_size = final_population_size;
 }
 
 void Algorithm::setPopulationSize(int population_size)
@@ -71,10 +79,11 @@ FormulaWithScoreArray * Algorithm::run()
                             this->data,
                             this->classes_count,
                             2,
-                            this->clauses_count, 
-                            this->literals_count,
-                            i,
-                            false
+                            this->min_clauses_count,
+                            this->max_clauses_count,
+                            this->min_literals_count,
+                            this->max_literals_count,
+                            i
                         ).begin());
                         this->formulas[i].formulas[j].score = this->evaluator->numericScore(this->formulas[i].formulas[j].formula, this->data, this->classes_count, i);
                     }
@@ -85,7 +94,7 @@ FormulaWithScoreArray * Algorithm::run()
         }
 
         this->formulas[i].sortByScore();
-        this->formulas[i].size = 100;
+        this->formulas[i].size = this->final_population_size;
     }
 
     return this->formulas;
@@ -97,10 +106,11 @@ std::list<Formula> Algorithm::generateInitialPopulation(int goal)
         this->data,
         this->classes_count,
         this->formulas_count*10,
-        this->clauses_count, 
-        this->literals_count,
-        goal,
-        false
+        this->min_clauses_count,
+        this->max_clauses_count,
+        this->min_literals_count,
+        this->max_literals_count,
+        goal
     );
 }
 
