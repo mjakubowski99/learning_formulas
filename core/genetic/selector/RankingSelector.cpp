@@ -1,5 +1,4 @@
 #include "RankingSelector.hpp"
-#include <algorithm>
 
 RankingSelector::RankingSelector(int treshold)
 {
@@ -8,8 +7,7 @@ RankingSelector::RankingSelector(int treshold)
 
 FormulaWithScoreArray RankingSelector::select(FormulaWithScoreArray formulas)
 {
-    sort(formulas.formulas, formulas.formulas+formulas.size, [](FormulaWithScore & a, FormulaWithScore & b) {return a.score > b.score;});
-
+    formulas.sortByScore();
     FormulaWithScoreArray result(this->treshold);
 
     for(int i=0; i<treshold; i++) {

@@ -13,10 +13,14 @@ int decision_classes_count = 0;
 
 std::string train_file_name = "../data/train.txt";
 std::string test_file_name = "../data/test.txt";
+std::string algorithm = "RANDOM";
+
 int max_cycles_count_param = 20;
 int formulas_count_param = 100;
-int clauses_count_param = 5;
-int literals_count_param = 3;
+int min_clauses_count = 5;
+int max_clauses_count = 5;
+int min_literals_count = 5;
+int max_literals_count = 5;
 float positive_responses_percentage = 0.4;
 std::string result_dir = "/src/result/";
 
@@ -55,26 +59,31 @@ void parse_args(int argc, char * argv[])
     }
     if (argc>=3) {
         std::string test_pom(argv[2]);
+        
         test_file_name = test_pom;
     }
     if (argc>=4) {
-        max_cycles_count_param = std::stoi(argv[3]);
+        std::string pom(argv[3]);
+        result_dir = pom;
     }
     if (argc>=5) {
-        formulas_count_param = std::stoi(argv[4]);
+        std::string test_pom(argv[4]);
+        algorithm = test_pom;
     }
-    if (argc>=6) {
-        clauses_count_param = std::stoi(argv[5]);
-    }
-    if (argc>=7) {
-        literals_count_param = std::stoi(argv[6]);
-    }
-    if (argc>=8) {
-        positive_responses_percentage = std::stoi(argv[7])/100.0;
-    }
-    if (argc>=9) {
-        std::string pom(argv[9]);
-        result_dir = pom;
+
+    if (algorithm == "RANDOM") {
+        if (argc>=6) {
+            formulas_count_param = std::stoi(argv[5]);
+        }
+        if (argc>=7) {
+            min_clauses_count = std::stoi(argv[6]);
+        }
+        if (argc>=8) {
+            max_clauses_count = std::stoi(argv[7]);
+        }
+        if (argc>=9) {
+            max_clauses_count = std::stoi(argv[7]);
+        }
     }
 }
 
@@ -90,6 +99,24 @@ void saveFormulasToFile(FormulaWithScoreArray * formulas, int classes_count, std
         for(int j=0; j<formulas[i].size; j++) {
             std::string f = stringifyFormula(formulas[i].formulas[j].formula);
             formulas_file << f << '\n';
+        }
+    }
+
+    formulas_file.close();
+}
+
+void saveFormulasWithScoreToFile(FormulaWithScoreArray * formulas, int classes_count, std::string file_name)
+{
+    std::cout << file_name << std::endl;
+    std::ofstream formulas_file(file_name);
+    std::set<std::string> formula_strings;
+    
+    for(int i=0; i<classes_count; i++) {
+        formulas_file << i << '\n';
+
+        for(int j=0; j<formulas[i].size; j++) {
+            std::string f = stringifyFormula(formulas[i].formulas[j].formula);
+            formulas_file << f << " - " << formulas[i].formulas[j].score << '\n';
         }
     }
 
@@ -117,47 +144,25 @@ int main(int argc, char * argv[]) {
 
     Algorithm algorithm(generator, evaluator);
     FormulaCrosser * crosser = new OnePointCrosser;
-    FormulaSelector * selector = new RankingSelector(20);
+    FormulaSelector * selector = new RankingSelector(150);
 
     algorithm.setData(train_data, decision_classes_count);
     algorithm.setCrossingStrategy(crosser);
     algorithm.setSelectionStrategy(selector);
     algorithm.setFormulaParams(formulas_count_param, clauses_count_param, literals_count_param);
-    algorithm.setPopulationsCount(200);
-    algorithm.setPopulationSize(100);
+    algorithm.setPopulationsCount(20);
+    algorithm.setPopulationSize(300);
     algorithm.setMutationsPercent(0.05);
 
     FormulaWithScoreArray * formula_with_score_array = algorithm.run();
 
     Data * test_data = parseData(test_file_name);
-    saveFormulasToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
-
-    std::cout << algorithm.score(test_data) << std::endl;
-    /**
-    std::cout << "Running algorithm..." << std::endl;
-
-    FormulaGenerator * generator = new FormulaGenerator;
-    FormulaEvaluator * evaluator = new FormulaEvaluator(positive_responses_percentage);
-
-    Algorithm algorithm(generator, evaluator);
-    FormulaCrosser * crosser = new OnePointCrosser;
-    FormulaSelector * selector = new RankingSelector(20);
-
-    algorithm.setData(train_data, decision_classes_count);
-    algorithm.setCrossingStrategy(crosser);
-    algorithm.setSelectionStrategy(selector);
-    algorithm.setFormulaParams(formulas_count_param, clauses_count_param, literals_count_param);
-    algorithm.setPopulationsCount(1000);
-    algorithm.setPopulationSize(30);
-
-    FormulaWithScoreArray * formula_with_score_array = algorithm.run();
-
-    Data * test_data = parseData(test_file_name);
-    saveFormulasToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
+    saveFormulasWithScoreToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
 
     std::cout << algorithm.score(test_data) << std::endl;
 
     /**
+    Data * train_data = parseData(train_file_name);
     RandomClassifier clf(
         decision_classes_count, 
         max_cycles_count_param, 
@@ -179,6 +184,7 @@ int main(int argc, char * argv[]) {
     stream << result_dir << ms;
 
     clf.saveFormulasToFile(result_dir+"result.txt");
-    **/
     return 0;
+         * 
+    */
 }

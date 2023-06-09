@@ -17,7 +17,6 @@ class FormulaPredictor:
 
         return self.predict_raw(df)
 
-
     def predict_raw(self, data: list[list[bool]]):
         predictions = []
 

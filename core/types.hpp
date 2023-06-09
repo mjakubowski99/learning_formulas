@@ -6,6 +6,7 @@
 #include <array>
 #include <set>
 #include <list>
+#include <algorithm>
 using namespace std;
 
 
@@ -106,6 +107,11 @@ struct FormulaWithScoreArray
     {
         this->formulas = new FormulaWithScore[size];
         this->size = size;
+    }
+
+    void sortByScore()
+    {
+        sort(this->formulas, this->formulas+this->size, [](FormulaWithScore & a, FormulaWithScore & b) {return a.score > b.score;});
     }
 };
 

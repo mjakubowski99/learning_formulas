@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QComboBox
 from PyQt5.QtWidgets import QFileDialog
 from ui.output_reader import ProcessOutputReader, MyConsole
 from PyQt5.QtCore import pyqtSlot
@@ -8,6 +8,7 @@ from ui.DataframeReader import DataframeReader
 from ui.layout_cleaner import clean_layout
 import numpy as np 
 from file import make_train_test_data_files
+from utils.file import *
 
 class FormulaLearner(QMainWindow):
 
@@ -56,7 +57,37 @@ class FormulaLearner(QMainWindow):
                 self.train_file,
                 self.test_file
             )
-        
+
+    def make_select(self):
+        self.algorithm_selector = QComboBox()
+        self.algorithm_selector.addItems(['Randomowy', 'Ewolucyjny'])
+        self.input_layout.addItem(self.algorithm_selector)
+        self.algorithm_selector.currentIndexChanged.connect(self.on_selected_algorithm)
+
+    def on_selected_algorithm(self):
+        clean_layout(self.input_layout)
+
+        if self.algorithm_selector.currentIndex == 0:
+            self.make_for_random_algorithm()
+        else:
+            self.make_for_evolution_algorithm()
+
+    def make_for_random_algorithm(self):
+        self.cycles_input = LabeledSpinBox("Ilość cykli:", 20).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 100).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.clauses_input = LabeledSpinBox("Ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.literals_input = LabeledSpinBox("Ilość literałów: ", 3).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.positive_responses_percentage_input = LabeledSpinBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout).setValueRange(0,100)
+
+    def make_for_evolution_algorithm(self):
+        self.populations_count_input = LabeledSpinBox("Ilość populacji:", 20)
+        self.final_formulas_size_input = LabeledSpinBox("Finalna ilośc formuł:", 100)
+        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 300).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.clauses_input = LabeledSpinBox("Ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.literals_input = LabeledSpinBox("Ilość literałów: ", 3).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.mutations_percentage_input = LabeledSpinBox("Procent mutacji: ", 5).add_to_layout(self.input_layout).setValueRange(0,100)
+        self.percentage_to_reproduce_input = LabeledSpinBox("Procent populacji do reporodukcji: ", 5).add_to_layout(self.input_layout).setValueRange(0,100)
+
     def stop_formula_learning(self):
         self._process_reader.kill()
         self.console.append_output("Process stopped...")
@@ -152,9 +183,7 @@ class MainWindow(QMainWindow):
         self.selected_file = self.file_dialog.selectedFiles()[0]
         clean_layout(self.data_layout)
 
-        config_path = self.selected_file.split('/')[:-1]
-
-        self.config_file = "/".join(config_path) + "/" + "config.json"
+        self.config_file = get_config_file_path_from_file_directory(self.selected_file)
 
         try:
             self.reader = DataframeReader(self.selected_file, self.config_file, self.data_layout, self)

@@ -58,13 +58,34 @@ FormulaWithScoreArray * Algorithm::run()
 
         int p=0;
         while (p<this->populations_count) {
+            std::cout << "Population: " << p << std::endl;
             this->formulas[i] = this->selector->select(this->formulas[i]);
 
             this->performCrossing(i);
             this->mutate(i);
 
+            if (i!=this->populations_count-1) {
+                for(int j=0; j<this->formulas[i].size; j++) {
+                    if (this->formulas[i].formulas[j].score < 66.66) {
+                        this->formulas[i].formulas[j].formula = *(this->generator->makeFormulas(
+                            this->data,
+                            this->classes_count,
+                            2,
+                            this->clauses_count, 
+                            this->literals_count,
+                            i,
+                            false
+                        ).begin());
+                        this->formulas[i].formulas[j].score = this->evaluator->numericScore(this->formulas[i].formulas[j].formula, this->data, this->classes_count, i);
+                    }
+                }
+            }
+
             p++;
         }
+
+        this->formulas[i].sortByScore();
+        this->formulas[i].size = 100;
     }
 
     return this->formulas;
@@ -75,7 +96,7 @@ std::list<Formula> Algorithm::generateInitialPopulation(int goal)
     return this->generator->makeFormulas(
         this->data,
         this->classes_count,
-        this->formulas_count * 10,
+        this->formulas_count*10,
         this->clauses_count, 
         this->literals_count,
         goal,

@@ -3,9 +3,16 @@ from preprocessing.DataTransformer import DataTransformer
 import pandas as pd 
 
 def encode_column(x, intervals: dict[int, Interval]):
+    
+    label = None 
     for label, interval in intervals.items():
         if x >= interval.begin and x<=interval.end:
             return label
+        last_label = label
+
+    if label is not None:
+        return label 
+
     raise Exception("Failed to encode value")
 
 class Standarizer(DataTransformer):

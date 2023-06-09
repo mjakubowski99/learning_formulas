@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from preprocessing.DataTransformer import DataTransformer
 
-default_max_unique = 5
+default_max_unique = 10
 
 class ObjectTagger(DataTransformer):
 
