@@ -75,16 +75,30 @@ FormulaWithScoreArray * Algorithm::run()
             if (i!=this->populations_count-1) {
                 for(int j=0; j<this->formulas[i].size; j++) {
                     if (this->formulas[i].formulas[j].score < 66.66) {
-                        this->formulas[i].formulas[j].formula = *(this->generator->makeFormulas(
-                            this->data,
-                            this->classes_count,
-                            2,
-                            this->min_clauses_count,
-                            this->max_clauses_count,
-                            this->min_literals_count,
-                            this->max_literals_count,
-                            i
-                        ).begin());
+                        std::list<Formula> generated_formulas;
+
+                        if (j%2==0) {
+                            this->generator->makePositiveFormulas(
+                                generated_formulas,
+                                this->data[i],
+                                1,
+                                this->min_clauses_count,
+                                this->max_clauses_count,
+                                this->min_literals_count,
+                                this->max_literals_count
+                            );
+                        } else {
+                            this->generator->makePositiveFormulas(
+                                generated_formulas,
+                                this->data[i],
+                                1,
+                                this->min_clauses_count,
+                                this->max_clauses_count,
+                                this->min_literals_count,
+                                this->max_literals_count
+                            );
+                        }
+                        this->formulas[i].formulas[j].formula = *(generated_formulas.begin());
                         this->formulas[i].formulas[j].score = this->evaluator->numericScore(this->formulas[i].formulas[j].formula, this->data, this->classes_count, i);
                     }
                 }
@@ -177,6 +191,7 @@ float Algorithm::score(Data * data)
     int score=0;
     int all=0;
 
+    std::cout << "Wyniki: " << std::endl;
     std::list<Formula> * formulas = new std::list<Formula>[this->classes_count];
     for(int i=0; i<this->classes_count; i++) {
         for(int w=0; w<this->formulas[i].size; w++) {
@@ -191,13 +206,14 @@ float Algorithm::score(Data * data)
                 j,
                 data[i].attributes_count
             );
-
             if (i==vote_result) {
                 score++;
             }
+            std::cout << vote_result << std::endl;
         }
         all+=data[i].rows_count;
     }
+    std::cout << "Koniec" << std::endl;
 
     return score / (float) all;
 }

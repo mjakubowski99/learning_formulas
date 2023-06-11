@@ -128,10 +128,19 @@ class DataframeReader:
     def standarize_value(self):
         df = self.data_manager.getData()
         for column in df.columns:
+            if column == self.target_column:
+                continue
+
             self.data_manager.setValueRanges(column, self.column_managers[column].interval_picker.getIntervals())
             self.data_manager.setBoundaries(column, self.column_managers[column].interval_picker.getBoundaries())
 
         self.data_manager.standarize()
+        for column in df.columns:
+            if column == self.target_column:
+                continue
+            
+            self.data_manager.setMaxStandarizedValue(column, self.data_manager.df[column].max()+1)
+            
         self.setDataframe(self.data_manager.getData())
         self.parent.reload()
 

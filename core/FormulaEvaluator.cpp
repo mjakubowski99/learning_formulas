@@ -1,6 +1,7 @@
 #include "types.hpp"
 #include "FormulaEvaluator.hpp"
 #include <iostream>
+#include "utils.hpp"
 
 FormulaEvaluator::FormulaEvaluator(float positive_responses_treshold)
 {
@@ -38,7 +39,9 @@ int FormulaEvaluator::voteForRow(std::list<Formula> * decision_class_formulas, i
         int score = 0;
         
         for(Formula formula : decision_class_formulas[i]) {
-            if (this->formulaSatisfied(formula, data, row, attributes_count)) {
+            bool satisfied = this->formulaSatisfied(formula, data, row, attributes_count);
+
+            if (satisfied) {
                 score++;
             }
         }

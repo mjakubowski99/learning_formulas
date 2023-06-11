@@ -1,7 +1,9 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import LabelBinarizer
+from preprocessing.binarizer.Binarizer import Binarizer
 import os
+
+max_values = {}
 
 def make_train_test_data_files(df, target, train_file="train.txt", test_file="test.txt"):
     if os.path.isfile(train_file):
@@ -30,7 +32,7 @@ def make_train_test_data_files(df, target, train_file="train.txt", test_file="te
 
     classes = df[target].unique()
     classes.sort()
-
+    
     if all_bin:
 
         train_file.write(str(len(classes))+'\n')
@@ -51,12 +53,9 @@ def make_train_test_data_files(df, target, train_file="train.txt", test_file="te
         return
     
     binarizers = {}
-
     for column in df.columns:
-        if column == target:
-            continue
-        binarizers[column] = LabelBinarizer()
-        binarizers[column].fit(df[column])
+        binarizers[column] = Binarizer()
+        max_values[column] = df[column].max()+1
 
     train_classes = len(classes)
 
@@ -101,16 +100,16 @@ def write_lines(file, binarizers, df, target):
         np.savetxt(file, df.values, fmt='%d')
         return
             
-    result = None 
+    result = [[] for i in range(0,len(df))]
+
     for column in df.columns:
         if column == target:
             continue
-
-        if result is None:
-            result = binarizers[column].transform(df[column])
-            continue
-
-        result = np.concatenate((result, binarizers[column].transform(df[column])), axis=1)
+        
+        i=0
+        for value in binarizers[column].fit_transform(df[column], max_values[column]):
+            result[i].extend(value)
+            i+=1
 
     np.savetxt(file, result, fmt='%d')
         
@@ -119,7 +118,7 @@ def binarize(binarizers, row, columns, target):
     for column in columns:
         if column == target:
             continue
-        result = binarizers[column].transform([row[column]])[0]
+        result = binarizers[column].fit_transform([row[column]], max_values[column])[0]
         line += ' '.join(str(x) for x in result)
         line += ' '
     return line[:-1]

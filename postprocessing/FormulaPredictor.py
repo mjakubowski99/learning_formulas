@@ -1,7 +1,8 @@
 from models.Formula import Formula
 from postprocessing.FormulaClassVoter import FormulaClassVoter
 from preprocessing.DataManager import DataManager
-import pandas as pd 
+import pandas as pd
+import numpy as np
 
 class FormulaPredictor:
 

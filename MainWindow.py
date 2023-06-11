@@ -5,6 +5,7 @@ from ui.output_reader import ProcessOutputReader, MyConsole
 from PyQt5.QtCore import pyqtSlot
 from ui.LabeledSpinBox import LabeledSpinBox
 from ui.DataframeReader import DataframeReader
+from ui.FormulaAnalyzerWindow import FormulaAnalyzerWindow
 from ui.layout_cleaner import clean_layout
 import numpy as np 
 from file import make_train_test_data_files
@@ -65,60 +66,75 @@ class FormulaLearner(QMainWindow):
         self.select_layout.addWidget(self.algorithm_selector)
 
     def get_current_algorithm(self):
-        if self.algorithm_selector.currentIndex == 0:
+        if self.algorithm_selector.currentIndex() == 0:
             return "RANDOM"
         return "EVOLUTION"
 
     def on_selected_algorithm(self):
-        clean_layout(self.input_layout)
+        for i in range(self.input_layout.count()): 
+            self.input_layout.itemAt(i).widget().close()
 
-        if self.algorithm_selector.currentIndex == 0:
+        if self.get_current_algorithm() == "RANDOM":
             self.make_for_random_algorithm()
         else:
             self.make_for_evolution_algorithm()
 
     def make_for_random_algorithm(self):
-        self.cycles_input = LabeledSpinBox("Ilość cykli:", 20).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 100).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.cycles_input = LabeledSpinBox("Ilość cykli:", 20).add_to_layout(self.input_layout)
+        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 100).add_to_layout(self.input_layout)
+        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout)
+        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout)
+        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout)
+        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout)
         self.positive_responses_percentage_input = LabeledSpinBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout).setValueRange(0,100)
 
     def make_for_evolution_algorithm(self):
-        self.populations_count_input = LabeledSpinBox("Ilość populacji:", 20)
-        self.final_formulas_size_input = LabeledSpinBox("Finalna ilośc formuł:", 100)
-        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 300).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
-        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout).setValueRange(0,1000000)
+        self.populations_count_input = LabeledSpinBox("Ilość populacji:", 20).add_to_layout(self.input_layout)
+        self.final_formulas_size_input = LabeledSpinBox("Finalna ilośc formuł:", 100).add_to_layout(self.input_layout)
+        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 300).add_to_layout(self.input_layout)
+        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout)
+        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout)
+        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout)
+        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout)
         self.mutations_percentage_input = LabeledSpinBox("Procent mutacji: ", 5).add_to_layout(self.input_layout).setValueRange(0,100)
-        self.percentage_to_reproduce_input = LabeledSpinBox("Procent populacji do reporodukcji: ", 5).add_to_layout(self.input_layout).setValueRange(0,100)
+        self.percentage_to_reproduce_input = LabeledSpinBox("Procent populacji do reporodukcji: ", 50).add_to_layout(self.input_layout).setValueRange(0,100)
 
     def stop_formula_learning(self):
         self._process_reader.kill()
         self.console.append_output("Process stopped...")
 
     def set_up_env(self):
-        variables = {
-            "ALGORITHM": self.get_current_algorithm(),
-            "TRAIN_FILE_NAME": "/src/data/train.txt",
-            "TEST_FILE_NAME": "/src/data/test.txt",
-            "FORMULAS_COUNT": self.formulas_input.get_value(),
-            "CYCLES_COUNT": self.cycles_input.get_value(),
-            "MIN_CLAUSES_COUNT": self.min_clauses_input.get_value(),
-            "MAX_CLAUSES_COUNT": self.max_clauses_input.get_value(),
-            "MIN_LITERALS_COUNT": self.min_literals_input.get_value(),
-            "MAX_LITERALS_COUNT": self.max_literals_input.get_value(),
-            "POSITIVE_RESPONSES_PERCENTAGE": self.positive_responses_percentage_input.get_value(),
-            "POPULATIONS_COUNT": self.populations_count_input.get_value(),
-            "POPULATIONS_SIZE": self.formulas_input.get_value(),
-            "FINAL_POPULATION_SIZE": self.final_formulas_size_input.get_value(),
-            "MUTATION_PERCENTAGE": self.mutations_percentage_input.get_value()/100.0,
-            "REPRODUCTION_PERCENTAGE": self.percentage_to_reproduce_input.get_value()/100.0
-        }
+        if self.get_current_algorithm() == "RANDOM":
+            variables = {
+                "ALGORITHM": self.get_current_algorithm(),
+                "TRAIN_FILE_NAME": "/src/data/train.txt",
+                "TEST_FILE_NAME": "/src/data/test.txt",
+                "RESULT_DIR": "/src/result/",
+                "FORMULAS_COUNT": self.formulas_input.get_value(),
+                "CYCLES_COUNT": self.cycles_input.get_value(),
+                "MIN_CLAUSES_COUNT": self.min_clauses_input.get_value(),
+                "MAX_CLAUSES_COUNT": self.max_clauses_input.get_value(),
+                "MIN_LITERALS_COUNT": self.min_literals_input.get_value(),
+                "MAX_LITERALS_COUNT": self.max_literals_input.get_value(),
+                "POSITIVE_RESPONSES_PERCENTAGE": self.positive_responses_percentage_input.get_value(),
+            }
+        else:
+            variables = {
+                "ALGORITHM": self.get_current_algorithm(),
+                "TRAIN_FILE_NAME": "/src/data/train.txt",
+                "TEST_FILE_NAME": "/src/data/test.txt",
+                "RESULT_DIR": "/src/result/",
+                "MIN_CLAUSES_COUNT": self.min_clauses_input.get_value(),
+                "MAX_CLAUSES_COUNT": self.max_clauses_input.get_value(),
+                "MIN_LITERALS_COUNT": self.min_literals_input.get_value(),
+                "MAX_LITERALS_COUNT": self.max_literals_input.get_value(),
+                "POPULATIONS_COUNT": self.populations_count_input.get_value(),
+                "POPULATIONS_SIZE": self.formulas_input.get_value(),
+                "FINAL_POPULATION_SIZE": self.final_formulas_size_input.get_value(),
+                "MUTATION_PERCENTAGE": self.mutations_percentage_input.get_value()/100.0,
+                "REPRODUCTION_PERCENTAGE": self.percentage_to_reproduce_input.get_value()/100.0
+            }
+
         with open(".env", "w") as f:
             for variable in variables:
                 f.write(variable+"="+str(variables[variable])+'\n')
@@ -174,20 +190,27 @@ class MainWindow(QMainWindow):
 
         self.load_file = QPushButton("Załaduj plik z danymi csv")
         self.learn_formula = QPushButton("Przejdz do uczenia formuł...")
+        self.formula_analyzer = QPushButton("Przejdź do analizy formuł...")
         self.load_file.setFixedWidth(200)
         self.learn_formula.setFixedWidth(200)
         self.load_file.clicked.connect(self.open_file_dialog)
         self.learn_formula.clicked.connect(self.reload)
+        self.formula_analyzer.clicked.connect(self.analyzer)
 
         self.button_layout.addWidget(self.load_file)
         self.button_layout.addWidget(self.learn_formula)
+        self.button_layout.addWidget(self.formula_analyzer)
 
         self.layout.addLayout(self.button_layout)
         self.layout.addLayout(self.data_layout)
         
         # set the central widget of the main window to the new widget
         self.setCentralWidget(self.widget)
-        self.reader = None 
+        self.reader = None
+
+    def analyzer(self):
+        self.dialog = FormulaAnalyzerWindow()
+        self.dialog.show()
 
     def reload(self):
         self.dialog = FormulaLearner(self.reader, self.run_with_docker)

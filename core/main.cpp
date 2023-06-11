@@ -87,7 +87,7 @@ void parse_args(int argc, char * argv[])
     }
     if (argc>=9) {
         max_literals_count = std::stoi(argv[8]);
-    }   
+    }
 
     if (algorithm == "RANDOM") {
         if (argc>=10) {
@@ -203,7 +203,7 @@ int main(int argc, char * argv[]) {
         std::cout << "Runned for file: " << train_file_name << std::endl;
         std::cout << "Test file: " << test_file_name << std::endl;
         std::cout << "Populations count: " << populations_count << std::endl;
-        std::cout << "Population size: " << formulas_count_param << std::endl;
+        std::cout << "Population size: " << population_size << std::endl;
         std::cout << "Min clauses count in formula: " << min_clauses_count << std::endl;
         std::cout << "Max clauses count in formula: " << max_clauses_count << std::endl;
         std::cout << "Min literals count in formula: " << min_literals_count << std::endl;
@@ -231,11 +231,12 @@ int main(int argc, char * argv[]) {
         algorithm.setPopulationsCount(populations_count);
         algorithm.setPopulationSize(population_size);
         algorithm.setMutationsPercent(mutation_percentage);
+        algorithm.setFinalPopulationSize(final_population_size);
 
         FormulaWithScoreArray * formula_with_score_array = algorithm.run();
 
         Data * test_data = parseData(test_file_name);
-        saveFormulasWithScoreToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
+        saveFormulasToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
         std::cout << algorithm.score(test_data) << std::endl;
     }
 

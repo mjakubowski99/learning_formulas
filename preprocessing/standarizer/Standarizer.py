@@ -3,14 +3,13 @@ from preprocessing.DataTransformer import DataTransformer
 import pandas as pd 
 
 def encode_column(x, intervals: dict[int, Interval]):
-    
-    label = None 
+    last_label = None
     for label, interval in intervals.items():
         if x >= interval.begin and x<=interval.end:
             return label
         last_label = label
 
-    if label is not None:
+    if last_label is not None:
         return label 
 
     raise Exception("Failed to encode value")
@@ -19,6 +18,7 @@ class Standarizer(DataTransformer):
 
     def __init__(self, df, target, intervals: dict=None, boundaries: dict=None):
         self.default_boundary = 5
+        self.target = target 
 
         if boundaries is None:
             self.boundaries = {}
@@ -34,20 +34,21 @@ class Standarizer(DataTransformer):
         for column in df.columns:
             if column == target:
                 continue
-            if df[column].min() == 0 or df[column].max() in [0,1]:
-                continue
-            df[column] = df[column].apply(encode_column, intervals=self.intervals[column])
+            df[column] = df[column].apply(lambda x : encode_column(x,self.intervals[column]))
+
         return df 
 
     def init_intervals(self, df, target):
         intervals = {}
         for column in df.columns:
+            if column == target:
+                continue
+            
             self.boundaries[column] = {
                 'min': df[column].min(),
                 'max': df[column].max(),
                 'boundary': self.default_boundary
             }
-
             params = self.boundaries[column]
             intervals[column] = self.generate_intervals(params['min'], params['max'], params['boundary'])
 
@@ -74,6 +75,10 @@ class Standarizer(DataTransformer):
         return self.intervals
 
     def generate_intervals(self, min, max, new_max):
+        min = int(min)
+        max = int(max)
+        new_max = int(new_max)
+
         intervals = {}
         if new_max >= max:
             i=min

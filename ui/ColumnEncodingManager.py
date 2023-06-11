@@ -36,7 +36,7 @@ class ColumnEncodingManager:
             self.__init_max_unique_objects(data_manager, state)
             self.max_unique_objects.add_to_layout(column_layout)
 
-        elif state.isValueStandarization():
+        elif state.isValueStandarization() and self.column != data_manager.getTarget():
             data_manager.init_standarizer()
             self.__init_interval_picker(data_manager, state)
             column_layout.addWidget(self.interval_picker)

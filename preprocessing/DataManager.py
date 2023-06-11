@@ -4,9 +4,10 @@ from preprocessing.decimal_encoding.DecimalEncoder import DecimalEncoder
 from preprocessing.object_tagging.ObjectTagger import ObjectTagger
 from models.Interval import Interval
 from preprocessing.standarizer.Standarizer import Standarizer
-from sklearn.preprocessing import LabelBinarizer
+from preprocessing.binarizer.Binarizer import Binarizer
 import os.path
 import pandas as pd
+import numpy as np
 import json 
 
 class DataManager:
@@ -26,6 +27,9 @@ class DataManager:
         intervals = {}
         boundaries = {}
         for column in self.df.columns:
+            if column == self.target:
+                continue
+
             if self.config['columns'][column].get('value_ranges') is None:
                 self.value_standarizer = Standarizer(self.df, self.target)
                 return
@@ -77,6 +81,9 @@ class DataManager:
         self.save_config()
 
     def getValueRanges(self, column):
+        if column == self.target:
+            return {} 
+        
         if self.config['columns'][column].get('value_ranges') is None:
             self.setValueRanges(self.value_standarizer.intervals)
 
@@ -89,11 +96,15 @@ class DataManager:
         return self.config['columns'][column]['boundaries']
     
     def setBoundaries(self, column, boundaries: dict):
+        if column == self.target:
+            return {} 
+        
         self.config['columns'][column]['boundaries'] = {
             'min': int(boundaries['min']),
             'max': int(boundaries['max']),
             'boundary': int(boundaries['boundary']),
         }
+        self.value_standarizer.boundaries[column] = self.config['columns'][column]['boundaries']
         self.save_config()
 
     def setValueRanges(self, column, value_ranges: dict[Interval]):
@@ -102,7 +113,19 @@ class DataManager:
             data[int(key)] = {'begin': int(value_range.begin), 'end': int(value_range.end)}
 
         self.config['columns'][column]['value_ranges'] = data
+
+        data = {}
+        for key, value_range in self.config['columns'][column]['value_ranges'].items():
+            data[int(key)] = Interval(value_range['begin'], value_range['end'])
+        self.value_standarizer.intervals[column] = data
         self.save_config()
+
+    def setMaxStandarizedValue(self, column, value):
+        self.config['columns'][column]['max_standarized_value'] = int(value)
+        self.save_config()
+
+    def getMaxStandarizedValue(self, column):
+        return self.config['columns'][column]['max_standarized_value']
 
     def fill_missing(self):
         tresholds = {}
@@ -129,6 +152,9 @@ class DataManager:
     def standarize(self):
         data = {}
         for column in self.df.columns:
+            if column == self.target:
+                continue
+
             data[column] = self.config['columns'][column]['value_ranges']
 
         self.df = self.value_standarizer.process(self.df, self.target)
@@ -140,27 +166,31 @@ class DataManager:
         self.standarize()
 
         result = []
-        for x in range(0, len(self.df)+1):
+        for x in range(0, len(self.df)+2):
             result.append([])
 
         target = self.config['target']
         
+        max_rows = {}
+        for column in self.df.columns:
+            if column == target:
+                continue
+            max_rows[column] = self.getMaxStandarizedValue(column)
+
+        result = [[] for i in range(0, len(self.df))]
+
         for column in self.df.columns:
             if column == target:
                 continue
 
-            binarizer = LabelBinarizer() 
-            max = self.config['columns'][column]['boundaries']['boundary']
-
-            self.df[column].where(self.df[column] > max, max)
+            binarizer = Binarizer()
 
             values = self.df[column].values.tolist()
-            values.append(max)
 
-            values = binarizer.fit_transform(values)
+            encoded = binarizer.fit_transform(values, max_rows[column])
             i=0
-            for row in values:
-                result[i].extend(row)
+            for value in encoded:
+                result[i].extend(value)
                 i+=1
 
         return result

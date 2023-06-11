@@ -5,6 +5,7 @@ class LabeledSpinBox:
     def __init__(self, label, init_value: int):
         self.__label = QLabel(label)
         self.__spin_box = QSpinBox()
+        self.setValueRange(0,1000000)
         self.__spin_box.setValue(init_value)
 
     def add_to_layout(self, layout):

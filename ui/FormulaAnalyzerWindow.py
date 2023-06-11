@@ -10,20 +10,27 @@ class FormulaAnalyzerWindow(QMainWindow):
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
+        self.setWindowTitle("Analizer formuł logicznych")
+        self.setGeometry(100, 100, 1270, 720)
         self.data_file_dialog_button = self.make_file_dialog_button("Wczytaj dane do predykcji...")
         self.data_file_dialog_button.clicked.connect(self.read_data_file)
+
+        self.widget = QWidget()
+        self.layout = QVBoxLayout(self.widget)
         self.layout.addWidget(self.data_file_dialog_button)
+
+        self.setCentralWidget(self.widget)
 
     def build_dataframe(self, data_file, config_file):
         self.data_manager = DataManager(pd.read_csv(data_file), config_file)
 
-        self.data_manager.df = target_to_begin(self.data_manager.getData(), self.data_manager.getTarget())
         self.predictor = self.make_predictor_for_latest_data()
         results = self.predictor.predict(self.data_manager.df, self.data_manager.config_file)
+        self.data_manager.df = target_to_begin(self.data_manager.getData(), self.data_manager.getTarget())
         self.data_manager.df = insert_column_at(self.data_manager.df, 1, self.data_manager.getTarget()+"_predicted", results)
 
         self.table = QTableView()
-        self.table_model = TableModel(self, self.data_manager.df)
+        self.table_model = TableModel(self.data_manager.df)
         self.table.setModel(self.table_model)
 
         self.layout.addWidget(self.table)

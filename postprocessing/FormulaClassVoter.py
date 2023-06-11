@@ -19,12 +19,11 @@ class FormulaClassVoter:
 
         return most_votes_class
 
-
     def satisfied(self, row: list[bool], formula: Formula):
         for clause in formula.clauses:
             clause_true = False
             for literal in clause.literals:
-                if row[literal.index] == literal.positive:
+                if bool(row[literal.index]) == literal.positive:
                     clause_true = True
                     break 
             
