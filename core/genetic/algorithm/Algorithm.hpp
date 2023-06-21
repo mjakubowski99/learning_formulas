@@ -12,7 +12,6 @@ class Algorithm {
     int final_population_size;
     int poulation_size;
     float mutations_percent;
-    int formulas_count;
     int min_clauses_count;
     int max_clauses_count;
     int min_literals_count;
@@ -31,7 +30,6 @@ class Algorithm {
         void setData(Data * data, int classes_count);
 
         void setFormulaParams(
-            int formulas_count, 
             int min_clauses_count, 
             int max_clauses_count, 
             int min_literals_count, 

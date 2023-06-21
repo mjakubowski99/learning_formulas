@@ -64,6 +64,7 @@ void FormulaGenerator::makePositiveFormulas(
     int rows = data.rows_count;
     int cols = data.attributes_count;
     
+
     for(int i=0; i<formulas_count; i++) {
         Formula formula;
 

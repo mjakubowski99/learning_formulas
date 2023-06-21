@@ -15,14 +15,13 @@ void Algorithm::setData(Data * data, int classes_count)
 }
 
 void Algorithm::setFormulaParams(
-    int formulas_count, 
     int min_clauses_count, 
     int max_clauses_count, 
     int min_literals_count, 
     int max_literals_count
 )
 {
-    this->formulas_count = formulas_count;
+    this->final_population_size = final_population_size;
     this->min_clauses_count = min_clauses_count;
     this->max_clauses_count = max_clauses_count;
     this->min_literals_count = min_literals_count;
@@ -66,44 +65,12 @@ FormulaWithScoreArray * Algorithm::run()
 
         int p=0;
         while (p<this->populations_count) {
-            std::cout << "Population: " << p << std::endl;
             this->formulas[i] = this->selector->select(this->formulas[i]);
 
             this->performCrossing(i);
             this->mutate(i);
 
-            if (i!=this->populations_count-1) {
-                for(int j=0; j<this->formulas[i].size; j++) {
-                    if (this->formulas[i].formulas[j].score < 66.66) {
-                        std::list<Formula> generated_formulas;
-
-                        if (j%2==0) {
-                            this->generator->makePositiveFormulas(
-                                generated_formulas,
-                                this->data[i],
-                                1,
-                                this->min_clauses_count,
-                                this->max_clauses_count,
-                                this->min_literals_count,
-                                this->max_literals_count
-                            );
-                        } else {
-                            this->generator->makePositiveFormulas(
-                                generated_formulas,
-                                this->data[i],
-                                1,
-                                this->min_clauses_count,
-                                this->max_clauses_count,
-                                this->min_literals_count,
-                                this->max_literals_count
-                            );
-                        }
-                        this->formulas[i].formulas[j].formula = *(generated_formulas.begin());
-                        this->formulas[i].formulas[j].score = this->evaluator->numericScore(this->formulas[i].formulas[j].formula, this->data, this->classes_count, i);
-                    }
-                }
-            }
-
+            std::cout << "Populacja: " << p << std::endl;
             p++;
         }
 
@@ -119,7 +86,7 @@ std::list<Formula> Algorithm::generateInitialPopulation(int goal)
     return this->generator->makeFormulas(
         this->data,
         this->classes_count,
-        this->formulas_count*10,
+        this->poulation_size,
         this->min_clauses_count,
         this->max_clauses_count,
         this->min_literals_count,
@@ -131,13 +98,11 @@ std::list<Formula> Algorithm::generateInitialPopulation(int goal)
 FormulaWithScoreArray Algorithm::attachScore(std::list<Formula> formulas, int goal)
 {
     FormulaWithScoreArray formula_with_scores(formulas.size());
-
     int i=0;
     for(Formula formula : formulas) {
         FormulaWithScore formula_with_score;
         formula_with_score.formula = formula;
         formula_with_score.score = this->evaluator->numericScore(formula, this->data, this->classes_count, goal);
-
         formula_with_scores.formulas[i] = formula_with_score;
         i++;
     }
@@ -173,11 +138,40 @@ void Algorithm::mutate(int decision_class)
         int random = randomInt(0, formulas.size);
         Formula formula = formulas.formulas[random].formula;
 
-        int random_clause = randomInt(0,formula.size());
-        int random_literal = randomInt(0,formula[random_clause].size());
+        int formula_mutations_count = randomInt(0,formula.size());
 
-        formulas.formulas[random].formula[random_clause][random_literal].positive = 
-            !formulas.formulas[random].formula[random_clause][random_literal].positive;
+        std::list<Formula> generated_formulas;
+        if (random%2==0) {
+            this->generator->makePositiveFormulas(
+                generated_formulas,
+                this->data[decision_class],
+                decision_class,
+                formula_mutations_count,
+                formula_mutations_count,
+                this->min_literals_count,
+                this->max_literals_count
+            );
+        } else {
+            this->generator->makeNegativeFormulas(
+                generated_formulas,
+                this->data,
+                decision_class,
+                this->classes_count,
+                1,
+                formula_mutations_count,
+                formula_mutations_count,
+                this->min_literals_count,
+                this->max_literals_count
+            );
+        }
+    
+        for(Formula generated_formula : generated_formulas) {
+            for(int j=0; j<generated_formula.size(); j++) {
+                int random_clause = randomInt(0, formula.size());
+                formulas.formulas[random].formula[random_clause] = formula[j];
+            }
+            break;
+        }
     }
 
     this->formulas[decision_class] = formulas;
@@ -191,7 +185,6 @@ float Algorithm::score(Data * data)
     int score=0;
     int all=0;
 
-    std::cout << "Wyniki: " << std::endl;
     std::list<Formula> * formulas = new std::list<Formula>[this->classes_count];
     for(int i=0; i<this->classes_count; i++) {
         for(int w=0; w<this->formulas[i].size; w++) {
@@ -209,11 +202,9 @@ float Algorithm::score(Data * data)
             if (i==vote_result) {
                 score++;
             }
-            std::cout << vote_result << std::endl;
         }
         all+=data[i].rows_count;
     }
-    std::cout << "Koniec" << std::endl;
 
     return score / (float) all;
 }

@@ -23,14 +23,17 @@ class DataManager:
 
         self.make()
 
-    def init_standarizer(self):
+    def init_standarizer(self, force_not_init=False):
         intervals = {}
         boundaries = {}
         for column in self.df.columns:
             if column == self.target:
                 continue
 
-            if self.config['columns'][column].get('value_ranges') is None:
+            if self.config['columns'][column].get('value_ranges') is None and force_not_init:
+                continue
+
+            if self.config['columns'][column].get('value_ranges') is None and not force_not_init:
                 self.value_standarizer = Standarizer(self.df, self.target)
                 return
             
@@ -154,13 +157,17 @@ class DataManager:
         for column in self.df.columns:
             if column == self.target:
                 continue
+            
+            if self.config['columns'][column].get('value_ranges') is None:
+                self.df = self.df.drop(columns=[column])
+                continue
 
             data[column] = self.config['columns'][column]['value_ranges']
 
         self.df = self.value_standarizer.process(self.df, self.target)
 
     def process_all_at_once(self):
-        self.fill_missing()
+        self.df = self.df.dropna()
         self.encode_floats()
         self.encode_objects()
         self.standarize()
@@ -175,6 +182,10 @@ class DataManager:
         for column in self.df.columns:
             if column == target:
                 continue
+            if self.config['columns'][column].get('max_standarized_value') is None:
+                self.df = self.df.drop(columns=[column])
+                continue
+
             max_rows[column] = self.getMaxStandarizedValue(column)
 
         result = [[] for i in range(0, len(self.df))]

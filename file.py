@@ -105,9 +105,12 @@ def write_lines(file, binarizers, df, target):
     for column in df.columns:
         if column == target:
             continue
+
+        print(len(df.columns))
         
+        values = binarizers[column].fit_transform(df[column], max_values[column])
         i=0
-        for value in binarizers[column].fit_transform(df[column], max_values[column]):
+        for value in values:
             result[i].extend(value)
             i+=1
 

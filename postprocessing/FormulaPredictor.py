@@ -12,7 +12,7 @@ class FormulaPredictor:
 
     def predict(self, df: pd.DataFrame, config):
         data_manager = DataManager(df, config)
-        data_manager.init_standarizer()
+        data_manager.init_standarizer(True)
         
         df = data_manager.process_all_at_once()
 

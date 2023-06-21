@@ -22,7 +22,11 @@ class FormulaAnalyzerWindow(QMainWindow):
         self.setCentralWidget(self.widget)
 
     def build_dataframe(self, data_file, config_file):
+
         self.data_manager = DataManager(pd.read_csv(data_file), config_file)
+
+        if (len(self.data_manager.df) > 10000):
+            self.data_manager.df = self.data_manager.df[0:1000]
 
         self.predictor = self.make_predictor_for_latest_data()
         results = self.predictor.predict(self.data_manager.df, self.data_manager.config_file)

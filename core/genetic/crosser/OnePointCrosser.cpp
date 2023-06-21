@@ -4,29 +4,15 @@
 Formula OnePointCrosser::cross(Formula & a, Formula & b)
 {
     Formula result;
+    int clause_from_a = randomInt(0, a.size());
+    int clasuse_from_b = randomInt(0, b.size());
 
-    if (a.size() < b.size()) {
-        return run(a,b);
+    if (randomInt(0,2)%2==0) {
+        a[clause_from_a] = b[clasuse_from_b];
+        return a;
     }
-    return run(b,a);
-}
-
-Formula OnePointCrosser::run(Formula & a, Formula & b)
-{
-    int clause_split_point = randomInt(0, a.size());
-    int literal_split_point = randomInt(0, a[clause_split_point].size());
-
-    for(int i=clause_split_point; i<b.size(); i++) {
-        for(int j=literal_split_point; j<b[i].size(); j++) {
-
-            if (i<clause_split_point) {
-                b[i] = a[i];
-            }
-            if (i==clause_split_point && j<literal_split_point) {
-                a[i][j] = b[i][j];
-            }
-        }
+    else {
+        b[clasuse_from_b] = a[clause_from_a];
+        return b;
     }
-
-    return b;
 }

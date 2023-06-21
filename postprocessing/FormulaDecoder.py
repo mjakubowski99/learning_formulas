@@ -7,6 +7,9 @@ class FormulaDecoder:
     def cnf_from_string(self, line: str):
         clauses = []
         for clause in line.split('^'):
+            if " - " in clause:
+                continue
+            
             literals = []
             for literal in clause[1:-1].split('v'):
                 if literal[-1] == ')':

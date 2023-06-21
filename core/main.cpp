@@ -13,7 +13,7 @@ int decision_classes_count = 0;
 
 std::string train_file_name = "../data/train.txt";
 std::string test_file_name = "../data/test.txt";
-std::string algorithm = "RANDOM";
+std::string algorithm = "EVOLUTION";
 
 int max_cycles_count_param = 20;
 int formulas_count_param = 100;
@@ -222,7 +222,6 @@ int main(int argc, char * argv[]) {
         algorithm.setCrossingStrategy(crosser);
         algorithm.setSelectionStrategy(selector);
         algorithm.setFormulaParams(
-            formulas_count_param, 
             min_clauses_count, 
             max_clauses_count, 
             min_literals_count, 
@@ -236,7 +235,7 @@ int main(int argc, char * argv[]) {
         FormulaWithScoreArray * formula_with_score_array = algorithm.run();
 
         Data * test_data = parseData(test_file_name);
-        saveFormulasToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
+        saveFormulasWithScoreToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
         std::cout << algorithm.score(test_data) << std::endl;
     }
 
