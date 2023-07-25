@@ -8,6 +8,7 @@ from PyQt5.QtWidgets import QVBoxLayout
 from ui.layout_cleaner import clean_layout
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QAbstractItemView
+from ui.layout_cleaner import clean_layout
 
 class IntervalPickerButton(QPushButton):
     def __init__(self, standarizer: Standarizer, column, columns, parent=None):
@@ -20,11 +21,19 @@ class IntervalPickerButton(QPushButton):
         self.standarizer = standarizer
         self.column = column
         self.columns = columns
+        self.main_layout = QVBoxLayout()
+        self.values_layout = QVBoxLayout()
+        self.interval_layout = QVBoxLayout()
+        self.main_layout.addLayout(self.values_layout)
+        self.main_layout.addLayout(self.interval_layout)
+
         self.label = QLabel("Zmień ilość wartości: ")
         self.values = QSpinBox()
         self.values.setValue(self.standarizer.getBoundary(self.column))
         self.values.valueChanged.connect(self.setBoundary)
-        self.main_layout = QVBoxLayout()
+
+        self.values_layout.addWidget(self.label)
+        self.values_layout.addWidget(self.values)
 
     def getIntervals(self):
         return self.standarizer.getColumnIntervals(self.column)
@@ -34,7 +43,6 @@ class IntervalPickerButton(QPushButton):
 
     def setBoundary(self):
         self.standarizer.setBoundary(self.column, self.values.value())
-        clean_layout(self.main_layout)
         self.make_intervals()
 
     def apply_intervals(self):
@@ -45,7 +53,11 @@ class IntervalPickerButton(QPushButton):
             self.standarizer.setIntervals(column, intervals)
         self.standarizer.setIntervals(self.column, intervals)
 
+        self.window.close()
+
     def make_intervals(self):
+        clean_layout(self.interval_layout)
+
         self.picker = IntervalPicker(self.standarizer.getIntervals()[self.column])
 
         self.selector_label = QLabel("Wybierz kolumny, do zaaplikowania tych samych ustawień")
@@ -58,12 +70,11 @@ class IntervalPickerButton(QPushButton):
             item = QListWidgetItem(column)
             self.column_selector.addItem(item)
 
-        self.main_layout.addWidget(self.label)
-        self.main_layout.addWidget(self.values)
-        self.picker.add_to_layout(self.main_layout)
-        self.main_layout.addWidget(self.selector_label)
-        self.main_layout.addWidget(self.column_selector)
-        self.main_layout.addWidget(self.confirm_button)
+        self.picker.add_to_layout(self.interval_layout)
+
+        self.interval_layout.addWidget(self.selector_label)
+        self.interval_layout.addWidget(self.column_selector)
+        self.interval_layout.addWidget(self.confirm_button)
         self.scroll = QScrollArea()
         self.widget = QWidget()
 

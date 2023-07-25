@@ -26,17 +26,19 @@ class FormulaAnalyzerWindow(QMainWindow):
         self.data_manager = DataManager(pd.read_csv(data_file), config_file)
 
         if (len(self.data_manager.df) > 10000):
-            self.data_manager.df = self.data_manager.df[0:1000]
+            self.data_manager.df = self.data_manager.df[0:6000]
 
         self.predictor = self.make_predictor_for_latest_data()
         results = self.predictor.predict(self.data_manager.df, self.data_manager.config_file)
         self.data_manager.df = target_to_begin(self.data_manager.getData(), self.data_manager.getTarget())
-        self.data_manager.df = insert_column_at(self.data_manager.df, 1, self.data_manager.getTarget()+"_predicted", results)
+        self.data_manager.df = insert_column_at(self.data_manager.df, 1, str(self.data_manager.getTarget())+"_predicted", results)
 
+        self.score_label = QLabel("Dokładność predykcji: "+str(self.predictor.score))
         self.table = QTableView()
         self.table_model = TableModel(self.data_manager.df)
         self.table.setModel(self.table_model)
 
+        self.layout.addWidget(self.score_label)
         self.layout.addWidget(self.table)
 
     def read_data_file(self):

@@ -10,14 +10,17 @@ class ObjectTagger(DataTransformer):
     def default(self, df):
         return self.__make_default_max_unique(df.columns)
 
-    def process(self, df: pd.DataFrame, target=None, max_unique_counts: dict[t.Any, int]=None) -> pd.DataFrame:
+    def process(self, df: pd.DataFrame, target=None, max_unique_counts: dict[t.Any, int]=None, encode_only=True) -> pd.DataFrame:
         self.taggers = {}
 
         for column in df.columns:
+            if encode_only and column == target:
+                continue
+            
             if df[column].dtype.kind in 'biufc':
                 continue
 
-            if df[column].nunique() > max_unique_counts[column] and column != target:
+            if not encode_only and df[column].nunique() > max_unique_counts[column] and column != target:
                 df = df.drop(columns=[column])
                 continue
 

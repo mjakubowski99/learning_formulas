@@ -53,11 +53,18 @@ class DataManager:
         self.save_config()
 
     def getTarget(self):
-        return self.config["target"]
+        return self.config.get("target")
 
     def setTarget(self, target):
+        self.target = target
+
         self.config["target"] = target
+        self.config['classes'] = self.df[self.target].fillna('').unique().tolist()
+        self.config['classes'].sort()
         self.save_config()
+
+    def getClasses(self):
+        return self.config['classes']
 
     def getFillMissing(self, column):
         return self.config['columns'][column]['missing_values']
@@ -138,6 +145,16 @@ class DataManager:
 
         self.df = self.missing_filler.process(self.df, self.target, tresholds, self.config['dropped_columns'])
 
+    def bound_to_only_saved_columns(self):
+        for column in self.df.columns:
+            if column not in self.config['saved_columns']:
+                self.df = self.df.drop(columns=[column])
+            else:
+                if self.df[column].dtype.kind in 'biufc':
+                    self.df[column] = self.df[column].fillna(0.0)
+                else:
+                    self.df[column] = self.df[column].fillna('Not assigned')
+
     def encode_floats(self):
         data = {}
         for column in self.df.columns:
@@ -145,15 +162,18 @@ class DataManager:
         
         self.df = self.decimal_encoder.process(self.df, self.target, data)
 
-    def encode_objects(self):
+    def encode_objects(self, encode_only=False):
         data = {}
         for column in self.df.columns:
             data[column] = self.config['columns'][column]['max_unique_objects']
 
-        self.df = self.object_tagger.process(self.df, self.target, data)
+        self.df = self.object_tagger.process(self.df, self.target, data, encode_only)
 
     def standarize(self):
         data = {}
+        self.config['saved_columns'] = self.df.columns.tolist()
+        self.save_config()
+
         for column in self.df.columns:
             if column == self.target:
                 continue
@@ -166,10 +186,10 @@ class DataManager:
 
         self.df = self.value_standarizer.process(self.df, self.target)
 
-    def process_all_at_once(self):
-        self.df = self.df.dropna()
+    def process_saved(self):
+        self.bound_to_only_saved_columns()
         self.encode_floats()
-        self.encode_objects()
+        self.encode_objects(True)
         self.standarize()
 
         result = []
@@ -181,9 +201,6 @@ class DataManager:
         max_rows = {}
         for column in self.df.columns:
             if column == target:
-                continue
-            if self.config['columns'][column].get('max_standarized_value') is None:
-                self.df = self.df.drop(columns=[column])
                 continue
 
             max_rows[column] = self.getMaxStandarizedValue(column)
@@ -203,6 +220,8 @@ class DataManager:
             for value in encoded:
                 result[i].extend(value)
                 i+=1
+
+        print(len(result[0]))
 
         return result
 
@@ -225,6 +244,7 @@ class DataManager:
 
         self.target = self.df.columns[0]
 
+        config['classes'] = self.df[self.target].unique().tolist()
         config["target"] = self.target
         config['dropped_columns'] = []
         config['columns'] = {}

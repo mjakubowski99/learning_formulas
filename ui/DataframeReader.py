@@ -2,9 +2,6 @@ import pandas as pd
 from PyQt5.QtWidgets import *
 from ui.DataframeTableModel import TableModel
 from PyQt5.QtCore import Qt
-from preprocessing.decimal_encoding.DecimalEncoder import DecimalEncoder
-from preprocessing.object_tagging.ObjectTagger import ObjectTagger
-from preprocessing.standarizer.Standarizer import Standarizer
 from ui.layout_cleaner import clean_layout
 from enums.DataEncodingState import DataEncodingState
 from ui.state.EncodingState import EncodingState
@@ -34,6 +31,7 @@ class DataframeReader:
 
         self.target_column = self.data_manager.getTarget()
         self.target_index = self.data_manager.getData().columns.get_loc(self.target_column)
+        self.target_select.setCurrentIndex(self.target_index)
 
         self.original_df = df.copy()
 
@@ -54,10 +52,10 @@ class DataframeReader:
 
         self.buttons_layout = QHBoxLayout()
 
-        self.fix_missing_values_button = QPushButton("Uzupełnij brakujące wartości")
-        self.to_integers_button = QPushButton("Przekonwertuj na wartości numeryczne")
-        self.encode_objects_button = QPushButton("Zakoduj obiekty jako integer")
-        self.standarize_value_button = QPushButton("Zakoduj wartości i zapisz do pliku")
+        self.fix_missing_values_button = QPushButton("Uruchom uzupełnienia brakujących wartości")
+        self.to_integers_button = QPushButton("Uruchom kodowanie wartości zmiennoprzecinkowych na integer")
+        self.encode_objects_button = QPushButton("Uruchom kodowanie obiektów na integer")
+        self.standarize_value_button = QPushButton("Standaryzuj wartości i zapisz do pliku w formie binarnej")
 
         self.fix_missing_values_button.setVisible(self.state.isFillMissing())
         self.to_integers_button.setVisible(self.state.isFloatEncoding())
@@ -142,7 +140,7 @@ class DataframeReader:
             self.data_manager.setMaxStandarizedValue(column, self.data_manager.df[column].max()+1)
             
         self.setDataframe(self.data_manager.getData())
-        self.parent.reload()
+        self.parent.reload_evolution()
 
     def reset_dataframe(self):
         self.init_state()

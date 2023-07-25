@@ -1,6 +1,7 @@
 from models.Interval import Interval
 from PyQt5.QtWidgets import QSpinBox, QLabel
 from PyQt5.QtWidgets import QTableView, QHBoxLayout
+from ui.layout_cleaner import clean_layout
 
 class IntervalPicker:
     def __init__(self, intervals: dict[int, Interval]):
@@ -25,6 +26,7 @@ class IntervalPicker:
         return intervals
 
     def add_to_layout(self, layout):
+        clean_layout(layout)
         for id, pickers in self.pickers.items():
             picker_layout = QHBoxLayout()
             picker_layout.addWidget(QLabel("Wartość: "+str(id)))

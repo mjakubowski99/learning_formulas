@@ -13,10 +13,50 @@ class FormulaPredictor:
     def predict(self, df: pd.DataFrame, config):
         data_manager = DataManager(df, config)
         data_manager.init_standarizer(True)
-        
-        df = data_manager.process_all_at_once()
 
-        return self.predict_raw(df)
+        cloned_df = df.copy()
+        cloned_data_manager = DataManager(cloned_df, config)
+
+        cloned_data_manager.bound_to_only_saved_columns()
+        cloned_data_manager.encode_objects(True)
+        cloned_df = cloned_data_manager.getData()
+        
+        processed_df = data_manager.process_saved()
+        classes = data_manager.getClasses()
+
+        class_indexes = self.predict_raw(processed_df)
+
+        result = []
+        i=0
+        score = 0
+
+        if cloned_df.get(data_manager.getTarget()) is None:
+            for class_index in class_indexes:
+                if class_index is not None:
+                    predicted = classes[class_index]
+                else:
+                    predicted = -1
+
+                result.append(predicted)
+
+            self.score = None 
+            return result
+
+        for row in cloned_df[data_manager.getTarget()]:
+            
+            if class_indexes[i] is not None:
+                predicted = classes[class_indexes[i]]
+            else:
+                predicted = -1
+
+            if predicted == row:
+                score+=1
+            result.append(predicted)
+            i+=1
+
+        self.score = score/len(df)
+
+        return result
 
     def predict_raw(self, data: list[list[bool]]):
         predictions = []

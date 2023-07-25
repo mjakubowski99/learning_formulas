@@ -27,6 +27,7 @@ bool FormulaEvaluator::formulaEfficient(FormulaScore score)
     if (score.false_negatives+score.false_positives == 0 ) {
         return score.true_positives + score.true_negatives > 0;
     }
+
     return (score.true_positives+score.true_negatives) / (float) (score.false_negatives+score.false_positives) > 2.0;
 }
 

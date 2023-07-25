@@ -1,6 +1,7 @@
 import sys
-from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QComboBox
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QPushButton, QComboBox, QLabel
 from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtCore import Qt
 from ui.output_reader import ProcessOutputReader, MyConsole
 from PyQt5.QtCore import pyqtSlot
 from ui.LabeledSpinBox import LabeledSpinBox
@@ -13,21 +14,23 @@ from utils.file import *
 
 class FormulaLearner(QMainWindow):
 
-    def __init__(self, reader=None, run_with_docker=True, parent=None):
+    def __init__(self, reader=None, current_algorithm="RANDOM", run_with_docker=True, parent=None):
         super(FormulaLearner, self).__init__(parent)
         self.reader = reader
         self.run_with_docker = run_with_docker
+        self.current_algorithm = current_algorithm
+        self.setMinimumSize(1280, 720)
 
         self.widget = QWidget()
         self.layout = QVBoxLayout(self.widget)
 
         self._process_reader = ProcessOutputReader()
+        self.console_layout = QVBoxLayout()
         self.console = MyConsole()
-        self.select_layout = QHBoxLayout()
-        self.make_select()
+        self.console_layout.addWidget(self.console)
 
-        self.input_layout = QHBoxLayout()
-        self.make_for_random_algorithm()
+        self.input_layout = QGridLayout()
+        self.make()
 
         self.start_button = QPushButton("Rozpocznij uczenie")
         self.start_button.resize(50,50)
@@ -41,10 +44,9 @@ class FormulaLearner(QMainWindow):
         self.button_layout.addWidget(self.start_button)
         self.button_layout.addWidget(self.stop_button)
 
-        self.layout.addLayout(self.select_layout)
-        self.layout.addLayout(self.button_layout)
         self.layout.addLayout(self.input_layout)
-        self.layout.addWidget(self.console)
+        self.layout.addLayout(self.button_layout)
+        self.layout.addLayout(self.console_layout)
 
         self.setCentralWidget(self.widget)
 
@@ -59,45 +61,33 @@ class FormulaLearner(QMainWindow):
                 self.test_file
             )
 
-    def make_select(self):
-        self.algorithm_selector = QComboBox()
-        self.algorithm_selector.addItems(['Randomowy', 'Ewolucyjny'])
-        self.algorithm_selector.currentIndexChanged.connect(self.on_selected_algorithm)
-        self.select_layout.addWidget(self.algorithm_selector)
-
     def get_current_algorithm(self):
-        if self.algorithm_selector.currentIndex() == 0:
-            return "RANDOM"
-        return "EVOLUTION"
-
-    def on_selected_algorithm(self):
-        for i in range(self.input_layout.count()): 
-            self.input_layout.itemAt(i).widget().close()
-
+        return self.current_algorithm
+    
+    def make(self):
         if self.get_current_algorithm() == "RANDOM":
-            self.make_for_random_algorithm()
-        else:
-            self.make_for_evolution_algorithm()
+            return self.make_for_random_algorithm()
+        return self.make_for_evolution_algorithm()
 
     def make_for_random_algorithm(self):
-        self.cycles_input = LabeledSpinBox("Ilość cykli:", 20).add_to_layout(self.input_layout)
-        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 100).add_to_layout(self.input_layout)
-        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout)
-        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout)
-        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout)
-        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout)
-        self.positive_responses_percentage_input = LabeledSpinBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout).setValueRange(0,100)
+        self.cycles_input = LabeledSpinBox("Ilość cykli:", 20).add_to_layout(self.input_layout, 0, 0)
+        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 100).add_to_layout(self.input_layout, 0, 1)
+        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout, 0, 2)
+        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout, 1, 0)
+        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout, 1, 1)
+        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout, 1, 2)
+        self.positive_responses_percentage_input = LabeledSpinBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout, 2, 0).setValueRange(0,100)
 
     def make_for_evolution_algorithm(self):
-        self.populations_count_input = LabeledSpinBox("Ilość populacji:", 20).add_to_layout(self.input_layout)
-        self.final_formulas_size_input = LabeledSpinBox("Finalna ilośc formuł:", 100).add_to_layout(self.input_layout)
-        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 300).add_to_layout(self.input_layout)
-        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout)
-        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout)
-        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout)
-        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout)
-        self.mutations_percentage_input = LabeledSpinBox("Procent mutacji: ", 5).add_to_layout(self.input_layout).setValueRange(0,100)
-        self.percentage_to_reproduce_input = LabeledSpinBox("Procent populacji do reporodukcji: ", 50).add_to_layout(self.input_layout).setValueRange(0,100)
+        self.populations_count_input = LabeledSpinBox("Ilość populacji:", 20).add_to_layout(self.input_layout, 0, 0)
+        self.final_formulas_size_input = LabeledSpinBox("Finalna ilośc formuł:", 100).add_to_layout(self.input_layout, 0, 1)
+        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 300).add_to_layout(self.input_layout, 0, 2)
+        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout, 1, 0)
+        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout, 1, 1)
+        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout, 1, 2)
+        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout, 2, 0)
+        self.mutations_percentage_input = LabeledSpinBox("Procent mutacji: ", 5).add_to_layout(self.input_layout, 2, 1).setValueRange(0,100)
+        self.percentage_to_reproduce_input = LabeledSpinBox("Procent populacji do reporodukcji: ", 50).add_to_layout(self.input_layout, 2, 2).setValueRange(0,100)
 
     def stop_formula_learning(self):
         self._process_reader.kill()
@@ -145,15 +135,7 @@ class FormulaLearner(QMainWindow):
         self._process_reader.start("docker-compose", ["up", "--build"])
 
     def start_with_system(self):
-        self._process_reader.start('./core/build/learning_formulas', [
-            self.train_file,
-            self.test_file,
-            self.cycles_input.get_value(),
-            self.formulas_input.get_value(),
-            self.clauses_input.get_value(),
-            self.literals_input.get_value(),
-        ])
-
+        pass
 
     def start_formula_learning(self):
         self.console.clear_output()
@@ -184,21 +166,36 @@ class MainWindow(QMainWindow):
         self.layout.setContentsMargins(5,5,5,5)
 
         self.selected_file = None 
-        self.button_layout = QHBoxLayout()
+        self.button_layout = QVBoxLayout()
+        self.button_layout.setAlignment(Qt.AlignCenter)
         self.file_dialog = QFileDialog()
         self.file_dialog.setFileMode(QFileDialog.AnyFile)
 
-        self.load_file = QPushButton("Załaduj plik z danymi csv")
-        self.learn_formula = QPushButton("Przejdz do uczenia formuł...")
-        self.formula_analyzer = QPushButton("Przejdź do analizy formuł...")
-        self.load_file.setFixedWidth(200)
-        self.learn_formula.setFixedWidth(200)
+        self.load_file = QPushButton("Wybierz plik csv do przetworzenia...")
+        self.load_file.setToolTip("Po kliknięciu zostaniesz przeniesiony do interfejsu pozwalającego zakodować dane z pliku csv na binarne")
+        
+        self.learn_formula_evolution = QPushButton("Przejdz do uczenia formuł(algorytm ewolucyjny)...")
+        self.learn_formula_evolution.setToolTip("Po kliknięciu zostaniesz przeniesiony do interfejsu pozwalającego uruchomić algorytm uczenia z różnymi parametrami")
+        
+        self.learn_formula_random = QPushButton("Przejdz do uczenia formuł(algorytm losowy)...")
+        self.learn_formula_random.setToolTip("Po kliknięciu zostaniesz przeniesiony do interfejsu pozwalającego uruchomić algorytm uczenia z różnymi parametrami")
+
+        self.formula_analyzer = QPushButton("Wybierz plik csv do predykcji...")
+        self.formula_analyzer.setToolTip("Predykcja zostanie dokonana na podstawie formuł znajdujących się w katalogu core/results/result.txt")
+        
+        self.load_file.setFixedWidth(400)
+        self.learn_formula_evolution.setFixedWidth(400)
+        self.learn_formula_random.setFixedWidth(400)
+        self.formula_analyzer.setFixedWidth(400)
+
         self.load_file.clicked.connect(self.open_file_dialog)
-        self.learn_formula.clicked.connect(self.reload)
+        self.learn_formula_evolution.clicked.connect(self.reload_evolution)
+        self.learn_formula_random.clicked.connect(self.reload_random)
         self.formula_analyzer.clicked.connect(self.analyzer)
 
         self.button_layout.addWidget(self.load_file)
-        self.button_layout.addWidget(self.learn_formula)
+        self.button_layout.addWidget(self.learn_formula_evolution)
+        self.button_layout.addWidget(self.learn_formula_random)
         self.button_layout.addWidget(self.formula_analyzer)
 
         self.layout.addLayout(self.button_layout)
@@ -212,8 +209,12 @@ class MainWindow(QMainWindow):
         self.dialog = FormulaAnalyzerWindow()
         self.dialog.show()
 
-    def reload(self):
-        self.dialog = FormulaLearner(self.reader, self.run_with_docker)
+    def reload_evolution(self):
+        self.dialog = FormulaLearner(self.reader, "EVOLUTION", self.run_with_docker)
+        self.dialog.show()
+
+    def reload_random(self):
+        self.dialog = FormulaLearner(self.reader,  "RANDOM", self.run_with_docker)
         self.dialog.show()
 
     def open_file_dialog(self):

@@ -15,9 +15,6 @@ def make_train_test_data_files(df, target, train_file="train.txt", test_file="te
     test_file = open(test_file, "a")
 
     msk = np.random.rand(len(df)) < 0.7
-    
-    train_len = len(df[msk])
-    test_len = len(df[~msk])
 
     train = df[msk].groupby(target)
     test = df[~msk].groupby(target)
@@ -30,7 +27,7 @@ def make_train_test_data_files(df, target, train_file="train.txt", test_file="te
             all_bin = False
             break 
 
-    classes = df[target].unique()
+    classes = df[target].fillna('').unique().tolist()
     classes.sort()
     
     if all_bin:
@@ -105,8 +102,6 @@ def write_lines(file, binarizers, df, target):
     for column in df.columns:
         if column == target:
             continue
-
-        print(len(df.columns))
         
         values = binarizers[column].fit_transform(df[column], max_values[column])
         i=0
