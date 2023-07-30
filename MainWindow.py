@@ -11,6 +11,8 @@ from ui.layout_cleaner import clean_layout
 import numpy as np 
 from file import make_train_test_data_files
 from utils.file import *
+import shutil
+import os 
 
 class FormulaLearner(QMainWindow):
 
@@ -86,35 +88,30 @@ class FormulaLearner(QMainWindow):
         self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout, 1, 1)
         self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout, 1, 2)
         self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout, 2, 0)
-        self.mutations_percentage_input = LabeledSpinBox("Procent mutacji: ", 5).add_to_layout(self.input_layout, 2, 1).setValueRange(0,100)
-        self.percentage_to_reproduce_input = LabeledSpinBox("Procent populacji do reporodukcji: ", 50).add_to_layout(self.input_layout, 2, 2).setValueRange(0,100)
-        self.keep_best_input = LabeledSpinBox("Ilość najlepszych formuł przechodzących do następnej populacji", 10).add_to_layout(self.input_layout, 3, 1)
-
+        self.new_formulas_percentage_input = LabeledSpinBox("Procent oonownie wylosowanych formuł w populacji: ", 100).add_to_layout(self.input_layout, 2, 1).setValueRange(0,100)
+        self.crossing_percentage_input = LabeledSpinBox("Procent formuł do krzyżowania: ", 50).add_to_layout(self.input_layout, 2, 2).setValueRange(0,100)
+    
     def stop_formula_learning(self):
         self._process_reader.kill()
         self.console.append_output("Process stopped...")
 
     def set_up_env(self):
-        if self.get_current_algorithm() == "RANDOM":
+        if self.get_current_algorithm() == "EVOLUTION":
+
+            if not self.run_with_docker:
+                result_dir = "../result/",
+                train_file_name = "../data/train.txt"
+                test_file_name = "../data/test.txt"
+            else:
+                result_dir = "/src/result/",
+                train_file_name = "/src/data/train.txt"
+                test_file_name = "/src/data/test.txt"
+
             variables = {
                 "ALGORITHM": self.get_current_algorithm(),
-                "TRAIN_FILE_NAME": "/src/data/train.txt",
-                "TEST_FILE_NAME": "/src/data/test.txt",
-                "RESULT_DIR": "/src/result/",
-                "FORMULAS_COUNT": self.formulas_input.get_value(),
-                "CYCLES_COUNT": self.cycles_input.get_value(),
-                "MIN_CLAUSES_COUNT": self.min_clauses_input.get_value(),
-                "MAX_CLAUSES_COUNT": self.max_clauses_input.get_value(),
-                "MIN_LITERALS_COUNT": self.min_literals_input.get_value(),
-                "MAX_LITERALS_COUNT": self.max_literals_input.get_value(),
-                "POSITIVE_RESPONSES_PERCENTAGE": self.positive_responses_percentage_input.get_value(),
-            }
-        else:
-            variables = {
-                "ALGORITHM": self.get_current_algorithm(),
-                "TRAIN_FILE_NAME": "/src/data/train.txt",
-                "TEST_FILE_NAME": "/src/data/test.txt",
-                "RESULT_DIR": "/src/result/",
+                "TRAIN_FILE_NAME": train_file_name,
+                "TEST_FILE_NAME": test_file_name,
+                "RESULT_DIR": result_dir,
                 "MIN_CLAUSES_COUNT": self.min_clauses_input.get_value(),
                 "MAX_CLAUSES_COUNT": self.max_clauses_input.get_value(),
                 "MIN_LITERALS_COUNT": self.min_literals_input.get_value(),
@@ -122,9 +119,8 @@ class FormulaLearner(QMainWindow):
                 "POPULATIONS_COUNT": self.populations_count_input.get_value(),
                 "POPULATIONS_SIZE": self.formulas_input.get_value(),
                 "FINAL_POPULATION_SIZE": self.final_formulas_size_input.get_value(),
-                "MUTATION_PERCENTAGE": self.mutations_percentage_input.get_value()/100.0,
-                "REPRODUCTION_PERCENTAGE": self.percentage_to_reproduce_input.get_value()/100.0,
-                "KEEP_BEST": self.keep_best_input.get_value()
+                "NEW_FORMULAS_PERCENTAGE": self.new_formulas_percentage_input.get_value()/100.0,
+                "CROSSING_PERCENTAGE": self.crossing_percentage_input.get_value()/100.0,
             }
 
         with open(".env", "w") as f:
@@ -135,6 +131,8 @@ class FormulaLearner(QMainWindow):
     def start_with_docker(self):
         self.set_up_env()
 
+        if os.path.exists("core/build"):
+            shutil.rmtree("core/build")
         self._process_reader.start("docker-compose", ["up", "--build"])
 
     def start_with_system(self):
@@ -185,7 +183,7 @@ class MainWindow(QMainWindow):
         self.load_file = QPushButton("Wybierz plik csv do przetworzenia...")
         self.load_file.setToolTip("Po kliknięciu zostaniesz przeniesiony do interfejsu pozwalającego zakodować dane z pliku csv na binarne")
         
-        self.learn_formula_evolution = QPushButton("Przejdz do uczenia formuł(algorytm ewolucyjny)...")
+        self.learn_formula_evolution = QPushButton("Przejdz do uczenia formuł...")
         self.learn_formula_evolution.setToolTip("Po kliknięciu zostaniesz przeniesiony do interfejsu pozwalającego uruchomić algorytm uczenia z różnymi parametrami")
         
         self.learn_formula_random = QPushButton("Przejdz do uczenia formuł(algorytm losowy)...")
@@ -206,7 +204,6 @@ class MainWindow(QMainWindow):
 
         self.button_layout.addWidget(self.load_file)
         self.button_layout.addWidget(self.learn_formula_evolution)
-        self.button_layout.addWidget(self.learn_formula_random)
         self.button_layout.addWidget(self.formula_analyzer)
 
         self.layout.addLayout(self.button_layout)

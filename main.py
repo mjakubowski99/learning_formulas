@@ -2,9 +2,10 @@ import sys
 from MainWindow import MainWindow
 from PyQt5.QtWidgets import QApplication
 
-app = QApplication(sys.argv)
-main_window = MainWindow(False)
+run_with_docker = True
 
-#main_window.start_formula_learning()
+app = QApplication(sys.argv)
+main_window = MainWindow(run_with_docker)
+
 main_window.show()
 sys.exit(app.exec_())

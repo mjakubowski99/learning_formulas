@@ -16,10 +16,7 @@ set(SOURCES
     "utils.cpp" 
     "FormulaGenerator.cpp" 
     "FormulaEvaluator.cpp" 
-    "RandomClassifier.cpp" 
-    "genetic/crosser/OnePointCrosser.cpp"
-    "genetic/selector/RankingSelector.cpp"
-    "genetic/algorithm/Algorithm.cpp"
+    "Algorithm.cpp"
     "main.cpp"
 )
 

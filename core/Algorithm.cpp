@@ -1,5 +1,5 @@
 #include "Algorithm.hpp"
-#include "../../utils.hpp"
+#include "utils.hpp"
 
 Algorithm::Algorithm(FormulaGenerator * generator, FormulaEvaluator * evaluator)
 {
@@ -7,10 +7,9 @@ Algorithm::Algorithm(FormulaGenerator * generator, FormulaEvaluator * evaluator)
     this->evaluator = evaluator;
 }
 
-void Algorithm::setData(Data * data, Data * test_data, int classes_count)
+void Algorithm::setData(Data * data, int classes_count)
 {
     this->data = data;
-    this->test_data = test_data;
     this->classes_count = classes_count;
     this->formulas = new FormulaWithScoreArray[this->classes_count];
 }
@@ -19,8 +18,7 @@ void Algorithm::setFormulaParams(
     int min_clauses_count, 
     int max_clauses_count, 
     int min_literals_count, 
-    int max_literals_count,
-    int keep_best
+    int max_literals_count
 )
 {
     this->final_population_size = final_population_size;
@@ -28,17 +26,6 @@ void Algorithm::setFormulaParams(
     this->max_clauses_count = max_clauses_count;
     this->min_literals_count = min_literals_count;
     this->max_literals_count = max_literals_count;
-    this->keep_best = keep_best;
-}
-
-void Algorithm::setSelectionStrategy(FormulaSelector * selector)
-{
-    this->selector = selector;
-}
-
-void Algorithm::setCrossingStrategy(FormulaCrosser * crosser)
-{
-    this->crosser = crosser;
 }
 
 void Algorithm::setFinalPopulationSize(int final_population_size)
@@ -56,9 +43,9 @@ void Algorithm::setPopulationsCount(int populations_count)
     this->populations_count = populations_count;
 }
 
-void Algorithm::setMutationsPercent(float mutations_percent)
+void Algorithm::setNewFormulasPercentage(float new_formulas_percentage)
 {
-    this->mutations_percent = mutations_percent;
+    this->new_formulas_percentage = new_formulas_percentage;
 }
 
 FormulaWithScoreArray * Algorithm::run()
@@ -68,12 +55,8 @@ FormulaWithScoreArray * Algorithm::run()
 
         int p=0;
         while (p<this->populations_count) {
-            //this->formulas[i] = this->selector->select(this->formulas[i]);
             this->formulas[i].sortByScore();
-
-            //this->performCrossing(i);
-            this->mutate(i);
-
+            this->improveFormulas(i);
             std::cout << "Populacja: " << p << std::endl;
             p++;
         }
@@ -114,78 +97,36 @@ FormulaWithScoreArray Algorithm::attachScore(std::list<Formula> formulas, int go
     return formula_with_scores;
 }
 
-void Algorithm::performCrossing(int decision_class)
+void Algorithm::improveFormulas(int decision_class)
 {
     FormulaWithScoreArray formulas = this->formulas[decision_class];
-    FormulaWithScoreArray new_formulas(this->poulation_size);
+    int new_formulas_count = (int) (this->new_formulas_percentage * formulas.size);
 
-    if (this->keep_best > this->poulation_size) {
-        this->keep_best = this->poulation_size;
-    }
+    int formulas_size = this->new_formulas_percentage * this->poulation_size;
 
-    for(int i=0; i<this->keep_best; i++) {
-        new_formulas.formulas[i] = this->formulas[decision_class].formulas[i];
-    }
-    for(int i=this->keep_best; i<this->poulation_size; i++) {
-        int a = randomInt(0, this->formulas[decision_class].size);
-        int b = randomInt(0, this->formulas[decision_class].size);
-        while(a==b) {
-            b = randomInt(0, this->formulas[decision_class].size);
-        }
+    std::list<Formula> generated_formulas = this->generator->makeFormulas(
+        this->data,
+        this->classes_count,
+        formulas_size,
+        this->min_clauses_count,
+        this->max_clauses_count,
+        this->min_literals_count,
+        this->max_literals_count,
+        decision_class
+    );
 
-        new_formulas.formulas[i].formula = this->crosser->cross(formulas.formulas[a].formula, formulas.formulas[b].formula);
-        new_formulas.formulas[i].score = this->evaluator->numericScore(new_formulas.formulas[i].formula, this->data, this->classes_count, decision_class);
-    }
+    FormulaWithScoreArray gen_formulas = this->attachScore(generated_formulas, decision_class);
+    gen_formulas.sortByScore();
 
-    this->formulas[decision_class] = new_formulas;
-}
-
-void Algorithm::mutate(int decision_class)
-{
-    FormulaWithScoreArray formulas = this->formulas[decision_class];
-    int mutations_count = (int) (this->mutations_percent * formulas.size);
-
-    for(int i=0; i<mutations_count; i++) {
-        int random = randomInt(0, formulas.size);
-        Formula formula = formulas.formulas[random].formula;
-
-        int formula_mutations_count = randomInt(0,formula.size());
-
-        std::list<Formula> generated_formulas;
-
-        this->generator->makePositiveFormulas(
-            generated_formulas,
-            this->data[decision_class],
-            (int) (formula_mutations_count/2),
-            this->min_clauses_count,
-            this->max_clauses_count,
-            this->min_literals_count,
-            this->max_literals_count
-        );
-        this->generator->makeNegativeFormulas(
-            generated_formulas,
-            this->data,
-            decision_class,
-            this->classes_count,
-            (int) (formula_mutations_count/2),
-            this->min_clauses_count,
-            this->max_clauses_count,
-            this->min_literals_count,
-            this->max_literals_count
-        );
-
-        FormulaWithScoreArray gen_formulas = this->attachScore(generated_formulas, decision_class);
-        gen_formulas.sortByScore();
-
-        int size = formulas.size;
-        
-        int j=0;
-        for(int i=size-1; i>=size-gen_formulas.size; i--) {
-            if (gen_formulas.formulas[j].score > formulas.formulas[j].score) {
-                formulas.formulas[i] = gen_formulas.formulas[j];
-            }
+    int j=0;
+    for(int i=0; i<formulas.size && j<gen_formulas.size; i++) {
+        if (gen_formulas.formulas[j].score > formulas.formulas[i].score) {
+            FormulaWithScore copy = formulas.formulas[i];
+            formulas.formulas[formulas.size-1-j] = copy;
+            formulas.formulas[i] = gen_formulas.formulas[j];
             j++;
         }
+
     }
     formulas.sortByScore();
 

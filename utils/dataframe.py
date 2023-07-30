@@ -2,7 +2,7 @@ import pandas as pd
 
 def target_to_begin(df: pd.DataFrame, target):
     if target not in df.columns:
-        return
+        return df
 
     data = df[target]
     df=df.drop(columns=[target])

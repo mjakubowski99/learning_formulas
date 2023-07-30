@@ -26,7 +26,8 @@ class DataManager:
     def init_standarizer(self, force_not_init=False):
         intervals = {}
         boundaries = {}
-        for column in self.df.columns:
+        
+        for column in self.config['saved_columns']:
             if column == self.target:
                 continue
 

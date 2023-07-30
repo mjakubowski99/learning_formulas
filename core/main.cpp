@@ -1,14 +1,11 @@
 #include "types.hpp"
 #include "utils.hpp"
-#include "RandomClassifier.hpp"
 #include <iostream>
 #include <fstream>
 #include <ctime>
 #include <sstream>
 #include <filesystem>
-#include "genetic/algorithm/Algorithm.hpp"
-#include "genetic/crosser/OnePointCrosser.hpp"
-#include "genetic/selector/RankingSelector.hpp"
+#include "Algorithm.hpp"
 
 int decision_classes_count = 0;
 
@@ -16,21 +13,17 @@ std::string train_file_name = "../data/train.txt";
 std::string test_file_name = "../data/test.txt";
 std::string algorithm = "EVOLUTION";
 
-int max_cycles_count_param = 20;
 int formulas_count_param = 100;
 int min_clauses_count = 5;
 int max_clauses_count = 5;
 int min_literals_count = 5;
 int max_literals_count = 5;
-float positive_responses_percentage = 0.4;
 std::string result_dir = "../result/";
-
 int populations_count = 100;
 int population_size = 300;
 int final_population_size = 100;
-float mutation_percentage = 0.1;
-float reproduction_percentage = 0.5;
-int keep_best = 0;
+float new_formulas_percentage = 0.1;
+float crossing_percentage = 0.3;
 
 Data * parseData(std::string file_name)
 {
@@ -91,17 +84,7 @@ void parse_args(int argc, char * argv[])
         max_literals_count = std::stoi(argv[8]);
     }
 
-    if (algorithm == "RANDOM") {
-        if (argc>=10) {
-            max_cycles_count_param = std::stoi(argv[9]);
-        }
-        if (argc>=11) {
-            formulas_count_param = std::stoi(argv[10]);
-        }
-        if (argc>=12) {
-            positive_responses_percentage = std::stof(argv[11]);
-        }
-    } else if (algorithm == "EVOLUTION") {
+    if (algorithm == "EVOLUTION") {
         if (argc>=10) {
             populations_count = std::stoi(argv[9]);
         }
@@ -112,13 +95,10 @@ void parse_args(int argc, char * argv[])
             final_population_size = std::stoi(argv[11]);
         }
         if (argc>=13) {
-            mutation_percentage = std::stof(argv[12]);
+            new_formulas_percentage = std::stof(argv[12]);
         }
         if (argc>=14) {
-            reproduction_percentage = std::stof(argv[13]);
-        }
-        if (argc>=15) {
-            keep_best = std::stof(argv[14]);
+            crossing_percentage = std::stof(argv[13]);
         }
     }
 }
@@ -151,7 +131,7 @@ void saveReport(float result)
 
     if (!file_exists) {
         report_file << "populations_count,populaton_size,min_clauses_count,max_clauses_count,min_literals_count,max_literals_count,";
-        report_file << "size_to_reproduction,final_population_size,result\n";
+        report_file << "final_population_size,new_formulas_percentage,crossing_percentage,result\n";
     }
 
     report_file << populations_count << ",";
@@ -160,8 +140,9 @@ void saveReport(float result)
     report_file << max_clauses_count << ",";
     report_file << min_literals_count << ",";
     report_file << max_literals_count << ",";
-    report_file << (int) (population_size*reproduction_percentage) << ",";
     report_file << final_population_size << ",";
+    report_file << (int) (population_size*new_formulas_percentage) << ",";
+    report_file << (int) (population_size*crossing_percentage) << ",";
     report_file << result << "\n";
 
     report_file.close();
@@ -191,41 +172,35 @@ int main(int argc, char * argv[]) {
     Data * train_data = parseData(train_file_name);
     Data * test_data = parseData(test_file_name);
 
-    int to_reproduction_size = (int) (population_size*reproduction_percentage);
-
     std::cout << "Started evolation" << std::endl;
     std::cout << "Algorithm started with: " << std::endl;
     std::cout << "Runned for file: " << train_file_name << std::endl;
     std::cout << "Test file: " << test_file_name << std::endl;
     std::cout << "Populations count: " << populations_count << std::endl;
     std::cout << "Population size: " << population_size << std::endl;
+    std::cout << "New formulas percentage: " << new_formulas_percentage << std::endl;
+    std::cout << "Crossing percentage: " << crossing_percentage << std::endl;
     std::cout << "Min clauses count in formula: " << min_clauses_count << std::endl;
     std::cout << "Max clauses count in formula: " << max_clauses_count << std::endl;
     std::cout << "Min literals count in formula: " << min_literals_count << std::endl;
     std::cout << "Max literals count in formula: " << max_literals_count << std::endl;
-    std::cout << "Size to reproduction: " << to_reproduction_size << std::endl;
     std::cout << "Final population size: " << final_population_size << std::endl;
 
     FormulaGenerator * generator = new FormulaGenerator;
-    FormulaEvaluator * evaluator = new FormulaEvaluator(positive_responses_percentage);
+    FormulaEvaluator * evaluator = new FormulaEvaluator(0.4);
 
     Algorithm algorithm(generator, evaluator);
-    FormulaCrosser * crosser = new OnePointCrosser;
-    FormulaSelector * selector = new RankingSelector( (int) (population_size*reproduction_percentage) );
 
-    algorithm.setData(train_data, test_data, decision_classes_count);
-    algorithm.setCrossingStrategy(crosser);
-    algorithm.setSelectionStrategy(selector);
+    algorithm.setData(train_data, decision_classes_count);
     algorithm.setFormulaParams(
         min_clauses_count, 
         max_clauses_count, 
         min_literals_count, 
-        max_literals_count,
-        keep_best
+        max_literals_count
     );
     algorithm.setPopulationsCount(populations_count);
     algorithm.setPopulationSize(population_size);
-    algorithm.setMutationsPercent(mutation_percentage);
+    algorithm.setNewFormulasPercentage(new_formulas_percentage);
     algorithm.setFinalPopulationSize(final_population_size);
 
     FormulaWithScoreArray * formula_with_score_array = algorithm.run();

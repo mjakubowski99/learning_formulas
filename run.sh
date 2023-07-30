@@ -1,5 +1,11 @@
 #!/bin/bash
 
+input=".env"
+while IFS= read -r line
+do
+    export "$line"
+done < "$input"
+
 cd core 
 
 if [ -d "build" ] 
@@ -23,6 +29,5 @@ fi
     $POPULATIONS_COUNT \
     $POPULATIONS_SIZE \
     $FINAL_POPULATION_SIZE \
-    $MUTATION_PERCENTAGE \
-    $REPRODUCTION_PERCENTAGE \
-    $KEEP_BEST
+    $NEW_FORMULAS_PERCENTAGE \
+    $CROSSING_PERCENTAGE
