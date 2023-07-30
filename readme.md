@@ -42,6 +42,8 @@ plików są również wykorzystywane w celu przetworzenia danych przesłanych do
 Należy pamiętać, że plik z danymi do predykcji musi zawierać wszystkie kolumny jakie zawierały dane csv, które służyły do
 celów treningowych. Istnieje tu, też pewne ograniczenie. Jako, że ilość bitów w każdym wierszu danych binarnych musi być stała to
 w przypadku jeśli taki plik csv będzie zawierał większe wartości niż znane w zbiorze treningowym. To zostaną one ograniczone do maksymalnych wartości znanych temu zbiorowi podczas kodowania na dane binarne.
+5. Po każdym ukończeniu uczenia zapisywany jest plik z raportem, który zawiera zapis parametrów algorytmu oraz wynik na danych
+testowych(plik result/report.csv)
 
 ### Opis biblioteki uczącej formuły
 Opis kodu biblioteki można znaleźć w pliku readme.md w katalagu core/
