@@ -29,6 +29,7 @@ if [ "${ALGORITHM}" == "EVOLUTION" ]; then
         "${POPULATIONS_SIZE}" \
         "${FINAL_POPULATION_SIZE}" \
         "${MUTATION_PERCENTAGE}" \
-        "${REPRODUCTION_PERCENTAGE}"
+        "${REPRODUCTION_PERCENTAGE}" \
+        "${KEEP_BEST}"
 fi
 

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <ctime>
 #include <sstream>
+#include <filesystem>
 #include "genetic/algorithm/Algorithm.hpp"
 #include "genetic/crosser/OnePointCrosser.hpp"
 #include "genetic/selector/RankingSelector.hpp"
@@ -29,6 +30,7 @@ int population_size = 300;
 int final_population_size = 100;
 float mutation_percentage = 0.1;
 float reproduction_percentage = 0.5;
+int keep_best = 0;
 
 Data * parseData(std::string file_name)
 {
@@ -115,6 +117,9 @@ void parse_args(int argc, char * argv[])
         if (argc>=14) {
             reproduction_percentage = std::stof(argv[13]);
         }
+        if (argc>=15) {
+            keep_best = std::stof(argv[14]);
+        }
     }
 }
 
@@ -134,6 +139,32 @@ void saveFormulasToFile(FormulaWithScoreArray * formulas, int classes_count, std
     }
 
     formulas_file.close();
+}
+
+void saveReport(float result)
+{
+    std::ifstream infile("../result/report.csv");
+    bool file_exists = infile.good();
+    infile.close();
+
+    std::ofstream report_file("../result/report.csv", std::ios_base::app);
+
+    if (!file_exists) {
+        report_file << "populations_count,populaton_size,min_clauses_count,max_clauses_count,min_literals_count,max_literals_count,";
+        report_file << "size_to_reproduction,final_population_size,result\n";
+    }
+
+    report_file << populations_count << ",";
+    report_file << population_size << ",";
+    report_file << min_clauses_count << ",";
+    report_file << max_clauses_count << ",";
+    report_file << min_literals_count << ",";
+    report_file << max_literals_count << ",";
+    report_file << (int) (population_size*reproduction_percentage) << ",";
+    report_file << final_population_size << ",";
+    report_file << result << "\n";
+
+    report_file.close();
 }
 
 void saveFormulasWithScoreToFile(FormulaWithScoreArray * formulas, int classes_count, std::string file_name)
@@ -158,86 +189,50 @@ int main(int argc, char * argv[]) {
     parse_args(argc, argv);
 
     Data * train_data = parseData(train_file_name);
-    
-    if (algorithm == "RANDOM") {
-        std::cout << "Started random algorithm" << std::endl;
-        std::cout << "Algorithm started with: " << std::endl;
-        std::cout << "Runned for file: " << train_file_name << std::endl;
-        std::cout << "Test file: " << test_file_name << std::endl;
-        std::cout << "Cycles count: " << max_cycles_count_param << std::endl;
-        std::cout << "Formulas count for class: " << formulas_count_param << std::endl;
-        std::cout << "Min clauses count in formula: " << min_clauses_count << std::endl;
-        std::cout << "Max clauses count in formula: " << max_clauses_count << std::endl;
-        std::cout << "Min literals count in formula: " << min_literals_count << std::endl;
-        std::cout << "Max literals count in formula: " << max_literals_count << std::endl;
-        std::cout << "Positive responses percentage for decision class: " << positive_responses_percentage << std::endl;
+    Data * test_data = parseData(test_file_name);
 
-        RandomClassifier clf(
-            decision_classes_count, 
-            max_cycles_count_param, 
-            formulas_count_param, 
-            min_clauses_count,
-            max_clauses_count,
-            min_literals_count,
-            max_literals_count,
-            positive_responses_percentage
-        );
-        clf.fit(train_data);
+    int to_reproduction_size = (int) (population_size*reproduction_percentage);
 
-        delete train_data;
+    std::cout << "Started evolation" << std::endl;
+    std::cout << "Algorithm started with: " << std::endl;
+    std::cout << "Runned for file: " << train_file_name << std::endl;
+    std::cout << "Test file: " << test_file_name << std::endl;
+    std::cout << "Populations count: " << populations_count << std::endl;
+    std::cout << "Population size: " << population_size << std::endl;
+    std::cout << "Min clauses count in formula: " << min_clauses_count << std::endl;
+    std::cout << "Max clauses count in formula: " << max_clauses_count << std::endl;
+    std::cout << "Min literals count in formula: " << min_literals_count << std::endl;
+    std::cout << "Max literals count in formula: " << max_literals_count << std::endl;
+    std::cout << "Size to reproduction: " << to_reproduction_size << std::endl;
+    std::cout << "Final population size: " << final_population_size << std::endl;
 
-        Data * test_data = parseData(test_file_name);
-        std::cout << clf.score(test_data) << std::endl;
+    FormulaGenerator * generator = new FormulaGenerator;
+    FormulaEvaluator * evaluator = new FormulaEvaluator(positive_responses_percentage);
 
-        std::time_t ms = std::time(nullptr);
+    Algorithm algorithm(generator, evaluator);
+    FormulaCrosser * crosser = new OnePointCrosser;
+    FormulaSelector * selector = new RankingSelector( (int) (population_size*reproduction_percentage) );
 
-        std::stringstream stream;
-        stream << result_dir << ms;
+    algorithm.setData(train_data, test_data, decision_classes_count);
+    algorithm.setCrossingStrategy(crosser);
+    algorithm.setSelectionStrategy(selector);
+    algorithm.setFormulaParams(
+        min_clauses_count, 
+        max_clauses_count, 
+        min_literals_count, 
+        max_literals_count,
+        keep_best
+    );
+    algorithm.setPopulationsCount(populations_count);
+    algorithm.setPopulationSize(population_size);
+    algorithm.setMutationsPercent(mutation_percentage);
+    algorithm.setFinalPopulationSize(final_population_size);
 
-        clf.saveFormulasToFile(result_dir+"result.txt");
-    } else {
-        int to_reproduction_size = (int) (population_size*reproduction_percentage);
+    FormulaWithScoreArray * formula_with_score_array = algorithm.run();
 
-        std::cout << "Started evolation" << std::endl;
-        std::cout << "Algorithm started with: " << std::endl;
-        std::cout << "Runned for file: " << train_file_name << std::endl;
-        std::cout << "Test file: " << test_file_name << std::endl;
-        std::cout << "Populations count: " << populations_count << std::endl;
-        std::cout << "Population size: " << population_size << std::endl;
-        std::cout << "Min clauses count in formula: " << min_clauses_count << std::endl;
-        std::cout << "Max clauses count in formula: " << max_clauses_count << std::endl;
-        std::cout << "Min literals count in formula: " << min_literals_count << std::endl;
-        std::cout << "Max literals count in formula: " << max_literals_count << std::endl;
-        std::cout << "Size to reproduction: " << to_reproduction_size << std::endl;
-        std::cout << "Final population size: " << final_population_size << std::endl;
-
-        FormulaGenerator * generator = new FormulaGenerator;
-        FormulaEvaluator * evaluator = new FormulaEvaluator(positive_responses_percentage);
-
-        Algorithm algorithm(generator, evaluator);
-        FormulaCrosser * crosser = new OnePointCrosser;
-        FormulaSelector * selector = new RankingSelector( (int) (population_size*reproduction_percentage) );
-
-        algorithm.setData(train_data, decision_classes_count);
-        algorithm.setCrossingStrategy(crosser);
-        algorithm.setSelectionStrategy(selector);
-        algorithm.setFormulaParams(
-            min_clauses_count, 
-            max_clauses_count, 
-            min_literals_count, 
-            max_literals_count
-        );
-        algorithm.setPopulationsCount(populations_count);
-        algorithm.setPopulationSize(population_size);
-        algorithm.setMutationsPercent(mutation_percentage);
-        algorithm.setFinalPopulationSize(final_population_size);
-
-        FormulaWithScoreArray * formula_with_score_array = algorithm.run();
-
-        Data * test_data = parseData(test_file_name);
-        saveFormulasWithScoreToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
-        std::cout << algorithm.score(test_data) << std::endl;
-    }
+    saveFormulasWithScoreToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
+    float score = algorithm.score(test_data);
+    saveReport(score);
 
     return 0;
 }

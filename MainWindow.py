@@ -88,6 +88,7 @@ class FormulaLearner(QMainWindow):
         self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout, 2, 0)
         self.mutations_percentage_input = LabeledSpinBox("Procent mutacji: ", 5).add_to_layout(self.input_layout, 2, 1).setValueRange(0,100)
         self.percentage_to_reproduce_input = LabeledSpinBox("Procent populacji do reporodukcji: ", 50).add_to_layout(self.input_layout, 2, 2).setValueRange(0,100)
+        self.keep_best_input = LabeledSpinBox("Ilość najlepszych formuł przechodzących do następnej populacji", 10).add_to_layout(self.input_layout, 3, 1)
 
     def stop_formula_learning(self):
         self._process_reader.kill()
@@ -122,7 +123,8 @@ class FormulaLearner(QMainWindow):
                 "POPULATIONS_SIZE": self.formulas_input.get_value(),
                 "FINAL_POPULATION_SIZE": self.final_formulas_size_input.get_value(),
                 "MUTATION_PERCENTAGE": self.mutations_percentage_input.get_value()/100.0,
-                "REPRODUCTION_PERCENTAGE": self.percentage_to_reproduce_input.get_value()/100.0
+                "REPRODUCTION_PERCENTAGE": self.percentage_to_reproduce_input.get_value()/100.0,
+                "KEEP_BEST": self.keep_best_input.get_value()
             }
 
         with open(".env", "w") as f:
@@ -132,10 +134,19 @@ class FormulaLearner(QMainWindow):
 
     def start_with_docker(self):
         self.set_up_env()
+
         self._process_reader.start("docker-compose", ["up", "--build"])
 
     def start_with_system(self):
-        pass
+        self.set_up_env()
+
+        with open(".env" , "r") as f:
+            for line in f.readlines():
+                os.environ[line.split("=")[0]] = line.split("=")[1]
+        f.close()
+
+        self._process_reader.start("./run.sh")
+                
 
     def start_formula_learning(self):
         self.console.clear_output()

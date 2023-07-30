@@ -8,6 +8,7 @@
 
 class Algorithm {
     Data * data;
+    Data * test_data;
     int populations_count;
     int final_population_size;
     int poulation_size;
@@ -17,6 +18,7 @@ class Algorithm {
     int min_literals_count;
     int max_literals_count;
     int classes_count;
+    int keep_best;
     FormulaGenerator * generator;
     FormulaEvaluator * evaluator;
     FormulaSelector * selector;
@@ -27,13 +29,14 @@ class Algorithm {
     public:
         Algorithm(FormulaGenerator * generator, FormulaEvaluator * evaluator);
 
-        void setData(Data * data, int classes_count);
+        void setData(Data * data, Data * test_data, int classes_count);
 
         void setFormulaParams(
             int min_clauses_count, 
             int max_clauses_count, 
             int min_literals_count, 
-            int max_literals_count
+            int max_literals_count,
+            int keep_best 
         );
 
         void setSelectionStrategy(FormulaSelector * selector);

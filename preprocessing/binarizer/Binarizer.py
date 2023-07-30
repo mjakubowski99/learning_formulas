@@ -10,5 +10,5 @@ class Binarizer:
         return arr 
 
     def fit_transform(self, values, max):
-        bits = max+1
+        bits = max
         return np.array([self.binarize(value,bits) for value in values])
