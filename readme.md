@@ -29,7 +29,8 @@ Uruchomienie interfejsu użytkownika:
 python3 main.py
 ```
 Interfejs użytkownika pozwala na uruchomienie modułu uczącego formuły zarówno z użyciem dockera jak i bez niego.
-Opcja bez dockera wymaga posiadania dystrybucji Linuxa bądź jego emulatora.
+Opcja bez dockera wymaga posiadania dystrybucji Linuxa bądź jego emulatora. Sterowanie tym czy interfejs ma korzystać
+z dockera czy nie wykonujemy poprzez ustawienie zmiennej w pliku main.py. Domyślnie uczenie jest uruchamiane bez dockera.
 
 ### Uwagi
 1. Przetworzone przez interfejs pliki z ciągami danych binarnych zakodowane przez interfejs. Znajdują się w katalogu
