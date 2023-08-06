@@ -31,10 +31,10 @@ class DataManager:
             if column == self.target:
                 continue
 
-            if self.config['columns'][column].get('value_ranges') is None and force_not_init:
+            if self.config['columns'].get(column) is not None and self.config['columns'][column].get('value_ranges') is None and force_not_init:
                 continue
 
-            if self.config['columns'][column].get('value_ranges') is None and not force_not_init:
+            if self.config['columns'].get(column) is not None and self.config['columns'][column].get('value_ranges') is None and not force_not_init:
                 self.value_standarizer = Standarizer(self.df, self.target)
                 return
             
