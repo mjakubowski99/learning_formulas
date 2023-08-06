@@ -99,11 +99,11 @@ class FormulaLearner(QMainWindow):
         if self.get_current_algorithm() == "EVOLUTION":
 
             if not self.run_with_docker:
-                result_dir = "../result/",
+                result_dir = "../result/"
                 train_file_name = "../data/train.txt"
                 test_file_name = "../data/test.txt"
             else:
-                result_dir = "/src/result/",
+                result_dir = "/src/result/"
                 train_file_name = "/src/data/train.txt"
                 test_file_name = "/src/data/test.txt"
 

@@ -2,7 +2,7 @@ import sys
 from MainWindow import MainWindow
 from PyQt5.QtWidgets import QApplication
 
-run_with_docker = False
+run_with_docker = True
 
 app = QApplication(sys.argv)
 main_window = MainWindow(run_with_docker)

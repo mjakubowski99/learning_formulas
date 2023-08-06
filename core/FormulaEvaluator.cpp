@@ -58,13 +58,11 @@ int FormulaEvaluator::voteForRow(std::list<Formula> * decision_class_formulas, i
 
 float FormulaEvaluator::numericScore(Formula formula, Data * data, int classes_count, int goal)
 {
-    int total_rows_count = 0;
-    int valid_responses_count = 0;
-    float result;
+    int true_positives_sum = 0;
+    int false_positives_sum = 0;
+    int false_negatives_sum = 0;
 
     for(int i=0; i<classes_count; i++) {
-        total_rows_count += data[i].rows_count;
-
         for(int j=0; j<data[i].rows_count; j++) {
             bool formula_satisfied = this->formulaSatisfied(
                 formula, 
@@ -73,15 +71,30 @@ float FormulaEvaluator::numericScore(Formula formula, Data * data, int classes_c
                 data[i].attributes_count
             );
 
-            bool expected = i==goal;
+            bool expected=(i==goal);
 
-            if (expected==formula_satisfied) {
-                valid_responses_count++;
+            if (expected && formula_satisfied) {
+                true_positives_sum++;
+            }
+            if (!expected && formula_satisfied) {
+                false_positives_sum++;
+            }
+            if (expected && !formula_satisfied) {
+                false_negatives_sum++;
             }
         }
     }
 
-    return valid_responses_count/(float)total_rows_count;
+    float precision = (true_positives_sum+false_positives_sum) > 0 ?
+        true_positives_sum / (float) (true_positives_sum+false_positives_sum) : 0;
+    float recall = (true_positives_sum+false_negatives_sum) > 0 ? 
+        true_positives_sum / (float) (true_positives_sum+false_negatives_sum) : 0;
+
+    if (precision+recall==0) {
+        return 0;
+    }
+
+    return (2*precision*recall) / (precision+recall);
 }
 
 FormulaScore FormulaEvaluator::score(Formula formula, Data * data, int classes_count, int class_index, bool expected)

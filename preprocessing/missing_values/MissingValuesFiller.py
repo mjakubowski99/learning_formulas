@@ -25,6 +25,10 @@ class MissingValuesFiller(DataTransformer):
         rows_count = len(df)
 
         for column in df.columns:
+            if column == target:
+                df = df.dropna(subset=[column])
+                continue
+
             missing = df[column].isnull().sum()/rows_count
             if missing == 0:
                 continue
@@ -54,6 +58,10 @@ class MissingValuesFiller(DataTransformer):
             df = df.drop(columns=[column])
 
         for column in columns_to_fill_na:
+            if column == target:
+                df = df.dropna(subset=[column])
+                continue
+            
             if df[column].dtype.kind in 'biufc':
                 column_empty = df[column].isnull().sum() == len(df[column])
 

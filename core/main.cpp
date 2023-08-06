@@ -123,11 +123,11 @@ void saveFormulasToFile(FormulaWithScoreArray * formulas, int classes_count, std
 
 void saveReport(float result)
 {
-    std::ifstream infile("../result/report.csv");
+    std::ifstream infile(result_dir+"report.csv");
     bool file_exists = infile.good();
     infile.close();
 
-    std::ofstream report_file("../result/report.csv", std::ios_base::app);
+    std::ofstream report_file(result_dir+"report.csv", std::ios_base::app);
 
     if (!file_exists) {
         report_file << "populations_count,populaton_size,min_clauses_count,max_clauses_count,min_literals_count,max_literals_count,";
@@ -208,6 +208,7 @@ int main(int argc, char * argv[]) {
     saveFormulasWithScoreToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
     float score = algorithm.score(test_data);
     saveReport(score);
+    std::cout << "Score: " << score << std::endl;
 
     return 0;
 }

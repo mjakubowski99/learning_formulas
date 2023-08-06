@@ -27,7 +27,7 @@ class DataManager:
         intervals = {}
         boundaries = {}
         
-        for column in self.config['saved_columns']:
+        for column in self.df.columns:
             if column == self.target:
                 continue
 
