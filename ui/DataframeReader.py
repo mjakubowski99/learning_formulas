@@ -5,9 +5,9 @@ from PyQt5.QtCore import Qt
 from ui.layout_cleaner import clean_layout
 from enums.DataEncodingState import DataEncodingState
 from ui.state.EncodingState import EncodingState
-from preprocessing.DataManager import DataManager
+from processing.preprocessing.DataManager import DataManager
 from ui.ColumnEncodingManager import ColumnEncodingManager
-from preprocessing.missing_values.Treshold import Treshold
+from processing.preprocessing.Treshold import Treshold
 
 class DataframeReader:
 

@@ -1,4 +1,4 @@
-from models.Interval import Interval
+from processing.models.Interval import Interval
 from PyQt5.QtWidgets import QSpinBox, QLabel
 from PyQt5.QtWidgets import QTableView, QHBoxLayout
 from ui.layout_cleaner import clean_layout

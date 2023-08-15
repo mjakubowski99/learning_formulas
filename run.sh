@@ -6,16 +6,10 @@ do
     export "$line"
 done < "$input"
 
-cd core 
+cd ../core
 
-if [ -d "build" ] 
-then
-    cd build 
-    echo "Build cached!" 
-else
-    mkdir build && cd build
-    cmake .. && make
-fi
+mkdir -p build && cd build
+cmake .. && make
 
 ./learning_formulas \
     $TRAIN_FILE_NAME \

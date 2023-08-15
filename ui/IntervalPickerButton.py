@@ -3,7 +3,7 @@ from ui.PandasHistogram import PandasHistogram
 from PyQt5.QtWidgets import QPushButton, QMainWindow
 from PyQt5.QtWidgets import QVBoxLayout
 from ui.IntervalPicker import IntervalPicker
-from preprocessing.standarizer.Standarizer import Standarizer
+from processing.preprocessing.Standarizer import Standarizer
 from PyQt5.QtWidgets import QVBoxLayout
 from ui.layout_cleaner import clean_layout
 from PyQt5.QtCore import Qt

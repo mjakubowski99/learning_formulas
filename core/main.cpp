@@ -1,11 +1,13 @@
-#include "types.hpp"
-#include "utils.hpp"
 #include <iostream>
 #include <fstream>
 #include <ctime>
 #include <sstream>
 #include <filesystem>
-#include "Algorithm.hpp"
+
+#include <utils.hpp>
+#include <types.hpp>
+#include <FormulaGenerator.hpp>
+#include <Algorithm.hpp>
 
 int decision_classes_count = 0;
 

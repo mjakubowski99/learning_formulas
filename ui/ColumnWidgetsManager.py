@@ -1,8 +1,8 @@
 import pandas as pd
 from ui.state.EncodingState import EncodingState
 from PyQt5.QtWidgets import *
+from processing.preprocessing.MissingValuesFiller import MissingValuesFiller
 from ui.ColumnButton import ColumnButton
-from ui.preprocessing.MissingValuesFillingManager import MissingValuesFillingManager
 from ui.DataframeReader import DataframeReader
 from ui.ColumnActionButton import ColumnActionButton
 
@@ -12,7 +12,7 @@ class ColumnWidgetsManager:
         self.state = state
         self.dataframe_reader = None
         self.layout = QHBoxLayout()
-        self.missing_values_filling_manager = MissingValuesFillingManager()
+        self.missing_values_filler = MissingValuesFiller()
 
     def make(self, dataframe_reader: DataframeReader) -> QBoxLayout:
         self.dataframe_reader = dataframe_reader

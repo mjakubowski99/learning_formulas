@@ -4,7 +4,7 @@ from ui.LabeledSpinBox import LabeledSpinBox
 from ui.ColumnButton import ColumnButton
 from ui.ColumnCheckbox import ColumnCheckbox
 from ui.ColumnActionButton import ColumnActionButton
-from preprocessing.DataManager import DataManager
+from processing.preprocessing.DataManager import DataManager
 from PyQt5.QtWidgets import *
 import pandas as pd
 

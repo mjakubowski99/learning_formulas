@@ -1,9 +1,9 @@
 from PyQt5.QtWidgets import *
 from utils.file import *
 from utils.dataframe import *
-from preprocessing.DataManager import DataManager
-from postprocessing.FormulaPredictor import FormulaPredictor
-from postprocessing.FormulaProcessor import FormulaProcessor
+from processing.preprocessing.DataManager import DataManager
+from processing.postprocessing.FormulaProcessor import FormulaProcessor
+from processing.postprocessing.FormulaPredictor import FormulaPredictor
 from ui.DataframeTableModel import TableModel
 
 class FormulaAnalyzerWindow(QMainWindow):

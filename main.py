@@ -1,5 +1,5 @@
 import sys 
-from MainWindow import MainWindow
+from ui.MainWindow import MainWindow
 from PyQt5.QtWidgets import QApplication
 
 run_with_docker = True
