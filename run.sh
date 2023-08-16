@@ -6,7 +6,7 @@ do
     export "$line"
 done < "$input"
 
-cd ../core
+cd core
 
 mkdir -p build && cd build
 cmake .. && make
