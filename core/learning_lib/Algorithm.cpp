@@ -58,7 +58,7 @@ FormulaWithScoreArray * Algorithm::run()
             this->formulas[i].sortByScore();
             
             this->improveFormulas(i);
-            std::cout << "Populacja: " << p << std::endl;
+            std::cout << "Iteracja: " << p << std::endl;
             p++;
         }
 

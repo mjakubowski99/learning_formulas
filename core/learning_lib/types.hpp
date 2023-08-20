@@ -115,18 +115,13 @@ struct FormulaWithScoreArray
         sort(this->formulas, this->formulas+this->size, [](FormulaWithScore & a, FormulaWithScore & b) {return a.score > b.score;});
     }
 
-    int countSatisfiableFormulas(float threshold)
+    float avgScore()
     {
-        int count = 0;
         float avg_score = 0;
         for(int i=0; i<this->size; i++) {
             avg_score+=this->formulas[i].score;
-            if (this->formulas[i].score > threshold) {
-                count++;
-            }
         }
-        std::cout << "Avg score: " << avg_score/this->size << std::endl;
-        return count;
+        return avg_score/this->size;
     }
 };
 
