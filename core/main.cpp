@@ -208,7 +208,7 @@ int main(int argc, char * argv[]) {
     FormulaWithScoreArray * formula_with_score_array = algorithm.run();
 
     saveFormulasWithScoreToFile(formula_with_score_array, decision_classes_count, result_dir+"result.txt");
-    float score = algorithm.score(test_data);
+    float score = algorithm.score(train_data);
     saveReport(score);
     std::cout << "Score: " << score << std::endl;
 

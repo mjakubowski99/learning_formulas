@@ -88,8 +88,7 @@ class FormulaLearner(QMainWindow):
         self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout, 1, 1)
         self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout, 1, 2)
         self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout, 2, 0)
-        self.new_formulas_percentage_input = LabeledSpinBox("Procent oonownie wylosowanych formuł w populacji: ", 100).add_to_layout(self.input_layout, 2, 1).setValueRange(0,100)
-        self.crossing_percentage_input = LabeledSpinBox("Procent formuł do krzyżowania: ", 50).add_to_layout(self.input_layout, 2, 2).setValueRange(0,100)
+        self.new_formulas_percentage_input = LabeledSpinBox("Procent ponownie wylosowanych formuł w populacji: ", 100).add_to_layout(self.input_layout, 2, 1).setValueRange(0,100)
     
     def stop_formula_learning(self):
         self._process_reader.kill()
@@ -119,8 +118,7 @@ class FormulaLearner(QMainWindow):
                 "POPULATIONS_COUNT": self.populations_count_input.get_value(),
                 "POPULATIONS_SIZE": self.formulas_input.get_value(),
                 "FINAL_POPULATION_SIZE": self.final_formulas_size_input.get_value(),
-                "NEW_FORMULAS_PERCENTAGE": self.new_formulas_percentage_input.get_value()/100.0,
-                "CROSSING_PERCENTAGE": self.crossing_percentage_input.get_value()/100.0,
+                "NEW_FORMULAS_PERCENTAGE": self.new_formulas_percentage_input.get_value()/100.0
             }
 
         with open(".env", "w") as f:

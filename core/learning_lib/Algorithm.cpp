@@ -56,13 +56,17 @@ FormulaWithScoreArray * Algorithm::run()
         int p=0;
         while (p<this->populations_count) {
             this->formulas[i].sortByScore();
+            
             this->improveFormulas(i);
             std::cout << "Populacja: " << p << std::endl;
             p++;
         }
 
         this->formulas[i].sortByScore();
-        this->formulas[i].size = this->final_population_size;
+
+        if (this->final_population_size<=this->formulas[i].size) {
+            this->formulas[i].size = this->final_population_size;
+        }
     }
 
     return this->formulas;
@@ -146,7 +150,9 @@ float Algorithm::score(Data * data)
         for(int w=0; w<this->formulas[i].size; w++) {
             formulas[i].push_back(this->formulas[i].formulas[w].formula);
         }
+    }
 
+    for(int i=0; i<this->classes_count; i++) {
         for(int j=0; j<data[i].rows_count; j++) {
             int vote_result = this->evaluator->voteForRow(
                 formulas,
@@ -155,6 +161,7 @@ float Algorithm::score(Data * data)
                 j,
                 data[i].attributes_count
             );
+
             if (i==vote_result) {
                 score++;
             }
