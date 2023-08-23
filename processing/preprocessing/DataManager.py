@@ -38,6 +38,10 @@ class DataManager:
                 self.value_standarizer = Standarizer(self.df, self.target)
                 return
             
+            if self.config['columns'].get(column) is None:
+                continue
+
+            
             data = {}
             for key, value_range in self.config['columns'][column]['value_ranges'].items():
                 data[int(key)] = Interval(value_range['begin'], value_range['end'])

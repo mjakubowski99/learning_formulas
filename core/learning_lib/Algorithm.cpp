@@ -58,6 +58,7 @@ FormulaWithScoreArray * Algorithm::run()
             this->formulas[i].sortByScore();
             
             this->improveFormulas(i);
+            std::cout << "Decision class: " << i << "avg score: " << this->formulas[i].avgScore() << std::endl;
             std::cout << "Iteracja: " << p << std::endl;
             p++;
         }

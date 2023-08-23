@@ -81,7 +81,7 @@ class FormulaLearner(QMainWindow):
         self.positive_responses_percentage_input = LabeledSpinBox("Wymagany % pozytywnych odpowiedzi formuły: ", 40).add_to_layout(self.input_layout, 2, 0).setValueRange(0,100)
 
     def make_for_evolution_algorithm(self):
-        self.populations_count_input = LabeledSpinBox("Ilość populacji:", 20).add_to_layout(self.input_layout, 0, 0)
+        self.populations_count_input = LabeledSpinBox("Ilość iteracji:", 20).add_to_layout(self.input_layout, 0, 0)
         self.final_formulas_size_input = LabeledSpinBox("Finalna ilośc formuł:", 100).add_to_layout(self.input_layout, 0, 1)
         self.formulas_input = LabeledSpinBox("Ilość formuł: ", 300).add_to_layout(self.input_layout, 0, 2)
         self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout, 1, 0)
