@@ -16,6 +16,7 @@ class Algorithm {
     int max_literals_count;
     int classes_count;
     int keep_best;
+    std::string formula_evaluation_type;
     FormulaGenerator * generator;
     FormulaEvaluator * evaluator;
 
@@ -32,6 +33,8 @@ class Algorithm {
             int min_literals_count, 
             int max_literals_count
         );
+
+        void setFormulaEvaluationType(std::string formula_evaluation_type);
 
         void setPopulationSize(int population_size);
 

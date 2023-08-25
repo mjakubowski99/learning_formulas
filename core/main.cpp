@@ -14,6 +14,7 @@ int decision_classes_count = 0;
 std::string train_file_name = "../data/train.txt";
 std::string test_file_name = "../data/test.txt";
 std::string algorithm = "EVOLUTION";
+std::string formula_evaluation_type = "F_MEASURE";
 
 int formulas_count_param = 100;
 int min_clauses_count = 5;
@@ -100,7 +101,9 @@ void parse_args(int argc, char * argv[])
             new_formulas_percentage = std::stof(argv[12]);
         }
         if (argc>=14) {
-            crossing_percentage = std::stof(argv[13]);
+            std::string test_pom(argv[13]);
+            formula_evaluation_type = test_pom;
+            std::cout << "Evaluation type" << formula_evaluation_type << std::endl;
         }
     }
 }
@@ -187,6 +190,7 @@ int main(int argc, char * argv[]) {
     std::cout << "Min literals count in formula: " << min_literals_count << std::endl;
     std::cout << "Max literals count in formula: " << max_literals_count << std::endl;
     std::cout << "Final population size: " << final_population_size << std::endl;
+    std::cout << "Evaluation type: " << formula_evaluation_type << std::endl;
 
     FormulaGenerator * generator = new FormulaGenerator;
     FormulaEvaluator * evaluator = new FormulaEvaluator(0.4);
@@ -200,6 +204,7 @@ int main(int argc, char * argv[]) {
         min_literals_count, 
         max_literals_count
     );
+    algorithm.setFormulaEvaluationType(formula_evaluation_type);
     algorithm.setPopulationsCount(populations_count);
     algorithm.setPopulationSize(population_size);
     algorithm.setNewFormulasPercentage(new_formulas_percentage);

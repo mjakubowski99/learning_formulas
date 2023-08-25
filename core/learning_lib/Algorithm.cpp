@@ -28,6 +28,11 @@ void Algorithm::setFormulaParams(
     this->max_literals_count = max_literals_count;
 }
 
+void Algorithm::setFormulaEvaluationType(std::string formula_evaluation_type)
+{
+    this->formula_evaluation_type = formula_evaluation_type;
+}
+
 void Algorithm::setFinalPopulationSize(int final_population_size)
 {
     this->final_population_size = final_population_size;
@@ -94,7 +99,12 @@ FormulaWithScoreArray Algorithm::attachScore(std::list<Formula> formulas, int go
     for(Formula formula : formulas) {
         FormulaWithScore formula_with_score;
         formula_with_score.formula = formula;
-        formula_with_score.score = this->evaluator->fMeasureScore(formula, this->data, this->classes_count, goal);
+
+        if (this->formula_evaluation_type == "F_MEASURE") {
+            formula_with_score.score = this->evaluator->fMeasureScore(formula, this->data, this->classes_count, goal);
+        } else {
+            formula_with_score.score = this->evaluator->correctnessScore(formula, this->data, this->classes_count, goal);
+        }
         formula_with_scores.formulas[i] = formula_with_score;
         i++;
     }

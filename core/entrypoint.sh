@@ -14,6 +14,6 @@ if [ "${ALGORITHM}" == "EVOLUTION" ]; then
         "${POPULATIONS_SIZE}" \
         "${FINAL_POPULATION_SIZE}" \
         "${NEW_FORMULAS_PERCENTAGE}" \
-        "${CROSSING_PERCENTAGE}"
+        "${FORMULA_EVALUATION_TYPE}"
 fi
 

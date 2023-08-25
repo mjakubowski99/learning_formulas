@@ -12,7 +12,8 @@ import numpy as np
 from utils.file_writer import make_train_test_data_files
 from utils.file import *
 import shutil
-import os 
+import os
+from PyQt5.QtWidgets import QCheckBox
 
 class FormulaLearner(QMainWindow):
 
@@ -89,7 +90,9 @@ class FormulaLearner(QMainWindow):
         self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout, 1, 2)
         self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout, 2, 0)
         self.new_formulas_percentage_input = LabeledSpinBox("Procent ponownie wylosowanych formuł w populacji: ", 100).add_to_layout(self.input_layout, 2, 1).setValueRange(0,100)
-    
+        self.formula_evaluation_type_input = QCheckBox("Oceniaj formuły poprzez poprawność odpowiedzi")
+        self.input_layout.addWidget(self.formula_evaluation_type_input, 3, 0)
+
     def stop_formula_learning(self):
         self._process_reader.kill()
         self.console.append_output("Process stopped...")
@@ -106,6 +109,12 @@ class FormulaLearner(QMainWindow):
                 train_file_name = "/src/data/train.txt"
                 test_file_name = "/src/data/test.txt"
 
+            if self.formula_evaluation_type_input.isChecked():
+                evaluation_type = "CORRECTNESS"
+            else:
+                evaluation_type = "F_MEASURE"
+
+
             variables = {
                 "ALGORITHM": self.get_current_algorithm(),
                 "TRAIN_FILE_NAME": train_file_name,
@@ -118,7 +127,8 @@ class FormulaLearner(QMainWindow):
                 "POPULATIONS_COUNT": self.populations_count_input.get_value(),
                 "POPULATIONS_SIZE": self.formulas_input.get_value(),
                 "FINAL_POPULATION_SIZE": self.final_formulas_size_input.get_value(),
-                "NEW_FORMULAS_PERCENTAGE": self.new_formulas_percentage_input.get_value()/100.0
+                "NEW_FORMULAS_PERCENTAGE": self.new_formulas_percentage_input.get_value()/100.0,
+                "FORMULA_EVALUATION_TYPE": evaluation_type
             }
 
         with open(".env", "w") as f:
