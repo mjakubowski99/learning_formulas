@@ -2,7 +2,7 @@ from sklearn.model_selection import ParameterGrid
 import subprocess
 import sys
 
-tries = 3
+tries = 20
 
 grid = {
     "ALGORITHM": ["EVOLUTION"],
@@ -11,9 +11,9 @@ grid = {
     "RESULT_DIR": ["../result/"],
     "MIN_CLAUSES_COUNT": [10],
     "MAX_CLAUSES_COUNT": [10],
-    "MIN_LITERALS_COUNT": [2],
-    "MAX_LITERALS_COUNT": [2],
-    "POPULATIONS_COUNT": [5,10,15,20,25,30,35,40],
+    "MIN_LITERALS_COUNT": [3],
+    "MAX_LITERALS_COUNT": [3],
+    "POPULATIONS_COUNT": [20],
     "POPULATIONS_SIZE": [100],
     "FINAL_POPULATION_SIZE": [100],
     "NEW_FORMULAS_PERCENTAGE": [1],
