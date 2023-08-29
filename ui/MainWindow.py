@@ -84,12 +84,12 @@ class FormulaLearner(QMainWindow):
     def make_for_evolution_algorithm(self):
         self.populations_count_input = LabeledSpinBox("Ilość iteracji:", 20).add_to_layout(self.input_layout, 0, 0)
         self.final_formulas_size_input = LabeledSpinBox("Finalna ilośc formuł:", 100).add_to_layout(self.input_layout, 0, 1)
-        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 300).add_to_layout(self.input_layout, 0, 2)
-        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 5).add_to_layout(self.input_layout, 1, 0)
-        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 5).add_to_layout(self.input_layout, 1, 1)
-        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 5).add_to_layout(self.input_layout, 1, 2)
-        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 5).add_to_layout(self.input_layout, 2, 0)
-        self.new_formulas_percentage_input = LabeledSpinBox("Procent ponownie wylosowanych formuł w populacji: ", 100).add_to_layout(self.input_layout, 2, 1).setValueRange(0,100)
+        self.formulas_input = LabeledSpinBox("Ilość formuł: ", 100).add_to_layout(self.input_layout, 0, 2)
+        self.min_clauses_input = LabeledSpinBox("Minimalna ilość klauzul: ", 10).add_to_layout(self.input_layout, 1, 0)
+        self.max_clauses_input = LabeledSpinBox("Maksymalna ilość klauzul: ", 10).add_to_layout(self.input_layout, 1, 1)
+        self.min_literals_input = LabeledSpinBox("Minimalna ilość literałów: ", 3).add_to_layout(self.input_layout, 1, 2)
+        self.max_literals_input = LabeledSpinBox("Maksymalna ilość literałów: ", 3).add_to_layout(self.input_layout, 2, 0)
+        self.new_formulas_percentage_input = LabeledSpinBox("Procent ponownie wylosowanych formuł w populacji: ", 100).setValueRange(0,100)
         self.formula_evaluation_type_input = QCheckBox("Oceniaj formuły poprzez poprawność odpowiedzi")
         self.input_layout.addWidget(self.formula_evaluation_type_input, 3, 0)
 

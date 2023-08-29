@@ -3,7 +3,9 @@ import matplotlib.pyplot as plt
 
 df = pd.read_csv('core/result/report.csv')
 
-#df.groupby('populaton_size', as_index=False).mean().plot.line(x='result', y='result')
+"""
+df.groupby('decision_classes', as_index=False).mean().plot.line(x='decision_classes', y='result')
+"""
 
 x = []
 y = []
@@ -17,5 +19,6 @@ for row in df['result']:
 print(df['result'].mean())
 
 plt.plot(x,y)
+
 plt.show()
 
