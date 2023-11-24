@@ -31,13 +31,13 @@ class LearningManager:
         self.console.clear_output()
         self._process_reader.produce_output.connect(self.console.append_output)
         self._process_reader.start('./core/build/learning_formulas', [
-            'core/train.txt',
-            'core/test.txt',
+            'core/data/train.txt',
+            'core/data/test.txt',
             self.cycles_count,
             self.formulas_count,
             self.clauses_count,
             self.literals_count,
-            "result/"
+            "core/result/"
         ])
 
     def stop_formula_learning(self):

@@ -7,6 +7,10 @@ docker-compose up -d
 ```
 
 ### Bez dockera
+W celu zbudowaniu kodu C++ należy uruchomić skrypt bash:
+```
+./build.sh
+```
 Wymagane gcc oraz cmake. Można uruchomić poprzez wykonaniu w terminalu:
 ```
 ./run.sh
@@ -17,12 +21,15 @@ za ścieżki do plików bądź katalogów są relatywne.
 ## Uruchomienie interfejsu użytkownika
 Wymagania:
     - python3
-    - bibliotek zdefiniowane w requirements.txt 
+    - biblioteki zdefiniowane w requirements.txt 
 
 W celu instalacji bibliotek można użyć polecenia:
 ```
 pip install -r requirements.txt
 ```
+
+Do działania aplikacji niezbędę jest zbudowanie kodu C++ w przypadku systemów Linux
+można skorzystać z polecenia ./build.sh
 
 Uruchomienie interfejsu użytkownika:
 ```
@@ -45,6 +52,3 @@ celów treningowych. Istnieje tu, też pewne ograniczenie. Jako, że ilość bit
 w przypadku jeśli taki plik csv będzie zawierał większe wartości niż znane w zbiorze treningowym. To zostaną one ograniczone do maksymalnych wartości znanych temu zbiorowi podczas kodowania na dane binarne.
 5. Po każdym ukończeniu uczenia zapisywany jest plik z raportem, który zawiera zapis parametrów algorytmu oraz wynik na danych
 testowych(plik result/report.csv)
-
-### Opis biblioteki uczącej formuły
-Opis kodu biblioteki można znaleźć w pliku readme.md w katalagu core/
