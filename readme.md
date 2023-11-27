@@ -1,3 +1,31 @@
+## Uruchomienie interfejsu użytkownika
+Wymagania:
+    - cmake
+    - python3
+    - biblioteki zdefiniowane w requirements.txt
+
+Uprzednio należy zbudować kod C++, można tego dokonać poprzez wykonanie:
+```
+./build.sh
+```
+
+W celu instalacji bibliotek można użyć polecenia:
+```
+pip install -r requirements.txt
+```
+
+Do działania aplikacji niezbędę jest zbudowanie kodu C++ w przypadku systemów Linux
+można skorzystać z polecenia ./build.sh
+
+Uruchomienie interfejsu użytkownika:
+```
+python main.py
+```
+Interfejs użytkownika pozwala na uruchomienie modułu uczącego formuły zarówno z użyciem dockera jak i bez niego.
+Opcja bez dockera wymaga posiadania dystrybucji Linuxa bądź jego emulatora. Sterowanie tym czy interfejs ma korzystać
+z dockera czy nie wykonujemy poprzez ustawienie zmiennej w pliku main.py. Domyślnie uczenie jest uruchamiane bez dockera.
+
+
 ## Uruchomienie core w c++
 
 ### Z dockerem
@@ -18,26 +46,7 @@ Wymagane gcc oraz cmake. Można uruchomić poprzez wykonaniu w terminalu:
 Skrypt wykorzystuje zmienne zdefiniowane w pliku .env, należy pamiętać, że zmienne odpowiadające
 za ścieżki do plików bądź katalogów są relatywne.
 
-## Uruchomienie interfejsu użytkownika
-Wymagania:
-    - python3
-    - biblioteki zdefiniowane w requirements.txt 
 
-W celu instalacji bibliotek można użyć polecenia:
-```
-pip install -r requirements.txt
-```
-
-Do działania aplikacji niezbędę jest zbudowanie kodu C++ w przypadku systemów Linux
-można skorzystać z polecenia ./build.sh
-
-Uruchomienie interfejsu użytkownika:
-```
-python3 main.py
-```
-Interfejs użytkownika pozwala na uruchomienie modułu uczącego formuły zarówno z użyciem dockera jak i bez niego.
-Opcja bez dockera wymaga posiadania dystrybucji Linuxa bądź jego emulatora. Sterowanie tym czy interfejs ma korzystać
-z dockera czy nie wykonujemy poprzez ustawienie zmiennej w pliku main.py. Domyślnie uczenie jest uruchamiane bez dockera.
 
 ### Uwagi
 1. Przetworzone przez interfejs pliki z ciągami danych binarnych zakodowane przez interfejs. Znajdują się w katalogu
