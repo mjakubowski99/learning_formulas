@@ -2,7 +2,7 @@
 Wymagania:
     - cmake
     - python3
-    - biblioteki zdefiniowane w requirements.txt
+    - biblioteki zdefiniowane w requirements.txt  
 
 Uprzednio należy zbudować kod C++, można tego dokonać poprzez wykonanie:
 ```
